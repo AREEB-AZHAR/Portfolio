@@ -1,1296 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Areeb Azhar — AI & Software Architect</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&family=Neue+Haas+Grotesk+Display+Pro:wght@400;500&display=swap');
-
-  :root {
-    --bg: #060608;
-    --fg: #f0eeea;
-    --accent: #7DF9C2;
-    --accent2: #5B8AFF;
-    --muted: #3a3a4a;
-    --dim: #888899;
-    --glass: rgba(240,238,234,0.04);
-  }
-
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: 'JetBrains Mono', monospace;
-    overflow-x: hidden;
-    cursor: auto;
-  }
-  body.cursor-active { cursor: none; }
-  body.cursor-active a, body.cursor-active button { cursor: none; }
-
-  /* ── CUSTOM CURSOR ── */
-  #cursor {
-    width: 10px; height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed; z-index: 9999;
-    pointer-events: none;
-    transform: translate(-50%,-50%);
-    transition: width .25s, height .25s, background .25s;
-    mix-blend-mode: screen;
-  }
-  #cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(125,249,194,.4);
-    border-radius: 50%;
-    position: fixed; z-index: 9998;
-    pointer-events: none;
-    transform: translate(-50%,-50%);
-    transition: transform .08s linear, width .25s, height .25s, border-color .25s;
-  }
-  body:has(a:hover) #cursor, body:has(button:hover) #cursor { width:20px; height:20px; background: var(--accent2); }
-  body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width:56px; height:56px; border-color: var(--accent2); }
-
-  /* ── LOADER ── */
-  #loader {
-    position: fixed; inset: 0; z-index: 9000;
-    background: var(--bg);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 1.5rem;
-    transition: opacity .6s ease;
-  }
-  #loader.hidden { opacity:0; pointer-events:none; }
-  #loader.gone { display:none; }
-  .loader-code {
-    font-size: .75rem; letter-spacing: .1em; color: var(--dim);
-    overflow: hidden; white-space: nowrap;
-    border-right: 2px solid var(--accent);
-    animation: typing 1.6s steps(28,end) forwards, blink .7s step-end infinite alternate;
-    width: 0;
-  }
-  @keyframes typing { to { width: 28ch; } }
-  @keyframes blink { 50% { border-color: transparent; } }
-  .loader-brackets {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem; font-weight: 800; color: var(--fg);
-    display: flex; gap: .25rem; align-items: center;
-  }
-  .lb, .rb {
-    color: var(--accent);
-    animation: bracketPulse 1.2s ease-in-out infinite alternate;
-  }
-  .rb { animation-delay: .6s; }
-  @keyframes bracketPulse { to { opacity:.2; transform: scaleX(1.3); } }
-  .loader-bar {
-    width: 160px; height: 1px;
-    background: var(--muted);
-    position: relative; overflow: hidden;
-  }
-  .loader-bar::after {
-    content:''; position:absolute; inset:0;
-    background: var(--accent);
-    transform: translateX(-100%);
-    animation: barFill 1.8s cubic-bezier(.4,0,.2,1) forwards;
-  }
-  @keyframes barFill { to { transform: translateX(0); } }
-
-  /* ── CANVAS ── */
-  #neural-canvas {
-    position: fixed; inset:0; z-index:0;
-    pointer-events: none;
-  }
-  #stars-canvas {
-    position: fixed; inset:0; z-index:0;
-    pointer-events: none;
-    opacity: .5;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top:0; left:0; right:0; z-index: 800;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.4rem 3rem;
-    background: linear-gradient(to bottom, rgba(6,6,8,.95), transparent);
-    backdrop-filter: blur(4px);
-    transition: background .4s ease, border-bottom .4s ease;
-  }
-  nav.scrolled {
-    padding-top: .9rem; padding-bottom: .9rem;
-    background: rgba(6,6,8,.97);
-    box-shadow: 0 1px 0 rgba(125,249,194,.08);
-  }
-  nav { transition: padding .3s ease, background .3s ease, box-shadow .3s ease; }
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 1rem;
-    letter-spacing: .12em; text-transform: uppercase;
-    color: var(--fg);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--accent); }
-  .nav-idea {
-    display: flex; align-items: center; gap: .5rem;
-    background: var(--glass);
-    border: 1px solid rgba(125,249,194,.15);
-    border-radius: 2rem;
-    padding: .45rem .45rem .45rem 1.1rem;
-    backdrop-filter: blur(6px);
-  }
-  .nav-idea input {
-    background: transparent; border: none; outline: none;
-    color: var(--fg); font-family: 'JetBrains Mono', monospace;
-    font-size: .72rem; width: 210px;
-    placeholder-color: var(--dim);
-  }
-  .nav-idea input::placeholder { color: var(--dim); }
-  .nav-idea button {
-    background: var(--accent); border: none;
-    color: var(--bg); font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: .68rem;
-    letter-spacing: .1em; text-transform: uppercase;
-    padding: .5rem 1rem; border-radius: 2rem;
-    cursor: pointer;
-    transition: transform .2s, background .2s;
-  }
-  .nav-idea button:hover { transform: scale(1.06); background: #fff; }
-  .nav-menu {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: .8rem;
-    letter-spacing: .15em; text-transform: uppercase;
-    color: var(--fg); cursor: none;
-    position: relative;
-    background: none; border: none;
-    padding: .6rem 1.2rem;
-    border: 1px solid rgba(125,249,194,.2);
-    border-radius: 2rem;
-    transition: border-color .25s, color .25s, background .25s;
-    will-change: transform;
-  }
-  .nav-menu:hover { border-color: var(--accent); color: var(--accent); background: rgba(125,249,194,.05); }
-
-
-  /* ── HERO ── */
-  #hero {
-    min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 8rem 3rem 4rem;
-    position: relative; z-index: 1;
-  }
-  .hero-inner {
-    max-width: 1200px; margin: 0 auto; width: 100%;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-  }
-  .hero-left {}
-  .hero-tag {
-    font-size: .65rem; letter-spacing: .25em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1.5rem;
-    display: flex; align-items: center; gap: .6rem;
-    opacity: 1;
-  }
-  .hero-tag::before { content:''; width:24px; height:1px; background: var(--accent); }
-  .hero-h1 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: clamp(2.8rem, 5vw, 4.8rem);
-    line-height: 1.0; letter-spacing: -.02em;
-    text-transform: uppercase;
-    opacity: 1;
-  }
-  .hero-h1 .accent { color: var(--accent); }
-  .hero-tagline {
-    margin-top: 1.8rem;
-    font-size: .85rem; line-height: 1.8; color: var(--dim);
-    max-width: 440px;
-    opacity: 1;
-  }
-  .hero-cta {
-    margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
-    opacity: 1;
-  }
-  .btn-primary {
-    background: var(--accent); color: var(--bg);
-    font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
-    padding: .85rem 2rem; border-radius: 2rem; border: none;
-    cursor: pointer; text-decoration: none;
-    transition: transform .2s, box-shadow .2s;
-    box-shadow: 0 0 28px rgba(125,249,194,.25);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(125,249,194,.4); }
-  .btn-ghost {
-    background: transparent; color: var(--fg);
-    font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
-    padding: .85rem 2rem; border-radius: 2rem;
-    border: 1px solid var(--muted);
-    cursor: pointer; text-decoration: none;
-    transition: border-color .2s, color .2s;
-  }
-  .btn-ghost:hover { border-color: var(--fg); }
-
-  /* ── CODE BLOCK FLOAT ── */
-  .hero-right {
-    position: relative; height: 420px;
-    opacity: 1;
-  }
-  .code-card {
-    position: absolute;
-    background: rgba(14,14,20,.9);
-    border: 1px solid rgba(125,249,194,.18);
-    border-radius: 12px;
-    padding: 1.5rem;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 24px 64px rgba(0,0,0,.5);
-    font-size: .72rem; line-height: 1.75;
-    will-change: transform;
-  }
-  .code-card.card-main { width: 340px; top: 30px; left: 0; z-index:3; }
-  .code-card.card-small { width: 220px; top: 190px; left: 200px; z-index:4;
-    padding: 1rem 1.2rem; font-size: .65rem; }
-  .code-card.card-accent {
-    width: 180px; top: 20px; left: 260px; z-index:2;
-    padding: .9rem 1.1rem; font-size: .62rem;
-    border-color: rgba(91,138,255,.3);
-  }
-  .code-top { display:flex; gap:.4rem; margin-bottom:.8rem; }
-  .dot { width:9px; height:9px; border-radius:50%; }
-  .dot.r{background:#ff5f57;}.dot.y{background:#febc2e;}.dot.g{background:#28c840;}
-  .kw { color: var(--accent2); }
-  .fn { color: var(--accent); }
-  .st { color: #f1a060; }
-  .cm { color: var(--dim); font-style: italic; }
-  .num { color: #c792ea; }
-
-  .float-chip {
-    position: absolute; bottom: 20px; right: 0;
-    background: rgba(91,138,255,.15);
-    border: 1px solid rgba(91,138,255,.3);
-    border-radius: 2rem; padding: .5rem 1rem;
-    font-size: .65rem; color: var(--accent2);
-    letter-spacing: .1em;
-    animation: floatY 4s ease-in-out infinite;
-  }
-  @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-
-  /* ── SECTION SHARED ── */
-  section { position: relative; z-index:1; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
-  .section-label {
-    font-size: .6rem; letter-spacing: .3em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1rem;
-    display: flex; align-items: center; gap: .6rem;
-  }
-  .section-label::before { content:''; width:24px; height:1px; background: var(--accent); }
-
-  .reveal { opacity:0; transform: translateY(48px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
-  .reveal.visible { opacity:1; transform: translateY(0); }
-  .reveal.delay1 { transition-delay: .1s; }
-  .reveal.delay2 { transition-delay: .2s; }
-  .reveal.delay3 { transition-delay: .3s; }
-
-  /* ── ABOUT ── */
-  #about { padding: 10rem 0; }
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: center;
-  }
-  .about-img-wrap {
-    position: relative;
-    aspect-ratio: 3/4; max-width: 380px;
-  }
-  .about-img-placeholder {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #0e1020 0%, #1a1a2e 50%, #0e1020 100%);
-    border: 1px solid rgba(125,249,194,.12);
-    border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .about-img-placeholder::before {
-    content:''; position:absolute; inset:0;
-    background: radial-gradient(circle at 60% 40%, rgba(125,249,194,.07) 0%, transparent 60%);
-  }
-  .about-monogram {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 6rem; color: rgba(125,249,194,.12);
-    letter-spacing: -.05em; user-select: none;
-  }
-  .about-corner {
-    position: absolute; width: 40px; height: 40px;
-    border-color: var(--accent);
-    border-style: solid;
-  }
-  .about-corner.tl { top:-1px; left:-1px; border-width:2px 0 0 2px; }
-  .about-corner.br { bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
-  .about-badge {
-    position: absolute; bottom: -1.2rem; right: -1.2rem;
-    background: var(--accent); color: var(--bg);
-    font-family: 'Syne', sans-serif; font-weight: 800;
-    font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
-    padding: .7rem 1.2rem; border-radius: .25rem;
-  }
-  .about-text h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: clamp(2rem,3vw,3rem);
-    line-height: 1.1; text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-  .about-text h2 em { color: var(--accent); font-style: normal; }
-  .about-text p {
-    font-size: .82rem; line-height: 1.9; color: var(--dim);
-    margin-bottom: 1.2rem;
-  }
-  .stat-row { display: flex; gap: 2.5rem; margin-top: 2.5rem; }
-  .stat { }
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 2.2rem; color: var(--fg);
-    line-height: 1;
-  }
-  .stat-num span { color: var(--accent); }
-  .stat-label { font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-top: .3rem; }
-
-  /* ── PROJECTS ── */
-  #projects { padding: 10rem 0; }
-  .projects-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 4rem; flex-wrap: wrap; gap: 1.5rem;
-  }
-  .projects-header h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: clamp(2rem,3.5vw,3.5rem);
-    line-height: 1.05; text-transform: uppercase;
-  }
-  .projects-header h2 em { color: var(--accent); font-style: normal; }
-  .category-tabs { display: flex; gap: .5rem; flex-wrap: wrap; }
-  .tab {
-    background: transparent; border: 1px solid var(--muted);
-    color: var(--dim); font-family: 'JetBrains Mono', monospace;
-    font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
-    padding: .45rem 1rem; border-radius: 2rem; cursor: pointer;
-    transition: all .2s;
-  }
-  .tab.active, .tab:hover { border-color: var(--accent); color: var(--accent); background: rgba(125,249,194,.05); }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  .proj-card {
-    border: 1px solid var(--muted);
-    border-radius: 8px; overflow: hidden;
-    background: var(--glass);
-    transition: border-color .3s, transform .3s, box-shadow .3s;
-    cursor: pointer;
-    position: relative;
-  }
-  .proj-card:hover { border-color: rgba(125,249,194,.4); transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,.4); }
-  .proj-card:first-child { grid-column: span 2; }
-
-  .proj-visual {
-    height: 200px;
-    position: relative; overflow: hidden;
-    background: linear-gradient(135deg, #0a0a14, #111126);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .proj-card:first-child .proj-visual { height: 260px; }
-  .proj-glyph {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 5rem; opacity: .06;
-    position: absolute; user-select: none;
-    color: var(--fg);
-  }
-  .proj-visual-inner {
-    position: relative; z-index:1;
-    display: flex; flex-direction: column; align-items: center; gap:.5rem;
-  }
-  .proj-icon { font-size: 2.2rem; filter: drop-shadow(0 0 16px var(--accent)); }
-  .proj-tech-tag {
-    font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
-    background: rgba(125,249,194,.12); color: var(--accent);
-    padding: .25rem .7rem; border-radius: 2rem;
-    border: 1px solid rgba(125,249,194,.2);
-  }
-  .proj-overlay {
-    position: absolute; inset:0;
-    background: linear-gradient(to top, rgba(6,6,8,.8) 0%, transparent 60%);
-  }
-
-  .proj-body { padding: 1.4rem; }
-  .proj-num { font-size: .6rem; letter-spacing: .2em; color: var(--dim); margin-bottom: .4rem; }
-  .proj-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: 1rem;
-    text-transform: uppercase; letter-spacing: .04em;
-    margin-bottom: .5rem;
-  }
-  .proj-desc { font-size: .72rem; color: var(--dim); line-height: 1.7; }
-  .proj-arrow {
-    position: absolute; top: 1.2rem; right: 1.2rem;
-    width: 30px; height: 30px; border-radius: 50%;
-    border: 1px solid var(--muted);
-    display: flex; align-items:center; justify-content: center;
-    font-size: .8rem; color: var(--dim);
-    transition: background .2s, border-color .2s, color .2s;
-  }
-  .proj-card:hover .proj-arrow { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-
-  /* ── SPOTLIGHT ── */
-  #spotlight {
-    padding: 10rem 0;
-    position: relative;
-    overflow: hidden;
-  }
-  .spotlight-bg {
-    position: absolute; inset:0;
-    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(91,138,255,.07) 0%, transparent 70%);
-  }
-  .spotlight-inner {
-    position: relative; z-index:1;
-    text-align: center;
-  }
-  .spotlight-inner h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: clamp(3rem, 7vw, 7rem);
-    line-height: .95; text-transform: uppercase;
-    letter-spacing: -.03em;
-  }
-  .spotlight-inner h2 .line2 { color: var(--accent); }
-  .spotlight-meta {
-    margin-top: 2.5rem; max-width: 600px; margin-inline: auto;
-    font-size: .82rem; line-height: 1.9; color: var(--dim);
-  }
-  .tech-stack {
-    display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap;
-    margin-top: 2rem;
-  }
-  .tech-chip {
-    background: var(--glass);
-    border: 1px solid var(--muted);
-    border-radius: 2rem; padding: .4rem 1rem;
-    font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--dim);
-    transition: border-color .2s, color .2s;
-  }
-  .tech-chip:hover { border-color: var(--accent2); color: var(--accent2); }
-  .spotlight-divider {
-    width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, var(--muted), transparent);
-    margin: 3rem auto;
-  }
-  .spotlight-quote {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem; font-weight: 700;
-    max-width: 700px; margin-inline: auto;
-    line-height: 1.5;
-  }
-  .spotlight-quote em { color: var(--accent); font-style: normal; }
-
-  /* ── CTA / FOOTER ── */
-  #cta {
-    padding: 10rem 0 6rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-glow {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -60%);
-    width: 600px; height: 400px;
-    background: radial-gradient(ellipse, rgba(125,249,194,.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  #cta h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: clamp(2.5rem, 6vw, 5.5rem);
-    text-transform: uppercase; line-height: .95;
-    letter-spacing: -.02em;
-    margin-bottom: 1.5rem;
-    position: relative; z-index:1;
-  }
-  #cta h2 .accent { color: var(--accent); }
-  #cta p {
-    font-size: .82rem; color: var(--dim); margin-bottom: 2.5rem;
-    position: relative; z-index:1;
-  }
-  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index:1; }
-
-  footer {
-    border-top: 1px solid var(--muted);
-    padding: 3rem 0;
-    position: relative; z-index:1;
-  }
-  .footer-inner {
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
-  }
-  .footer-copy { font-size: .65rem; color: var(--dim); letter-spacing: .1em; }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a {
-    font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--dim); text-decoration: none;
-    transition: color .2s;
-  }
-  .footer-links a:hover { color: var(--accent); }
-
-  /* ── LINE DIVIDER ── */
-  .line-div { width:100%; height:1px; background: var(--muted); margin: 2rem 0; }
-
-  /* ── SCROLL INDICATOR ── */
-  .scroll-indicator {
-    position: absolute; bottom: 2.5rem; left: 50%;
-    transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: .5rem;
-    opacity: 1;
-  }
-  .scroll-indicator span { font-size: .58rem; letter-spacing: .25em; text-transform: uppercase; color: var(--dim); }
-  .scroll-line {
-    width: 1px; height: 50px;
-    background: linear-gradient(to bottom, var(--accent), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
-
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(24px); }
-    to { opacity:1; transform: translateY(0); }
-  }
-
-  /* ── RESPONSIVE ── */
-  @media(max-width: 900px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-idea { display: none; }
-    .hero-inner, .about-grid { grid-template-columns: 1fr; }
-    .hero-right { height: 280px; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .proj-card:first-child { grid-column: span 1; }
-    .container { padding: 0 1.5rem; }
-    #hero { padding: 7rem 1.5rem 4rem; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Areeb Azhar — Pro Max AI & Software Architect</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-<script>
-// Nuclear fallback: hide loader after 2.5s from first byte, no dependencies
-setTimeout(function(){
-  var l = document.getElementById('loader');
-  if(l){ l.style.opacity='0'; l.style.pointerEvents='none'; setTimeout(function(){ l.style.display='none'; }, 650); }
-}, 2500);
-</script>
 
-<!-- Cursor -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
-<!-- Neural Canvas -->
-<canvas id="neural-canvas"></canvas>
-<canvas id="stars-canvas"></canvas>
+  <!-- Ambient Fluid Effects -->
+  <div class="ambient-glow"></div>
+  <canvas id="neural-canvas"></canvas>
 
-<!-- Loader -->
-<div id="loader">
-  <div class="loader-brackets"><span class="lb">[</span>&nbsp;init&nbsp;<span class="rb">]</span></div>
-  <div class="loader-code">compiling_intelligence.exe...</div>
-  <div class="loader-bar"></div>
-</div>
-
-<!-- Nav -->
-<nav>
-  <a class="nav-logo" href="#"><span>&lt;</span>AA<span>/&gt;</span></a>
-  <div class="nav-idea">
-    <input type="text" placeholder="Got an idea for a web app or AI model?" />
-    <button onclick="handleIdea()">Send →</button>
+  <!-- Navigation -->
+  <div class="nav-wrap">
+    <nav class="nav-glass" style="position: relative;">
+      <a class="nav-logo interactive" href="#"><span>&lt;</span>AA<span>/&gt;</span></a>
+      <div class="nav-idea">
+        <input class="nav-input interactive" type="text" placeholder="Idea for a Web App or AI?" />
+        <button class="btn-primary interactive">Send →</button>
+      </div>
+      <button class="btn-ghost interactive" id="menu-toggle">Menu</button>
+      
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu glass-panel" id="mobile-menu">
+        <a class="interactive dropdown-link" href="#">Home</a>
+        <a class="interactive dropdown-link" href="#about">About</a>
+        <a class="interactive dropdown-link" href="#projects">Projects</a>
+        <a class="interactive dropdown-link" href="#contact">Contact</a>
+      </div>
+    </nav>
   </div>
-  <button class="nav-menu">Menu ·</button>
-</nav>
 
-<!-- Hero -->
-<section id="hero">
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-tag">AI Engineer · Full-Stack Dev · Game Architect</div>
-      <h1 class="hero-h1">Areeb<br><span class="accent">Azhar</span></h1>
-      <p class="hero-tagline">Architecting intelligent systems and immersive digital experiences — from fuzzy logic controllers to adaptive Unity game engines.</p>
-      <div class="hero-cta">
-        <a class="btn-primary" href="#projects">View Systems</a>
-        <a class="btn-ghost" href="#cta">Let's Build</a>
-      </div>
-    </div>
-    <div class="hero-right" id="hero-right">
-      <div class="code-card card-accent">
-        <div class="code-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-        <span class="cm">// fuzzy_logic.py</span><br>
-        <span class="kw">def</span> <span class="fn">fuzzify</span>(x):<br>
-        &nbsp;&nbsp;<span class="kw">return</span> <span class="fn">sigmoid</span>(x * <span class="num">.4</span>)
-      </div>
-      <div class="code-card card-main">
-        <div class="code-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-        <span class="cm">// AdaptiveDifficulty.cs</span><br>
-        <span class="kw">public class</span> <span class="fn">NeuralDifficultyEngine</span> {<br>
-        &nbsp;&nbsp;<span class="kw">private</span> <span class="fn">NeuralNet</span> brain;<br>
-        &nbsp;&nbsp;<span class="kw">float</span> skillDelta = <span class="num">0.0f</span>;<br><br>
-        &nbsp;&nbsp;<span class="kw">void</span> <span class="fn">Update</span>() {<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;skillDelta = brain.<span class="fn">Predict</span>(<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;playerMetrics<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;);<br>
-        &nbsp;&nbsp;}<br>
-        }
-      </div>
-      <div class="code-card card-small">
-        <div class="code-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-        <span class="kw">SELECT</span> * <span class="kw">FROM</span> solutions<br>
-        <span class="kw">WHERE</span> complexity = <span class="st">'high'</span><br>
-        <span class="kw">AND</span> elegance = <span class="st">'maximum'</span>;
-      </div>
-      <div class="float-chip">↗ α-β Pruning · O(b^(d/2))</div>
-    </div>
-  </div>
-  <div class="scroll-indicator">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- About -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid reveal" data-parallax="0.04">
-      <div class="about-img-wrap">
-        <div class="about-img-placeholder">
-          <div class="about-monogram">AA</div>
-          <div class="about-corner tl"></div>
-          <div class="about-corner br"></div>
+  <!-- Hero Section -->
+  <section class="hero container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="section-label">AI Engineer · Game Architect</div>
+        <h1 class="hero-title reveal-title">Areeb<br><span class="accent-text">Azhar</span></h1>
+        <p class="hero-subtitle reveal-title">Architecting intelligent systems and immersive digital experiences — from fuzzy logic to adaptive neural engines.</p>
+        <div class="hero-cta reveal-title">
+          <a class="btn-primary interactive" href="#projects">View Systems</a>
+          <a class="btn-ghost interactive" href="#contact">Let's Build</a>
         </div>
-        <div class="about-badge">Available Worldwide</div>
       </div>
-      <div class="about-text">
+      
+      <div class="hero-visual">
+        <div class="code-window cw-1 glass-panel">
+          <div class="code-header"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+          <span class="cm">// fuzzy_logic.py</span><br>
+          <span class="kw">def</span> <span class="fn">fuzzify</span>(x):<br>
+          &nbsp;&nbsp;<span class="kw">return</span> <span class="fn">sigmoid</span>(x * 0.4)
+        </div>
+        <div class="code-window cw-2 glass-panel">
+          <div class="code-header"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+          <span class="cm">// AdaptiveDifficulty.cs</span><br>
+          <span class="kw">public class</span> <span class="fn">NeuralEngine</span> {<br>
+          &nbsp;&nbsp;<span class="kw">private</span> <span class="fn">NeuralNet</span> brain;<br>
+          &nbsp;&nbsp;<span class="kw">void</span> <span class="fn">Update</span>() {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;float skillDelta = brain.<span class="fn">Predict</span>(metrics);<br>
+          &nbsp;&nbsp;}<br>
+          }
+        </div>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about container">
+    <div class="about-grid">
+      <div class="about-visual glass-panel">
+        <div class="about-holo">
+          <div class="holo-scanline"></div>
+          <div class="hologram-text">AA</div>
+        </div>
+      </div>
+      
+      <div class="about-content">
         <div class="section-label">About the Engineer</div>
-        <h2>Engineering <em>Logic,</em><br>Building Realities.</h2>
-        <p>Driven by an obsession with solving complex, high-dimensional problems — I operate at the intersection of artificial intelligence, full-stack engineering, and immersive game development.</p>
-        <p>From implementing Alpha-Beta Pruning algorithms that think three moves ahead, to designing adaptive neural networks that respond to player psychology in real-time — every system I build is engineered to be both mathematically rigorous and deeply human.</p>
-        <p>My stack spans ASP.NET MVC architectures, Unity C# pipelines, Python AI frameworks, and predictive fuzzy logic models — deployed into experiences that feel alive.</p>
-        <div class="stat-row">
-          <div class="stat">
-            <div class="stat-num">4<span>+</span></div>
+        <h2 class="reveal-title">Engineering <span class="accent-text">Logic,</span><br>Building Realities.</h2>
+        <p class="reveal-title">Driven by an obsession with solving complex, high-dimensional problems — I operate at the intersection of artificial intelligence, full-stack engineering, and immersive game development.</p>
+        <p class="reveal-title">From implementing Alpha-Beta Pruning algorithms that think three moves ahead, to designing adaptive neural networks that respond to player psychology in real-time — every system I build is engineered to be mathematically rigorous and deeply human.</p>
+        
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-num">4</div>
             <div class="stat-label">Years Engineering</div>
           </div>
-          <div class="stat">
-            <div class="stat-num">12<span>+</span></div>
+          <div class="stat-box">
+            <div class="stat-num">12</div>
             <div class="stat-label">Systems Built</div>
           </div>
-          <div class="stat">
-            <div class="stat-num">3<span>×</span></div>
+          <div class="stat-box">
+            <div class="stat-num">3</div>
             <div class="stat-label">AI Domains</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Projects -->
-<section id="projects">
-  <div class="container">
-    <div class="projects-header reveal" data-parallax="0.03">
+  <!-- Projects Section -->
+  <section id="projects" class="projects container">
+    <div class="projects-header">
       <div>
-        <div class="section-label">Work</div>
-        <h2>Systems &<br><em>Applications</em></h2>
+        <div class="section-label">Selected Work</div>
+        <h2 class="reveal-title">Systems & <span class="accent-text">Applications</span></h2>
       </div>
-      <div class="category-tabs">
-        <button class="tab active">All</button>
-        <button class="tab">Full-Stack</button>
-        <button class="tab">Game Dev</button>
-        <button class="tab">AI/ML</button>
+      <div class="project-filters">
+        <span class="pill interactive filter-btn active" data-target="0">All</span>
+        <span class="pill interactive filter-btn" data-target="1">Full-Stack</span>
+        <span class="pill interactive filter-btn" data-target="0">Game Dev</span>
+        <span class="pill interactive filter-btn" data-target="2">AI/ML</span>
+        <span class="pill interactive filter-btn" data-target="4">Design</span>
       </div>
     </div>
-    <div class="projects-grid reveal" data-parallax="0.02">
 
-      <!-- Card 1 — Featured -->
-      <div class="proj-card">
-        <div class="proj-visual" style="background: url('images/proj_puzzle_ai.png') center/cover;">
-          <div class="proj-glyph">AI</div>
-          <div class="proj-overlay"></div>
-          <div class="proj-visual-inner">
-            <div class="proj-icon">🧠</div>
-            <div class="proj-tech-tag">Unity · C# · Neural Networks</div>
+    <div class="gallery-wrapper">
+      <button class="gallery-btn prev-btn interactive" aria-label="Previous Project">
+        <svg viewBox="0 0 24 24" fill="none" class="arrow-svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="gallery-btn next-btn interactive" aria-label="Next Project">
+        <svg viewBox="0 0 24 24" fill="none" class="arrow-svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="gallery-viewport">
+        <div class="gallery-track">
+        <!-- Card 1 -->
+        <div class="project-card gallery-item glass-panel interactive">
+          <div class="project-visual">
+            <img src="images/proj_puzzle_ai.png" alt="Adaptive Difficulty Puzzle Engine">
+            <div class="project-overlay"></div>
+          </div>
+          <div class="project-arrow">↗</div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-num">01 // Featured</span>
+              <span class="project-tech">Unity · C# · Neural Net</span>
+            </div>
+            <h3 class="project-title">Adaptive Difficulty Engine</h3>
+            <p class="project-desc">Final-year Unity project. A neural network monitors real-time metrics and dynamically recalibrates puzzle complexity mid-session.</p>
           </div>
         </div>
-        <div class="proj-arrow">↗</div>
-        <div class="proj-body">
-          <div class="proj-num">01 — Featured</div>
-          <div class="proj-title">Adaptive Difficulty Puzzle Engine</div>
-          <div class="proj-desc">Final-year Unity project. A neural network monitors 14 real-time player metrics and dynamically recalibrates puzzle complexity mid-session — no two playthroughs are the same.</div>
-        </div>
-      </div>
 
-      <!-- Card 2 -->
-      <div class="proj-card">
-        <div class="proj-visual" style="background: url('images/proj_dashboard.png') center/cover;">
-          <div class="proj-glyph">MVC</div>
-          <div class="proj-overlay"></div>
-          <div class="proj-visual-inner">
-            <div class="proj-icon">⚡</div>
-            <div class="proj-tech-tag">ASP.NET · SQL · MVC</div>
+        <!-- Card 2 -->
+        <div class="project-card gallery-item glass-panel interactive">
+          <div class="project-visual">
+            <img src="images/proj_dashboard.png" alt="Dynamic Dashboard">
+            <div class="project-overlay"></div>
+          </div>
+          <div class="project-arrow">↗</div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-num">02 // Full-Stack</span>
+              <span class="project-tech">ASP.NET · SQL · MVC</span>
+            </div>
+            <h3 class="project-title">Dynamic Dashboard</h3>
+            <p class="project-desc">Enterprise-grade ASP.NET MVC web application with real-time data visualisation, role-based access, and predictive analytics.</p>
           </div>
         </div>
-        <div class="proj-arrow">↗</div>
-        <div class="proj-body">
-          <div class="proj-num">02 — Full-Stack</div>
-          <div class="proj-title">Dynamic Dashboard Platform</div>
-          <div class="proj-desc">Enterprise-grade ASP.NET MVC web application with real-time data visualisation, role-based access, and predictive analytics modules.</div>
-        </div>
-      </div>
 
-      <!-- Card 3 -->
-      <div class="proj-card">
-        <div class="proj-visual" style="background: url('images/proj_alphabeta.png') center/cover;">
-          <div class="proj-glyph">αβ</div>
-          <div class="proj-overlay"></div>
-          <div class="proj-visual-inner">
-            <div class="proj-icon">♟</div>
-            <div class="proj-tech-tag">Python · Alpha-Beta Pruning</div>
+        <!-- Card 3 -->
+        <div class="project-card gallery-item glass-panel interactive">
+          <div class="project-visual">
+            <img src="images/proj_alphabeta.png" alt="Alpha-Beta Search Agent">
+            <div class="project-overlay"></div>
+          </div>
+          <div class="project-arrow">↗</div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-num">03 // AI/ML</span>
+              <span class="project-tech">Python · Pruning</span>
+            </div>
+            <h3 class="project-title">Alpha-Beta Search Agent</h3>
+            <p class="project-desc">Game-playing AI leveraging Alpha-Beta Pruning to achieve elite complexity and outwit human opponents in adversarial environments.</p>
           </div>
         </div>
-        <div class="proj-arrow">↗</div>
-        <div class="proj-body">
-          <div class="proj-num">03 — AI/ML</div>
-          <div class="proj-title">Alpha-Beta Search Agent</div>
-          <div class="proj-desc">Game-playing AI leveraging Alpha-Beta Pruning to achieve O(b^d/2) complexity — outwitting human opponents in adversarial environments.</div>
-        </div>
-      </div>
 
-      <!-- Card 4 -->
-      <div class="proj-card">
-        <div class="proj-visual" style="background: url('images/proj_fuzzy.png') center/cover;">
-          <div class="proj-glyph">∿</div>
-          <div class="proj-overlay"></div>
-          <div class="proj-visual-inner">
-            <div class="proj-icon">〰️</div>
-            <div class="proj-tech-tag">Python · Fuzzy Logic</div>
+        <!-- Card 4 -->
+        <div class="project-card gallery-item glass-panel interactive">
+          <div class="project-visual">
+            <img src="images/proj_fuzzy.png" alt="Fuzzy Logic Controller">
+            <div class="project-overlay"></div>
+          </div>
+          <div class="project-arrow">↗</div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-num">04 // AI/ML</span>
+              <span class="project-tech">Python · Fuzzy Logic</span>
+            </div>
+            <h3 class="project-title">Fuzzy Logic Controller</h3>
+            <p class="project-desc">Membership-function–based inference engine for handling real-world uncertainty in predictive classification tasks.</p>
           </div>
         </div>
-        <div class="proj-arrow">↗</div>
-        <div class="proj-body">
-          <div class="proj-num">04 — AI/ML</div>
-          <div class="proj-title">Fuzzy Logic Controller</div>
-          <div class="proj-desc">Membership-function–based inference engine for handling real-world uncertainty in predictive classification tasks.</div>
-        </div>
-      </div>
 
-      <!-- Card 5 -->
-      <div class="proj-card" onclick="window.open('https://areeb-azhar.github.io/online-web-store-design/', '_blank')">
-        <div class="proj-visual" style="background: url('images/shopify_landing_pdf.jpg') top center/cover;">
-          <div class="proj-glyph">UI</div>
-          <div class="proj-overlay"></div>
-          <div class="proj-visual-inner">
-            <div class="proj-icon">🛍️</div>
-            <div class="proj-tech-tag">Shopify · UX · UI Design</div>
+        <!-- Card 5 -->
+        <a class="project-card gallery-item glass-panel interactive" href="https://areeb-azhar.github.io/online-web-store-design/" target="_blank" style="text-decoration: none; color: inherit;">
+          <div class="project-visual">
+            <img src="images/shopify_landing_pdf.jpg" alt="Amazing Giant Flowers">
+            <div class="project-overlay"></div>
           </div>
-        </div>
-        <div class="proj-arrow">↗</div>
-        <div class="proj-body">
-          <div class="proj-num">05 — Design</div>
-          <div class="proj-title">Amazing Giant Flowers</div>
-          <div class="proj-desc">Shopify ecommerce platform for handcrafted giant flower arrangements and modular backdrops. Designed for an intuitive, premium shopping experience.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- Spotlight -->
-<section id="spotlight">
-  <div class="spotlight-bg"></div>
-  <div class="container">
-    <div class="spotlight-inner reveal" data-parallax="0.05">
-      <div class="section-label" style="justify-content:center;">Spotlight</div>
-      <h2>
-        <span>Algorithmic</span><br>
-        <span class="line2">Marvels.</span>
-      </h2>
-      <div class="spotlight-meta">
-        The final-year Unity project represents a convergence point — where neural network inference meets real-time game loop architecture. A system that learns, adapts, and responds with sub-16ms latency to ensure the player is always at the edge of their ability.
-      </div>
-      <div class="tech-stack">
-        <span class="tech-chip">C#</span>
-        <span class="tech-chip">Unity 2022</span>
-        <span class="tech-chip">Neural Networks</span>
-        <span class="tech-chip">Adaptive AI</span>
-        <span class="tech-chip">Game Loop Arch.</span>
-        <span class="tech-chip">Player Analytics</span>
-      </div>
-      <div class="spotlight-divider"></div>
-      <div class="spotlight-quote">
-        "Intelligence is not about having all the answers — it's about building systems that <em>find them in real time.</em>"
+          <div class="project-arrow">↗</div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="project-num">05 // Design</span>
+              <span class="project-tech">Shopify · UX · UI Design</span>
+            </div>
+            <h3 class="project-title">Amazing Giant Flowers</h3>
+            <p class="project-desc">Shopify ecommerce platform for handcrafted giant flower arrangements. Designed for an intuitive, premium shopping experience.</p>
+          </div>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section id="cta">
-  <div class="cta-glow"></div>
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label" style="justify-content:center;">Contact</div>
-      <h2>Let's Build<br>the Next <span class="accent">Innovation.</span></h2>
-      <p>Have a system to architect, a game to engineer, or an AI problem to crack?</p>
-      <div class="cta-buttons">
-        <a class="btn-primary" href="mailto:areebazhar3@gmail.com">areebazhar3@gmail.com ↗</a>
-        <a class="btn-ghost" href="https://github.com/AREEB-AZHAR" target="_blank">GitHub</a>
-        </div>
+  <!-- Spotlight Section -->
+  <section class="spotlight container">
+    <div class="section-label" style="justify-content: center;">Spotlight</div>
+    <h2 class="spotlight-title reveal-title">Algorithmic<br><span class="accent-text">Marvels.</span></h2>
+    <p class="spotlight-desc reveal-title">
+      Where neural network inference meets real-time game loop architecture. A system that learns, adapts, and responds with sub-16ms latency to ensure the player is always at the edge of their ability.
+    </p>
+    <div class="tech-pills reveal-title">
+      <span class="pill interactive">C#</span>
+      <span class="pill interactive">Unity 2022</span>
+      <span class="pill interactive">TensorFlow</span>
+      <span class="pill interactive">Adaptive AI</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-copy">© 2025 Areeb Azhar — All Systems Go.</div>
+  <!-- Footer CTA -->
+  <footer id="contact" class="footer container">
+    <div class="footer-cta">
+      <div class="section-label" style="justify-content: center;">Contact</div>
+      <h2 class="reveal-title">Let's Build the<br><span class="accent-text">Next Innovation.</span></h2>
+      <a class="btn-primary interactive" style="font-size: 1rem; padding: 1.2rem 3rem; margin-top: 1rem;" href="mailto:areebazhar3@gmail.com">areebazhar3@gmail.com ↗</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Areeb Azhar — All Systems Go.</span>
       <div class="footer-links">
-        <a href="https://github.com/AREEB-AZHAR" target="_blank">GitHub</a>
-        <a href="mailto:areebazhar3@gmail.com">Email</a>
+        <a class="interactive" href="https://github.com/AREEB-AZHAR" target="_blank">GitHub</a>
+        <a class="interactive" href="mailto:areebazhar3@gmail.com">Email</a>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-// ═══════════════════════════════════════════
-//  AREEB AZHAR PORTFOLIO — INTERACTIVE LAYER
-// ═══════════════════════════════════════════
-
-// ── LOADER ──
-(function() {
-  var loader = document.getElementById('loader');
-  function hideLoader() {
-    loader.classList.add('hidden');
-    setTimeout(function(){ loader.style.display='none'; }, 700);
-  }
-  setTimeout(hideLoader, 2200);
-})();
-
-// ── CUSTOM CURSOR ──
-(function(){
-  const dot  = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  if(!dot || !ring) return;
-  let mx=window.innerWidth/2, my=window.innerHeight/2;
-  let rx=mx, ry=my;
-  let hovering = false;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx+'px'; dot.style.top = my+'px';
-    dot.style.opacity = '1'; ring.style.opacity = '1';
-  });
-
-  // Magnetic effect on interactive elements
-  document.querySelectorAll('a, button, .proj-card, .tab').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      hovering = true;
-      dot.style.width = '18px'; dot.style.height = '18px';
-      dot.style.background = 'var(--accent2)';
-      ring.style.width = '54px'; ring.style.height = '54px';
-      ring.style.borderColor = 'rgba(91,138,255,.5)';
-    });
-    el.addEventListener('mouseleave', () => {
-      hovering = false;
-      dot.style.width = '10px'; dot.style.height = '10px';
-      dot.style.background = 'var(--accent)';
-      ring.style.width = '36px'; ring.style.height = '36px';
-      ring.style.borderColor = 'rgba(125,249,194,.4)';
-    });
-  });
-
-  function animRing(){
-    rx += (mx - rx) * 0.10;
-    ry += (my - ry) * 0.10;
-    ring.style.left = rx+'px';
-    ring.style.top  = ry+'px';
-    requestAnimationFrame(animRing);
-  }
-  animRing();
-  document.body.style.cursor = 'none';
-})();
-
-// ── NEURAL / CONSTELLATION CANVAS ──
-(function(){
-  const canvas = document.getElementById('neural-canvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H;
-  const N    = 110;
-  const LINK = 160;           // base link distance
-  const MOUSE_RADIUS  = 180;  // attract radius
-  const RIPPLE_RADIUS = 220;  // link-boost radius around cursor
-  const COLOR = '125,249,194';
-  const COLOR2 = '91,138,255'; // blue tint for cursor-near nodes
-
-  let nodes  = [];
-  let mouseX = -9999, mouseY = -9999;
-  let prevMouseX = -9999, prevMouseY = -9999;
-  let mouseVX = 0, mouseVY = 0; // cursor velocity
-  let mouseActive = false;      // has the user moved the mouse?
-
-  function resize(){
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Spawn nodes
-  for(let i = 0; i < N; i++){
-    nodes.push({
-      x:     Math.random() * window.innerWidth,
-      y:     Math.random() * window.innerHeight,
-      vx:    (Math.random() - .5) * .35,
-      vy:    (Math.random() - .5) * .35,
-      r:     Math.random() * 1.6 + .5,
-      pulse: Math.random() * Math.PI * 2,
-      lit:   0   // 0–1 "lit up" factor near cursor
-    });
-  }
-
-  // Track cursor with velocity
-  document.addEventListener('mousemove', e => {
-    mouseVX   = e.clientX - mouseX;
-    mouseVY   = e.clientY - mouseY;
-    mouseX    = e.clientX;
-    mouseY    = e.clientY;
-    mouseActive = true;
-  });
-
-  // On click — send a shockwave outward
-  let shockwaves = [];
-  document.addEventListener('click', e => {
-    shockwaves.push({ x: e.clientX, y: e.clientY, r: 0, max: 260, alpha: .6 });
-  });
-
-  function draw(){
-    ctx.clearRect(0, 0, W, H);
-
-    // ── Cursor aura ──
-    if(mouseActive){
-      const aura = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, MOUSE_RADIUS * 1.2);
-      aura.addColorStop(0,   'rgba(125,249,194,.045)');
-      aura.addColorStop(.5,  'rgba(91,138,255,.02)');
-      aura.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.beginPath();
-      ctx.arc(mouseX, mouseY, MOUSE_RADIUS * 1.2, 0, Math.PI * 2);
-      ctx.fillStyle = aura;
-      ctx.fill();
-    }
-
-    // ── Shockwaves ──
-    shockwaves = shockwaves.filter(s => s.r < s.max);
-    shockwaves.forEach(s => {
-      s.r  += 6;
-      s.alpha *= .93;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(125,249,194,${s.alpha * .4})`;
-      ctx.lineWidth   = 1.5;
-      ctx.stroke();
-    });
-
-    // ── Update nodes ──
-    nodes.forEach(n => {
-      n.x    += n.vx;
-      n.y    += n.vy;
-      n.pulse += .018;
-
-      // Bounce walls
-      if(n.x < 0 || n.x > W) n.vx *= -1;
-      if(n.y < 0 || n.y > H) n.vy *= -1;
-
-      const dx   = n.x - mouseX;
-      const dy   = n.y - mouseY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if(mouseActive && dist < MOUSE_RADIUS && dist > 0){
-        // Repel from cursor + inherit some cursor velocity
-        const force = (1 - dist / MOUSE_RADIUS) * .055;
-        n.vx += (dx / dist) * force + mouseVX * .004;
-        n.vy += (dy / dist) * force + mouseVY * .004;
-      }
-
-      // Shockwave push
-      shockwaves.forEach(s => {
-        const sx = n.x - s.x, sy = n.y - s.y;
-        const sd = Math.sqrt(sx*sx + sy*sy);
-        if(Math.abs(sd - s.r) < 30 && sd > 0){
-          const push = (1 - Math.abs(sd - s.r) / 30) * .8;
-          n.vx += (sx / sd) * push;
-          n.vy += (sy / sd) * push;
-        }
-      });
-
-      // Speed cap — faster near cursor
-      const maxSpd = dist < MOUSE_RADIUS ? 2.2 : .85;
-      const spd    = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
-      if(spd > maxSpd){ n.vx = (n.vx / spd) * maxSpd; n.vy = (n.vy / spd) * maxSpd; }
-
-      // Lit factor — nodes glow brighter near cursor
-      const targetLit = mouseActive ? Math.max(0, 1 - dist / MOUSE_RADIUS) : 0;
-      n.lit += (targetLit - n.lit) * .08;
-    });
-
-    // ── Draw links ──
-    for(let i = 0; i < nodes.length; i++){
-      for(let j = i + 1; j < nodes.length; j++){
-        const dx = nodes[i].x - nodes[j].x;
-        const dy = nodes[i].y - nodes[j].y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-
-        // Links near cursor get boosted distance + brightness
-        const iNearMouse = nodes[i].lit > .1 || nodes[j].lit > .1;
-        const linkDist   = iNearMouse ? LINK * 1.6 : LINK;
-
-        if(d < linkDist){
-          const base  = (1 - d / linkDist);
-          const boost = (nodes[i].lit + nodes[j].lit) * .5;
-          const alpha = base * (.18 + boost * .55);
-
-          // Blend color toward blue when near cursor
-          if(boost > .15){
-            // Draw a brighter, slightly blue-tinted line
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(${COLOR2},${alpha * .6})`;
-            ctx.lineWidth   = .6 + boost * 1.2;
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(${COLOR},${alpha})`;
-          ctx.lineWidth   = .6 + boost * .8;
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    // ── Draw nodes ──
-    nodes.forEach(n => {
-      const r       = n.r + Math.sin(n.pulse) * .5;
-      const litBoost = n.lit;
-
-      // Outer glow — expands near cursor
-      const glowR = r * (4 + litBoost * 8);
-      const grad  = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, glowR);
-      grad.addColorStop(0, `rgba(${COLOR},${.25 + litBoost * .5})`);
-      grad.addColorStop(.4, `rgba(${COLOR2},${litBoost * .2})`);
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
-
-      // Core dot — brighter when lit
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, r * (1 + litBoost * .6), 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${COLOR},${.55 + litBoost * .45})`;
-      ctx.fill();
-    });
-
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-// ── PARALLAX & REVEAL (declared before smooth scroll so loop() can call them) ──
-var parallaxItems = [];
-function initParallax(){
-  document.querySelectorAll('.code-card').forEach(function(el, i){
-    parallaxItems.push({ el: el, speed: [0.06, 0.10, 0.08][i] || 0.07, type:'card' });
-  });
-  document.querySelectorAll('#about .about-img-wrap, #spotlight h2').forEach(function(el){
-    parallaxItems.push({ el: el, speed: 0.04, type:'section' });
-  });
-}
-function parallaxTick(scrollY){
-  parallaxItems.forEach(function(item){
-    var offset = scrollY * item.speed;
-    item.el.style.transform = item.type === 'card'
-      ? 'translateY(' + offset + 'px)'
-      : 'translateY(' + (offset * 0.5) + 'px)';
-  });
-}
-
-var revealEls = [];
-function initReveal(){
-  document.querySelectorAll('.reveal').forEach(function(el){
-    el.style.opacity    = '0';
-    el.style.transform  = 'translateY(48px)';
-    el.style.transition = 'opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1)';
-    revealEls.push({ el: el, done: false });
-  });
-}
-function revealTick(scrollY){
-  var vh = window.innerHeight;
-  revealEls.forEach(function(item){
-    if(item.done) return;
-    var rect = item.el.getBoundingClientRect();
-    if(rect.top < vh * 0.88){
-      item.el.style.opacity   = '1';
-      item.el.style.transform = 'translateY(0)';
-      item.done = true;
-    }
-  });
-}
-
-
-
-
-
-// ── MAGNETIC MENU BUTTON ──
-(function(){
-  const btn = document.querySelector('.nav-menu');
-  if(!btn) return;
-  btn.addEventListener('mousemove', e => {
-    const r   = btn.getBoundingClientRect();
-    const cx  = r.left + r.width  / 2;
-    const cy  = r.top  + r.height / 2;
-    const dx  = (e.clientX - cx) * .35;
-    const dy  = (e.clientY - cy) * .35;
-    btn.style.transform = `translate(${dx}px, ${dy}px)`;
-  });
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = 'translate(0,0)';
-    btn.style.transition = 'transform .4s cubic-bezier(.23,1,.32,1)';
-  });
-  btn.addEventListener('mouseenter', () => { btn.style.transition = 'transform .1s'; });
-
-  // Mobile menu toggle — show nav links
-  btn.addEventListener('click', () => {
-    const isOpen = btn.dataset.open === '1';
-    btn.dataset.open = isOpen ? '0' : '1';
-    btn.textContent  = isOpen ? 'Menu ·' : 'Close ×';
-  });
-})();
-
-// ── NAV SCROLL STYLE ──
-(function(){
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if(window.scrollY > 60){
-      nav.style.background = 'rgba(6,6,8,.97)';
-      nav.style.borderBottom = '1px solid rgba(125,249,194,.08)';
-    } else {
-      nav.style.background = '';
-      nav.style.borderBottom = '';
-    }
-  });
-})();
-
-// ── NAV IDEA HANDLER ──
-function handleIdea(){
-  const input = document.querySelector('.nav-idea input');
-  if(input && input.value.trim()){
-    alert('Idea received: ' + input.value + ' — Areeb will get back to you!');
-    input.value = '';
-  } else if(input){
-    input.focus();
-    input.placeholder = 'Type your idea first ↑';
-    setTimeout(() => { input.placeholder = 'Got an idea for a web app or AI model?'; }, 2000);
-  }
-}
-const ideaInput = document.querySelector('.nav-idea input');
-if(ideaInput) ideaInput.addEventListener('keydown', e => { if(e.key==='Enter') handleIdea(); });
-const sendBtn = document.querySelector('.nav-idea button');
-if(sendBtn) sendBtn.addEventListener('click', handleIdea);
-
-// ── PROJECT CATEGORY FILTER ──
-(function(){
-  const cats  = ['game','fullstack','ai','ai','fullstack'];
-  const grid  = document.querySelector('.projects-grid');
-  const cards = Array.from(document.querySelectorAll('.proj-card'));
-  cards.forEach((c,i) => { c.dataset.cat = cats[i] || 'all'; });
-
-  function applyFilter(f){
-    const matched   = cards.filter(c => {
-      const cat = c.dataset.cat;
-      return f==='all'
-        || (f==='full-stack' && cat==='fullstack')
-        || (f==='game dev'   && cat==='game')
-        || (f==='ai/ml'      && cat==='ai');
-    });
-    const unmatched = cards.filter(c => !matched.includes(c));
-
-    // Re-order DOM: matched first, then unmatched
-    [...matched, ...unmatched].forEach(c => grid.appendChild(c));
-
-    // Style: matched full, unmatched dimmed + pushed back
-    matched.forEach(c => {
-      c.style.transition   = 'opacity .4s ease, transform .4s ease';
-      c.style.opacity      = '1';
-      c.style.transform    = '';
-      c.style.pointerEvents = 'auto';
-      // First matched card gets the wide span on desktop
-      c.style.gridColumn   = '';
-    });
-    unmatched.forEach(c => {
-      c.style.transition   = 'opacity .4s ease, transform .4s ease';
-      c.style.opacity      = '0.13';
-      c.style.transform    = 'scale(0.96) translateY(8px)';
-      c.style.pointerEvents = 'none';
-      c.style.gridColumn   = '';
-    });
-
-    // Re-apply wide span to first matched card (if any)
-    if(matched.length > 0 && window.innerWidth > 900){
-      matched[0].style.gridColumn = 'span 2';
-    }
-  }
-
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      applyFilter(tab.textContent.trim().toLowerCase());
-    });
-  });
-
-  // Init with 'all'
-  applyFilter('all');
-})();
-
-// ── SMOOTH ANCHOR SCROLL ──
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if(target) target.scrollIntoView({ behavior:'smooth' });
-  });
-});
-
-// ── INIT + NATIVE SCROLL LOOP ──
-function init(){
-  initParallax();
-  initReveal();
-  revealTick(window.scrollY);
-
-  // Drive parallax + reveal off native scroll via rAF
-  var lastScroll = -1;
-  function tick(){
-    var sy = window.scrollY;
-    if(sy !== lastScroll){
-      parallaxTick(sy);
-      revealTick(sy);
-      lastScroll = sy;
-    }
-    requestAnimationFrame(tick);
-  }
-  tick();
-}
-
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
-</script>
+  <script type="module" src="./main.js"></script>
 </body>
+</html>
