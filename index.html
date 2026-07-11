@@ -1,260 +1,324 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Areeb Azhar — Pro Max AI & Software Architect</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Areeb Azhar is a software engineering student building full-stack, mobile, AI, blockchain, and game-development projects.">
+  <meta name="theme-color" content="#f1efe8">
+  <meta property="og:title" content="Areeb Azhar — Software Engineer">
+  <meta property="og:description" content="Selected software engineering work across full-stack, mobile, AI, blockchain, and Unity.">
+  <meta property="og:type" content="website">
+  <title>Areeb Azhar — Software Engineer</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
 
-  <!-- Custom Cursor -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
+  <header class="site-header">
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <a class="brand" href="#top" aria-label="Areeb Azhar, home">
+      <span class="brand-mark">AA</span>
+      <span class="brand-copy"><strong>Areeb Azhar</strong><small>Software Engineering</small></span>
+    </a>
 
-  <!-- Ambient Fluid Effects -->
-  <div class="ambient-glow"></div>
-  <canvas id="neural-canvas"></canvas>
-
-  <!-- Navigation -->
-  <div class="nav-wrap">
-    <nav class="nav-glass" style="position: relative;">
-      <a class="nav-logo interactive" href="#"><span>&lt;</span>AA<span>/&gt;</span></a>
-      <div class="nav-idea">
-        <input class="nav-input interactive" type="text" placeholder="Idea for a Web App or AI?" />
-        <button class="btn-primary interactive">Send →</button>
-      </div>
-      <button class="btn-ghost interactive" id="menu-toggle">Menu</button>
-      
-      <!-- Dropdown Menu -->
-      <div class="dropdown-menu glass-panel" id="mobile-menu">
-        <a class="interactive dropdown-link" href="#">Home</a>
-        <a class="interactive dropdown-link" href="#about">About</a>
-        <a class="interactive dropdown-link" href="#projects">Projects</a>
-        <a class="interactive dropdown-link" href="#contact">Contact</a>
-      </div>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#toolkit">Toolkit</a>
     </nav>
-  </div>
 
-  <!-- Hero Section -->
-  <section class="hero container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <div class="section-label">AI Engineer · Game Architect</div>
-        <h1 class="hero-title reveal-title">Areeb<br><span class="accent-text">Azhar</span></h1>
-        <p class="hero-subtitle reveal-title">Architecting intelligent systems and immersive digital experiences — from fuzzy logic to adaptive neural engines.</p>
-        <div class="hero-cta reveal-title">
-          <a class="btn-primary interactive" href="#projects">View Systems</a>
-          <a class="btn-ghost interactive" href="#contact">Let's Build</a>
-        </div>
-      </div>
-      
-      <div class="hero-visual">
-        <div class="code-window cw-1 glass-panel">
-          <div class="code-header"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-          <span class="cm">// fuzzy_logic.py</span><br>
-          <span class="kw">def</span> <span class="fn">fuzzify</span>(x):<br>
-          &nbsp;&nbsp;<span class="kw">return</span> <span class="fn">sigmoid</span>(x * 0.4)
-        </div>
-        <div class="code-window cw-2 glass-panel">
-          <div class="code-header"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-          <span class="cm">// AdaptiveDifficulty.cs</span><br>
-          <span class="kw">public class</span> <span class="fn">NeuralEngine</span> {<br>
-          &nbsp;&nbsp;<span class="kw">private</span> <span class="fn">NeuralNet</span> brain;<br>
-          &nbsp;&nbsp;<span class="kw">void</span> <span class="fn">Update</span>() {<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;float skillDelta = brain.<span class="fn">Predict</span>(metrics);<br>
-          &nbsp;&nbsp;}<br>
-          }
-        </div>
-      </div>
-    </div>
-    
-    <div class="scroll-indicator">
-      <span class="scroll-text">Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="about container">
-    <div class="about-grid">
-      <div class="about-visual glass-panel">
-        <div class="about-holo">
-          <div class="holo-scanline"></div>
-          <div class="hologram-text">AA</div>
-        </div>
-      </div>
-      
-      <div class="about-content">
-        <div class="section-label">About the Engineer</div>
-        <h2 class="reveal-title">Engineering <span class="accent-text">Logic,</span><br>Building Realities.</h2>
-        <p class="reveal-title">Driven by an obsession with solving complex, high-dimensional problems — I operate at the intersection of artificial intelligence, full-stack engineering, and immersive game development.</p>
-        <p class="reveal-title">From implementing Alpha-Beta Pruning algorithms that think three moves ahead, to designing adaptive neural networks that respond to player psychology in real-time — every system I build is engineered to be mathematically rigorous and deeply human.</p>
-        
-        <div class="stats-row">
-          <div class="stat-box">
-            <div class="stat-num">4</div>
-            <div class="stat-label">Years Engineering</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num">12</div>
-            <div class="stat-label">Systems Built</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num">3</div>
-            <div class="stat-label">AI Domains</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="projects container">
-    <div class="projects-header">
-      <div>
-        <div class="section-label">Selected Work</div>
-        <h2 class="reveal-title">Systems & <span class="accent-text">Applications</span></h2>
-      </div>
-      <div class="project-filters">
-        <span class="pill interactive filter-btn active" data-target="0">All</span>
-        <span class="pill interactive filter-btn" data-target="1">Full-Stack</span>
-        <span class="pill interactive filter-btn" data-target="0">Game Dev</span>
-        <span class="pill interactive filter-btn" data-target="2">AI/ML</span>
-        <span class="pill interactive filter-btn" data-target="4">Design</span>
-      </div>
+    <div class="header-actions">
+      <a class="availability" href="#contact"><span></span> Open to opportunities</a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav">Menu</button>
     </div>
 
-    <div class="gallery-wrapper">
-      <button class="gallery-btn prev-btn interactive" aria-label="Previous Project">
-        <svg viewBox="0 0 24 24" fill="none" class="arrow-svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="gallery-btn next-btn interactive" aria-label="Next Project">
-        <svg viewBox="0 0 24 24" fill="none" class="arrow-svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-      <div class="gallery-viewport">
-        <div class="gallery-track">
-        <!-- Card 1 -->
-        <div class="project-card gallery-item glass-panel interactive">
-          <div class="project-visual">
-            <img src="images/proj_puzzle_ai.png" alt="Adaptive Difficulty Puzzle Engine">
-            <div class="project-overlay"></div>
+  <aside class="section-hud" aria-hidden="true">
+    <span class="section-hud-number">01</span>
+    <span class="section-hud-copy"><small>Now viewing</small><strong>Introduction</strong></span>
+  </aside>
+
+  <main id="main" class="flip-stage">
+    <section class="hero flip-section" id="top" data-section-number="01" data-section-label="Introduction">
+      <div class="section-flip-content">
+      <div class="hero-kicker reveal">
+        <span>BS Software Engineering</span>
+        <span>03 years of building</span>
+        <span>Karachi, Pakistan</span>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">Student engineer · product-minded builder</p>
+          <h1 class="reveal" aria-label="I turn ideas into working software, useful products, clear interfaces, and intelligent systems.">I turn ideas into <em class="dynamic-copy" data-rotate="working software.|useful products.|clear interfaces.|intelligent systems." aria-hidden="true"><span>working software.</span></em></h1>
+          <p class="hero-lede reveal">I’m Areeb Azhar, a software engineering student building across full-stack web, mobile, AI, blockchain, and interactive systems. I care about clear architecture, useful interfaces, and shipping the complete experience.</p>
+          <div class="hero-actions reveal">
+            <a class="button button-dark" href="#work">Explore my work <span>↘</span></a>
+            <a class="text-link" href="mailto:areebazhar3@gmail.com">areebazhar3@gmail.com <span>↗</span></a>
           </div>
-          <div class="project-arrow">↗</div>
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-num">01 // Featured</span>
-              <span class="project-tech">Unity · C# · Neural Net</span>
+        </div>
+
+        <aside class="hero-card reveal" aria-label="Portfolio summary">
+          <div class="profile-row">
+            <img src="https://avatars.githubusercontent.com/u/222596911?v=4" alt="Areeb Azhar" width="96" height="96">
+            <div>
+              <span class="status"><i></i> Available</span>
+              <h2>Areeb Azhar</h2>
+              <p>Software engineering student</p>
             </div>
-            <h3 class="project-title">Adaptive Difficulty Engine</h3>
-            <p class="project-desc">Final-year Unity project. A neural network monitors real-time metrics and dynamically recalibrates puzzle complexity mid-session.</p>
           </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="project-card gallery-item glass-panel interactive">
-          <div class="project-visual">
-            <img src="images/proj_dashboard.png" alt="Dynamic Dashboard">
-            <div class="project-overlay"></div>
+          <div class="hero-stats">
+            <div><strong>16</strong><span>documented builds</span></div>
+            <div><strong>06</strong><span>technical domains</span></div>
+            <div><strong>03</strong><span>years of study</span></div>
           </div>
-          <div class="project-arrow">↗</div>
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-num">02 // Full-Stack</span>
-              <span class="project-tech">ASP.NET · SQL · MVC</span>
-            </div>
-            <h3 class="project-title">Dynamic Dashboard</h3>
-            <p class="project-desc">Enterprise-grade ASP.NET MVC web application with real-time data visualisation, role-based access, and predictive analytics.</p>
+          <div class="currently">
+            <span>Currently exploring</span>
+            <strong class="dynamic-copy dynamic-copy-small" data-rotate="Adaptive systems · Blockchain · Product engineering|Accessible game design · Unity · C#|Realtime data · React · Product UI|Trust systems · Privacy · Verification"><span>Adaptive systems · Blockchain · Product engineering</span></strong>
           </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="project-card gallery-item glass-panel interactive">
-          <div class="project-visual">
-            <img src="images/proj_alphabeta.png" alt="Alpha-Beta Search Agent">
-            <div class="project-overlay"></div>
-          </div>
-          <div class="project-arrow">↗</div>
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-num">03 // AI/ML</span>
-              <span class="project-tech">Python · Pruning</span>
-            </div>
-            <h3 class="project-title">Alpha-Beta Search Agent</h3>
-            <p class="project-desc">Game-playing AI leveraging Alpha-Beta Pruning to achieve elite complexity and outwit human opponents in adversarial environments.</p>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="project-card gallery-item glass-panel interactive">
-          <div class="project-visual">
-            <img src="images/proj_fuzzy.png" alt="Fuzzy Logic Controller">
-            <div class="project-overlay"></div>
-          </div>
-          <div class="project-arrow">↗</div>
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-num">04 // AI/ML</span>
-              <span class="project-tech">Python · Fuzzy Logic</span>
-            </div>
-            <h3 class="project-title">Fuzzy Logic Controller</h3>
-            <p class="project-desc">Membership-function–based inference engine for handling real-world uncertainty in predictive classification tasks.</p>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <a class="project-card gallery-item glass-panel interactive" href="https://areeb-azhar.github.io/online-web-store-design/" target="_blank" style="text-decoration: none; color: inherit;">
-          <div class="project-visual">
-            <img src="images/shopify_landing_pdf.jpg" alt="Amazing Giant Flowers">
-            <div class="project-overlay"></div>
-          </div>
-          <div class="project-arrow">↗</div>
-          <div class="project-body">
-            <div class="project-meta">
-              <span class="project-num">05 // Design</span>
-              <span class="project-tech">Shopify · UX · UI Design</span>
-            </div>
-            <h3 class="project-title">Amazing Giant Flowers</h3>
-            <p class="project-desc">Shopify ecommerce platform for handcrafted giant flower arrangements. Designed for an intuitive, premium shopping experience.</p>
-          </div>
-        </a>
+        </aside>
       </div>
-    </div>
-  </div>
-</section>
 
-  <!-- Spotlight Section -->
-  <section class="spotlight container">
-    <div class="section-label" style="justify-content: center;">Spotlight</div>
-    <h2 class="spotlight-title reveal-title">Algorithmic<br><span class="accent-text">Marvels.</span></h2>
-    <p class="spotlight-desc reveal-title">
-      Where neural network inference meets real-time game loop architecture. A system that learns, adapts, and responds with sub-16ms latency to ensure the player is always at the edge of their ability.
-    </p>
-    <div class="tech-pills reveal-title">
-      <span class="pill interactive">C#</span>
-      <span class="pill interactive">Unity 2022</span>
-      <span class="pill interactive">TensorFlow</span>
-      <span class="pill interactive">Adaptive AI</span>
-    </div>
-  </section>
-
-  <!-- Footer CTA -->
-  <footer id="contact" class="footer container">
-    <div class="footer-cta">
-      <div class="section-label" style="justify-content: center;">Contact</div>
-      <h2 class="reveal-title">Let's Build the<br><span class="accent-text">Next Innovation.</span></h2>
-      <a class="btn-primary interactive" style="font-size: 1rem; padding: 1.2rem 3rem; margin-top: 1rem;" href="mailto:areebazhar3@gmail.com">areebazhar3@gmail.com ↗</a>
-    </div>
-
-    <div class="footer-bottom">
-      <span>© 2026 Areeb Azhar — All Systems Go.</span>
-      <div class="footer-links">
-        <a class="interactive" href="https://github.com/AREEB-AZHAR" target="_blank">GitHub</a>
-        <a class="interactive" href="mailto:areebazhar3@gmail.com">Email</a>
+      <div class="hero-marquee" aria-label="Core technologies">
+        <div>
+          <span>React</span><i>✳</i><span>Flutter</span><i>✳</i><span>Unity</span><i>✳</i><span>Python</span><i>✳</i><span>Java</span><i>✳</i><span>Hyperledger Fabric</span><i>✳</i><span>Shopify</span><i>✳</i>
+        </div>
       </div>
+      </div>
+    </section>
+
+    <section class="work section flip-section" id="work" data-section-number="02" data-section-label="Selected work">
+      <div class="section-flip-content">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow">Selected work · 2024—2026</p>
+          <h2>Projects with <em>something to prove.</em></h2>
+        </div>
+        <p>Each featured project represents a different engineering challenge—from distributed trust to adaptive gameplay and real-time market data.</p>
+      </div>
+
+      <div class="filters reveal" role="group" aria-label="Filter projects">
+        <button class="filter active" type="button" data-filter="all" aria-pressed="true">All work <span>06</span></button>
+        <button class="filter" type="button" data-filter="web" aria-pressed="false">Web <span>03</span></button>
+        <button class="filter" type="button" data-filter="mobile" aria-pressed="false">Mobile <span>01</span></button>
+        <button class="filter" type="button" data-filter="systems" aria-pressed="false">Systems <span>03</span></button>
+      </div>
+
+      <div class="featured-grid">
+        <article class="project project-wide reveal" data-category="systems web">
+          <div class="project-image project-image-dark">
+            <img src="/projects/degree-verification.png" alt="On-chain credential verification portal" loading="lazy">
+            <span class="project-index">01</span>
+            <span class="project-type">Academic · Blockchain</span>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>Distributed systems</span><span>2026</span></div>
+            <h3>On-Chain Credential Attestation</h3>
+            <p>A hybrid degree-verification platform with student, registrar, and public verification portals backed by a permissioned blockchain network.</p>
+            <ul class="tags" aria-label="Technologies">
+              <li>Hyperledger Fabric</li><li>Express</li><li>CouchDB</li><li>Docker</li>
+            </ul>
+            <button class="project-link" type="button" data-project="degree">View case study <span>↗</span></button>
+          </div>
+        </article>
+
+        <article class="project reveal" data-category="systems">
+          <div class="project-image project-image-light">
+            <img src="/projects/connect-dots.png" alt="Accessible connect-the-dots Unity asset system" loading="lazy">
+            <span class="project-index">02</span>
+            <span class="project-type">Degree project · Game dev</span>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>Adaptive learning</span><span>2026</span></div>
+            <h3>NeuroPlay Game Suite</h3>
+            <p>A Unity mini-game suite that adjusts difficulty using player progress, with calm, accessible interfaces designed for neurodivergent learners.</p>
+            <ul class="tags" aria-label="Technologies"><li>Unity</li><li>C#</li><li>Adaptive logic</li></ul>
+            <button class="project-link" type="button" data-project="unity">View case study <span>↗</span></button>
+          </div>
+        </article>
+
+        <article class="project reveal" data-category="web">
+          <div class="project-image project-image-dark">
+            <img src="/projects/crypto-dashboard.png" alt="CryptoTrader dashboard with paper portfolio" loading="lazy">
+            <span class="project-index">03</span>
+            <span class="project-type">Personal · Front-end</span>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>Market data product</span><span>2026</span></div>
+            <h3>CryptoTrader</h3>
+            <p>A responsive live-market dashboard and paper-trading simulator with watchlists, portfolio tracking, charts, and persisted local state.</p>
+            <ul class="tags" aria-label="Technologies"><li>React 19</li><li>CoinGecko</li><li>Zustand</li></ul>
+            <button class="project-link" type="button" data-project="crypto">View case study <span>↗</span></button>
+          </div>
+        </article>
+
+        <article class="project project-wide project-horizontal reveal" data-category="web">
+          <div class="project-image project-shopify">
+            <img src="./images/shopify_landing_pdf.jpg" alt="Amazing Giant Flowers ecommerce storefront" loading="lazy">
+            <span class="project-index">04</span>
+            <span class="project-type">Freelance · Ecommerce</span>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>Client storefront</span><span>2026</span></div>
+            <h3>Amazing Giant Flowers</h3>
+            <p>A custom Shopify storefront for handcrafted giant floral installations, built around rich merchandising, quote conversion, and mobile shopping.</p>
+            <ul class="tags" aria-label="Technologies"><li>Shopify</li><li>Liquid</li><li>JavaScript</li><li>UX</li></ul>
+            <a class="project-link" href="https://areeb-azhar.github.io/online-web-store-design/" target="_blank" rel="noreferrer">Visit live project <span>↗</span></a>
+          </div>
+        </article>
+
+        <article class="project reveal" data-category="mobile">
+          <div class="project-image finance-visual" aria-label="Balance Sheet mobile app interface preview">
+            <span class="project-index">05</span>
+            <span class="project-type">Personal · Mobile</span>
+            <div class="phone-mock" aria-hidden="true">
+              <div class="phone-head"><i></i><span>Balance</span><b>•••</b></div>
+              <strong>$12,480</strong>
+              <small>available balance</small>
+              <div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="phone-row"><span>Monthly budget</span><b>68%</b></div>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>Personal finance</span><span>2026</span></div>
+            <h3>Balance Sheet</h3>
+            <p>A cross-platform expense tracker with budgets, goals, account management, category insights, local persistence, and data visualisation.</p>
+            <ul class="tags" aria-label="Technologies"><li>Flutter</li><li>SQLite</li><li>Provider</li><li>fl_chart</li></ul>
+            <button class="project-link" type="button" data-project="finance">View case study <span>↗</span></button>
+          </div>
+        </article>
+
+        <article class="project reveal" data-category="systems">
+          <div class="project-image project-image-light architecture-image">
+            <img src="/projects/java-library-architecture.png" alt="Layered Java DVD library architecture diagram" loading="lazy">
+            <span class="project-index">06</span>
+            <span class="project-type">Coursework · Architecture</span>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>Software design</span><span>2026</span></div>
+            <h3>DVD Library System</h3>
+            <p>A Java desktop system using a layered architecture, service contracts, DTOs, domain exceptions, and a Swing presentation layer.</p>
+            <ul class="tags" aria-label="Technologies"><li>Java</li><li>Swing</li><li>Facade</li><li>DTO</li></ul>
+            <button class="project-link" type="button" data-project="java">View case study <span>↗</span></button>
+          </div>
+        </article>
+      </div>
+      </div>
+    </section>
+
+    <section class="archive section flip-section" aria-labelledby="archive-title" data-section-number="03" data-section-label="Project archive">
+      <div class="section-flip-content">
+      <div class="archive-heading reveal">
+        <div><p class="eyebrow">The project archive</p><h2 id="archive-title">More things I’ve <em>built & explored.</em></h2></div>
+        <p>Personal experiments, course assignments, supporting systems, and smaller client work from three years of software engineering study.</p>
+      </div>
+
+      <div class="archive-list">
+        <article class="archive-item reveal"><span class="archive-number">07</span><div><h3>Privacy & ZKP Sandbox</h3><p>Interactive simulations for commitments, nullifiers, Merkle proofs, and repeated-round PIN verification.</p></div><span class="archive-meta">React · Web Crypto API</span><span class="archive-kind">Academic</span></article>
+        <article class="archive-item reveal"><span class="archive-number">08</span><div><h3>Market Probability Indicator</h3><p>Volume-adaptive bias, ATR risk targets, FVGs, liquidity zones, BOS/CHoCH, and signal tracking.</p></div><span class="archive-meta">Pine Script v6</span><span class="archive-kind">Personal</span></article>
+        <article class="archive-item reveal"><span class="archive-number">09</span><div><h3>AI Game Agents Collection</h3><p>Playable chess, Connect Four, checkers, and tic-tac-toe agents using minimax and alpha-beta pruning.</p></div><span class="archive-meta">Python · Pygame</span><span class="archive-kind">Coursework</span></article>
+        <article class="archive-item reveal"><span class="archive-number">10</span><div><h3>Food Ordering Storefront</h3><p>A visual menu and cart experience for a quick-service restaurant concept.</p></div><span class="archive-meta">HTML · CSS · JavaScript</span><span class="archive-kind">School</span></article>
+        <article class="archive-item reveal"><span class="archive-number">11</span><div><h3>Balance Tracker</h3><p>A lightweight Flutter budget tracker with shared-preference persistence and transaction workflows.</p></div><span class="archive-meta">Flutter · Dart</span><span class="archive-kind">Mobile</span></article>
+        <article class="archive-item reveal"><span class="archive-number">12</span><div><h3>Connect-the-Dots Asset System</h3><p>A regenerable, accessibility-minded Unity sprite pack with states, markers, hints, and templates.</p></div><span class="archive-meta">Python · Pillow · Unity</span><span class="archive-kind">Tooling</span></article>
+        <article class="archive-item reveal"><span class="archive-number">13</span><div><h3>Systems Modelling Toolkit</h3><p>Scripts for use-case diagrams, Gantt plans, interface prototypes, and architecture artefacts.</p></div><span class="archive-meta">Python · Data viz</span><span class="archive-kind">Coursework</span></article>
+        <article class="archive-item reveal"><span class="archive-number">14</span><div><h3>Flowers Landing Experience</h3><p>A compact interactive floral landing page exploring motion, layout, and responsive styling.</p></div><span class="archive-meta">HTML · CSS · JavaScript</span><span class="archive-kind">Experiment</span></article>
+        <article class="archive-item reveal"><span class="archive-number">15</span><div><h3>Personal Story Microsite</h3><p>A playful single-page experience combining custom imagery, responsive typography, and micro-interactions.</p></div><span class="archive-meta">HTML · Media</span><span class="archive-kind">Personal</span></article>
+        <article class="archive-item reveal"><span class="archive-number">16</span><div><h3>Portfolio System</h3><p>This responsive, accessible project catalogue—designed to turn three years of work into a clear interview narrative.</p></div><span class="archive-meta">Vite · JavaScript</span><span class="archive-kind">Ongoing</span></article>
+      </div>
+      </div>
+    </section>
+
+    <section class="about section flip-section" id="about" data-section-number="04" data-section-label="About me">
+      <div class="section-flip-content">
+      <div class="about-grid">
+        <div class="about-title reveal">
+          <p class="eyebrow">A little context</p>
+          <h2>Curious across the stack.<br><em>Serious about the craft.</em></h2>
+        </div>
+        <div class="about-copy reveal">
+          <p class="about-lede">My work doesn’t sit in one narrow lane. I enjoy moving from a data model to an interface, or from an algorithm to the product experience around it.</p>
+          <div class="about-columns">
+            <p>Over three years of my BS Software Engineering degree, I’ve built coursework, personal products, freelance ecommerce work, and an adaptive Unity degree project. That range taught me how to learn unfamiliar tools quickly and connect technical decisions to the people using the software.</p>
+            <p>I’m most energised by product engineering, front-end systems, intelligent applications, and teams where I can own a problem end to end. I value readable code, thoughtful details, and explaining technical trade-offs clearly.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="principles reveal">
+        <article><span>01</span><h3>Build the whole loop</h3><p>Understand the problem, model the system, craft the interface, and verify the result.</p></article>
+        <article><span>02</span><h3>Make complexity legible</h3><p>Good software should make difficult systems feel understandable to both users and teammates.</p></article>
+        <article><span>03</span><h3>Stay evidence-led</h3><p>Prefer working prototypes, measured behaviour, and honest constraints over impressive-sounding claims.</p></article>
+      </div>
+      </div>
+    </section>
+
+    <section class="toolkit section flip-section" id="toolkit" data-section-number="05" data-section-label="Capabilities">
+      <div class="section-flip-content">
+      <div class="toolkit-intro reveal">
+        <p class="eyebrow">Capabilities</p>
+        <h2>A toolkit built by <em>shipping projects.</em></h2>
+        <p>Technologies I’ve used in working coursework, prototypes, freelance builds, and personal products.</p>
+      </div>
+      <div class="skill-grid">
+        <article class="skill-card reveal"><span>01</span><h3>Web & product</h3><p>React, Vite, JavaScript, HTML, CSS, responsive UI, state management, REST APIs</p></article>
+        <article class="skill-card reveal"><span>02</span><h3>Mobile & games</h3><p>Flutter, Dart, Unity, C#, adaptive gameplay, mobile-first interaction, accessibility-minded UI</p></article>
+        <article class="skill-card reveal"><span>03</span><h3>Backend & data</h3><p>Node.js, Express, ASP.NET foundations, SQLite, SQL, CouchDB, authentication flows</p></article>
+        <article class="skill-card reveal"><span>04</span><h3>AI & algorithms</h3><p>Python, minimax, alpha-beta pruning, A* search, fuzzy logic, data visualisation</p></article>
+        <article class="skill-card reveal"><span>05</span><h3>Blockchain</h3><p>Hyperledger Fabric, chaincode, Merkle trees, hashing, ZKP simulations, Docker networking</p></article>
+        <article class="skill-card reveal"><span>06</span><h3>Commerce & tooling</h3><p>Shopify Liquid, theme customisation, Git/GitHub, documentation, architecture diagrams</p></article>
+      </div>
+      </div>
+    </section>
+
+    <section class="contact section flip-section" id="contact" data-section-number="06" data-section-label="Contact">
+      <div class="section-flip-content">
+      <div class="contact-card reveal">
+        <div>
+          <p class="eyebrow">Let’s work together</p>
+          <h2 aria-label="Have a role worth growing into, a product worth shipping, or a hard problem to solve?">Have a <span class="dynamic-copy dynamic-copy-light" data-rotate="role worth growing into.|product worth shipping.|hard problem to solve." aria-hidden="true"><span>role worth growing into.</span></span></h2>
+        </div>
+        <p>I’m interested in software engineering opportunities where I can contribute, learn quickly, and take real ownership.</p>
+        <div class="contact-actions">
+          <a class="button button-light" href="mailto:areebazhar3@gmail.com">Start a conversation <span>↗</span></a>
+          <button class="copy-email" type="button" data-email="areebazhar3@gmail.com">Copy email</button>
+        </div>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#top"><span class="brand-mark">AA</span><span class="brand-copy"><strong>Areeb Azhar</strong><small>Software Engineering</small></span></a>
+    <p>Designed and built by Areeb.<br>Karachi, Pakistan · <span id="local-time">PKT</span></p>
+    <div class="footer-links">
+      <a href="https://github.com/AREEB-AZHAR" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <a href="mailto:areebazhar3@gmail.com">Email ↗</a>
+      <a href="#top">Back to top ↑</a>
     </div>
+    <span class="copyright">© <span id="year">2026</span></span>
   </footer>
+
+  <dialog class="case-dialog" id="case-dialog" aria-labelledby="dialog-title">
+    <button class="dialog-close" type="button" aria-label="Close case study">Close ×</button>
+    <div class="dialog-number" id="dialog-number">01</div>
+    <p class="eyebrow" id="dialog-type">Case study</p>
+    <h2 id="dialog-title">Project title</h2>
+    <p class="dialog-summary" id="dialog-summary"></p>
+    <div class="dialog-grid">
+      <div><span>The challenge</span><p id="dialog-challenge"></p></div>
+      <div><span>What I built</span><p id="dialog-built"></p></div>
+      <div><span>Engineering focus</span><p id="dialog-focus"></p></div>
+      <div><span>Stack</span><p id="dialog-stack"></p></div>
+    </div>
+  </dialog>
 
   <script type="module" src="./main.js"></script>
 </body>
