@@ -33,13 +33,14 @@
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav">Menu</button>
     </div>
 
-    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#toolkit">Toolkit</a>
-      <a href="#contact">Contact</a>
-    </nav>
   </header>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#toolkit">Toolkit</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
   <aside class="section-hud" aria-hidden="true">
     <span class="section-hud-number">01</span>
@@ -76,7 +77,7 @@
             </div>
           </div>
           <div class="hero-stats">
-            <div><strong>16</strong><span>documented builds</span></div>
+            <div><strong>20</strong><span>public repositories</span></div>
             <div><strong>06</strong><span>technical domains</span></div>
             <div><strong>03</strong><span>years of study</span></div>
           </div>
@@ -89,7 +90,7 @@
 
       <div class="hero-marquee" aria-label="Core technologies">
         <div>
-          <span>React</span><i>✳</i><span>Flutter</span><i>✳</i><span>Unity</span><i>✳</i><span>Python</span><i>✳</i><span>Java</span><i>✳</i><span>Hyperledger Fabric</span><i>✳</i><span>Shopify</span><i>✳</i>
+          <span>Rust</span><i>✳</i><span>React</span><i>✳</i><span>Flutter</span><i>✳</i><span>Unity</span><i>✳</i><span>Python</span><i>✳</i><span>Java</span><i>✳</i><span>Hyperledger Fabric</span><i>✳</i><span>Shopify</span><i>✳</i>
         </div>
       </div>
       </div>
@@ -102,53 +103,78 @@
           <p class="eyebrow">Selected work · 2024—2026</p>
           <h2>Projects with <em>something to prove.</em></h2>
         </div>
-        <p>Each featured project represents a different engineering challenge—from distributed trust to adaptive gameplay and real-time market data.</p>
+        <p>Recent work across Rust systems, mobile product engineering, game development, blockchain credentials, and real-time market data.</p>
       </div>
 
       <div class="filters reveal" role="group" aria-label="Filter projects">
         <button class="filter active" type="button" data-filter="all" aria-pressed="true">All work <span>06</span></button>
-        <button class="filter" type="button" data-filter="web" aria-pressed="false">Web <span>03</span></button>
-        <button class="filter" type="button" data-filter="mobile" aria-pressed="false">Mobile <span>01</span></button>
+        <button class="filter" type="button" data-filter="web" aria-pressed="false">Web <span>04</span></button>
+        <button class="filter" type="button" data-filter="mobile" aria-pressed="false">Mobile <span>02</span></button>
         <button class="filter" type="button" data-filter="systems" aria-pressed="false">Systems <span>03</span></button>
       </div>
 
       <div class="featured-grid">
         <article class="project project-wide reveal" data-category="systems web">
-          <div class="project-image project-image-dark">
-            <img src="/projects/degree-verification.png" alt="On-chain credential verification portal" loading="lazy">
+          <div class="project-image project-image-dark project-art">
+            <img src="/projects/rustbot-og.png" alt="RustBot chatbot brand artwork" loading="lazy">
             <span class="project-index">01</span>
-            <span class="project-type">Academic · Blockchain</span>
+            <span class="project-type">Internship · Rust</span>
           </div>
           <div class="project-content">
-            <div class="project-topline"><span>Distributed systems</span><span>2026</span></div>
-            <h3>On-Chain Credential Attestation</h3>
-            <p>A hybrid degree-verification platform with student, registrar, and public verification portals backed by a permissioned blockchain network.</p>
+            <div class="project-topline"><span>Full-stack chatbot</span><span>9 weeks</span></div>
+            <h3>RustBot</h3>
+            <p>A Rust chatbot with a local knowledge store, browser interface, API layer, and secure third-party market-data integrations—built end to end during a nine-week internship.</p>
             <ul class="tags" aria-label="Technologies">
-              <li>Hyperledger Fabric</li><li>Express</li><li>CouchDB</li><li>Docker</li>
+              <li>Rust</li><li>HTTP APIs</li><li>HTML · CSS · JS</li><li>Local storage</li>
             </ul>
-            <button class="project-link" type="button" data-project="degree">View case study <span>↗</span></button>
+            <div class="project-actions"><button class="project-link" type="button" data-project="rustbot">View case study <span>↗</span></button><a class="project-link" href="https://github.com/AREEB-AZHAR/RustBot" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div>
           </div>
         </article>
 
-        <article class="project reveal" data-category="systems">
-          <div class="project-image project-image-light">
-            <img src="/projects/connect-dots.png" alt="Accessible connect-the-dots Unity asset system" loading="lazy">
+        <article class="project reveal" data-category="mobile">
+          <div class="project-image project-image-light project-art">
+            <img src="/projects/tally-ledger-512.png" alt="Tally personal finance app icon" loading="lazy">
             <span class="project-index">02</span>
-            <span class="project-type">Degree project · Game dev</span>
+            <span class="project-type">Personal · Mobile</span>
           </div>
           <div class="project-content">
-            <div class="project-topline"><span>Adaptive learning</span><span>2026</span></div>
-            <h3>NeuroPlay Game Suite</h3>
-            <p>A Unity mini-game suite that adjusts difficulty using player progress, with calm, accessible interfaces designed for neurodivergent learners.</p>
-            <ul class="tags" aria-label="Technologies"><li>Unity</li><li>C#</li><li>Adaptive logic</li></ul>
-            <button class="project-link" type="button" data-project="unity">View case study <span>↗</span></button>
+            <div class="project-topline"><span>Personal finance</span><span>2026</span></div>
+            <h3>Tally</h3>
+            <p>A Flutter finance ledger with transaction workflows, analytics, local SQLite storage, and Firebase sync—evolved into a broader personal-finance product.</p>
+            <ul class="tags" aria-label="Technologies"><li>Flutter</li><li>Dart</li><li>SQLite</li><li>Firebase</li></ul>
+            <div class="project-actions"><button class="project-link" type="button" data-project="tally">View case study <span>↗</span></button><a class="project-link" href="https://github.com/AREEB-AZHAR/flutter_calculator_new" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div>
+          </div>
+        </article>
+
+        <article class="project reveal" data-category="systems mobile">
+          <div class="project-image project-image-dark gameplay-image">
+            <img src="/projects/gravipop-gameplay.png" alt="GraviPop gameplay showing a cosmic merge puzzle, score, and power-up controls" loading="lazy">
+            <span class="project-index">03</span><span class="project-type">Personal · Game dev</span>
+          </div>
+          <div class="project-content">
+            <div class="project-topline"><span>Cross-platform game</span><span>2026</span></div>
+            <h3>GraviPop</h3>
+            <p>A physics-driven merge puzzle built in Rust, designed to run across desktop, Android, and the web with adaptive input and original artwork.</p>
+            <ul class="tags" aria-label="Technologies"><li>Rust</li><li>Miniquad</li><li>Physics</li><li>Android · Web</li></ul>
+            <div class="project-actions"><button class="project-link" type="button" data-project="gravipop">View case study <span>↗</span></button><a class="project-link" href="https://github.com/AREEB-AZHAR/gravipop-mobile" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div>
+          </div>
+        </article>
+
+        <article class="project reveal" data-category="systems web">
+          <div class="project-image project-image-dark"><img src="/projects/degree-verification.png" alt="Degree credential verification portal" loading="lazy"><span class="project-index">04</span><span class="project-type">Academic · Blockchain</span></div>
+          <div class="project-content">
+            <div class="project-topline"><span>Distributed systems</span><span>2026</span></div>
+            <h3>Degree Verification</h3>
+            <p>A credential-issuance and verification platform with student, registrar, and public verifier experiences, plus a privacy-proof sandbox.</p>
+            <ul class="tags" aria-label="Technologies"><li>Hyperledger Fabric</li><li>Express</li><li>CouchDB</li><li>Docker</li></ul>
+            <div class="project-actions"><button class="project-link" type="button" data-project="degree">View case study <span>↗</span></button><a class="project-link" href="https://github.com/AREEB-AZHAR/Degree-blockchain" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div>
           </div>
         </article>
 
         <article class="project reveal" data-category="web">
           <div class="project-image project-image-dark">
             <img src="/projects/crypto-dashboard.png" alt="CryptoTrader dashboard with paper portfolio" loading="lazy">
-            <span class="project-index">03</span>
+            <span class="project-index">05</span>
             <span class="project-type">Personal · Front-end</span>
           </div>
           <div class="project-content">
@@ -156,60 +182,21 @@
             <h3>CryptoTrader</h3>
             <p>A responsive live-market dashboard and paper-trading simulator with watchlists, portfolio tracking, charts, and persisted local state.</p>
             <ul class="tags" aria-label="Technologies"><li>React 19</li><li>CoinGecko</li><li>Zustand</li></ul>
-            <button class="project-link" type="button" data-project="crypto">View case study <span>↗</span></button>
+            <div class="project-actions"><button class="project-link" type="button" data-project="crypto">View case study <span>↗</span></button><a class="project-link" href="https://github.com/AREEB-AZHAR/CryptoDashboard" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div>
           </div>
         </article>
 
-        <article class="project project-wide project-horizontal reveal" data-category="web">
-          <div class="project-image project-shopify">
-            <img src="./images/shopify_landing_pdf.jpg" alt="Amazing Giant Flowers ecommerce storefront" loading="lazy">
-            <span class="project-index">04</span>
-            <span class="project-type">Freelance · Ecommerce</span>
-          </div>
+        <article class="project reveal" data-category="web">
+          <div class="project-image bunetto-image"><img src="/projects/bunetto-showcase.png" alt="Bunetto ecommerce website showcasing the Smoky Zing hero, menu navigation, and Order Now button" loading="lazy"><span class="project-index">06</span><span class="project-type">Ecommerce · Web</span></div>
           <div class="project-content">
-            <div class="project-topline"><span>Client storefront</span><span>2026</span></div>
-            <h3>Amazing Giant Flowers</h3>
-            <p>A custom Shopify storefront for handcrafted giant floral installations, built around rich merchandising, quote conversion, and mobile shopping.</p>
-            <ul class="tags" aria-label="Technologies"><li>Shopify</li><li>Liquid</li><li>JavaScript</li><li>UX</li></ul>
-            <a class="project-link" href="https://areeb-azhar.github.io/online-web-store-design/" target="_blank" rel="noreferrer">Visit live project <span>↗</span></a>
+            <div class="project-topline"><span>Food ordering experience</span><span>2026</span></div>
+            <h3>Bunetto Ecommerce</h3>
+            <p>A responsive burger storefront with a visual menu, product customisation, cart management, delivery or pickup options, and a WhatsApp ordering flow.</p>
+            <ul class="tags" aria-label="Technologies"><li>HTML</li><li>Tailwind CSS</li><li>JavaScript</li><li>WhatsApp</li></ul>
+            <div class="project-actions"><button class="project-link" type="button" data-project="bunetto">View case study <span>↗</span></button><a class="project-link" href="https://github.com/AREEB-AZHAR/Bunetto" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div>
           </div>
         </article>
 
-        <article class="project reveal" data-category="mobile">
-          <div class="project-image finance-visual" aria-label="Balance Sheet mobile app interface preview">
-            <span class="project-index">05</span>
-            <span class="project-type">Personal · Mobile</span>
-            <div class="phone-mock" aria-hidden="true">
-              <div class="phone-head"><i></i><span>Balance</span><b>•••</b></div>
-              <strong>$12,480</strong>
-              <small>available balance</small>
-              <div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="phone-row"><span>Monthly budget</span><b>68%</b></div>
-            </div>
-          </div>
-          <div class="project-content">
-            <div class="project-topline"><span>Personal finance</span><span>2026</span></div>
-            <h3>Balance Sheet</h3>
-            <p>A cross-platform expense tracker with budgets, goals, account management, category insights, local persistence, and data visualisation.</p>
-            <ul class="tags" aria-label="Technologies"><li>Flutter</li><li>SQLite</li><li>Provider</li><li>fl_chart</li></ul>
-            <button class="project-link" type="button" data-project="finance">View case study <span>↗</span></button>
-          </div>
-        </article>
-
-        <article class="project reveal" data-category="systems">
-          <div class="project-image project-image-light architecture-image">
-            <img src="/projects/java-library-architecture.png" alt="Layered Java DVD library architecture diagram" loading="lazy">
-            <span class="project-index">06</span>
-            <span class="project-type">Coursework · Architecture</span>
-          </div>
-          <div class="project-content">
-            <div class="project-topline"><span>Software design</span><span>2026</span></div>
-            <h3>DVD Library System</h3>
-            <p>A Java desktop system using a layered architecture, service contracts, DTOs, domain exceptions, and a Swing presentation layer.</p>
-            <ul class="tags" aria-label="Technologies"><li>Java</li><li>Swing</li><li>Facade</li><li>DTO</li></ul>
-            <button class="project-link" type="button" data-project="java">View case study <span>↗</span></button>
-          </div>
-        </article>
       </div>
       </div>
     </section>
@@ -222,16 +209,25 @@
       </div>
 
       <div class="archive-list">
-        <article class="archive-item reveal"><span class="archive-number">07</span><div><h3>Privacy & ZKP Sandbox</h3><p>Interactive simulations for commitments, nullifiers, Merkle proofs, and repeated-round PIN verification.</p></div><span class="archive-meta">React · Web Crypto API</span><span class="archive-kind">Academic</span></article>
-        <article class="archive-item reveal"><span class="archive-number">08</span><div><h3>Market Probability Indicator</h3><p>Volume-adaptive bias, ATR risk targets, FVGs, liquidity zones, BOS/CHoCH, and signal tracking.</p></div><span class="archive-meta">Pine Script v6</span><span class="archive-kind">Personal</span></article>
-        <article class="archive-item reveal"><span class="archive-number">09</span><div><h3>AI Game Agents Collection</h3><p>Playable chess, Connect Four, checkers, and tic-tac-toe agents using minimax and alpha-beta pruning.</p></div><span class="archive-meta">Python · Pygame</span><span class="archive-kind">Coursework</span></article>
-        <article class="archive-item reveal"><span class="archive-number">10</span><div><h3>Food Ordering Storefront</h3><p>A visual menu and cart experience for a quick-service restaurant concept.</p></div><span class="archive-meta">HTML · CSS · JavaScript</span><span class="archive-kind">School</span></article>
-        <article class="archive-item reveal"><span class="archive-number">11</span><div><h3>Balance Tracker</h3><p>A lightweight Flutter budget tracker with shared-preference persistence and transaction workflows.</p></div><span class="archive-meta">Flutter · Dart</span><span class="archive-kind">Mobile</span></article>
-        <article class="archive-item reveal"><span class="archive-number">12</span><div><h3>Connect-the-Dots Asset System</h3><p>A regenerable, accessibility-minded Unity sprite pack with states, markers, hints, and templates.</p></div><span class="archive-meta">Python · Pillow · Unity</span><span class="archive-kind">Tooling</span></article>
-        <article class="archive-item reveal"><span class="archive-number">13</span><div><h3>Systems Modelling Toolkit</h3><p>Scripts for use-case diagrams, Gantt plans, interface prototypes, and architecture artefacts.</p></div><span class="archive-meta">Python · Data viz</span><span class="archive-kind">Coursework</span></article>
-        <article class="archive-item reveal"><span class="archive-number">14</span><div><h3>Flowers Landing Experience</h3><p>A compact interactive floral landing page exploring motion, layout, and responsive styling.</p></div><span class="archive-meta">HTML · CSS · JavaScript</span><span class="archive-kind">Experiment</span></article>
-        <article class="archive-item reveal"><span class="archive-number">15</span><div><h3>Personal Story Microsite</h3><p>A playful single-page experience combining custom imagery, responsive typography, and micro-interactions.</p></div><span class="archive-meta">HTML · Media</span><span class="archive-kind">Personal</span></article>
-        <article class="archive-item reveal"><span class="archive-number">16</span><div><h3>Portfolio System</h3><p>This responsive, accessible project catalogue—designed to turn three years of work into a clear interview narrative.</p></div><span class="archive-meta">Vite · JavaScript</span><span class="archive-kind">Ongoing</span></article>
+        <article class="archive-item reveal"><span class="archive-number">07</span><div><h3><a href="https://github.com/AREEB-AZHAR/ChainShield" target="_blank" rel="noreferrer">ChainShield</a></h3><p>Blockchain transaction monitoring concept for identifying suspicious and potentially fraudulent activity.</p></div><span class="archive-meta">Blockchain · Analytics</span><span class="archive-kind">Personal</span></article>
+        <article class="archive-item reveal"><span class="archive-number">08</span><div><h3><a href="https://github.com/AREEB-AZHAR/CryptoDashboard" target="_blank" rel="noreferrer">CryptoDashboard</a></h3><p>Earlier crypto-market dashboard iteration, consolidated with the featured CryptoTrader project.</p></div><span class="archive-meta">React · Market data</span><span class="archive-kind">Earlier version</span></article>
+        <article class="archive-item reveal"><span class="archive-number">09</span><div><h3>Crypto Trading Bot Foundation</h3><p>Rust trading-bot groundwork with backtest and paper modes; live trading remains explicitly fail-closed.</p></div><span class="archive-meta">Rust · Trading systems</span><span class="archive-kind">Local project</span></article>
+        <article class="archive-item reveal"><span class="archive-number">10</span><div><h3><a href="https://github.com/AREEB-AZHAR/fyp-project-2026-05-24_04-55-34" target="_blank" rel="noreferrer">Unity Minigame Suite</a></h3><p>A degree-project game suite with player progress, adaptive difficulty, and accessible learning games.</p></div><span class="archive-meta">Unity · C#</span><span class="archive-kind">Degree project</span></article>
+        <article class="archive-item reveal"><span class="archive-number">11</span><div><h3><a href="https://github.com/AREEB-AZHAR/RE-Engineering" target="_blank" rel="noreferrer">Reverse Engineering Coursework</a></h3><p>Coursework repository documenting software re-engineering work.</p></div><span class="archive-meta">Software engineering</span><span class="archive-kind">Coursework</span></article>
+        <article class="archive-item reveal"><span class="archive-number">12</span><div><h3><a href="https://github.com/AREEB-AZHAR/QuizPakistanStudies" target="_blank" rel="noreferrer">Pakistan Studies Quiz</a></h3><p>A small interactive quiz project from coursework.</p></div><span class="archive-meta">Web · Quiz</span><span class="archive-kind">Coursework</span></article>
+        <article class="archive-item reveal"><span class="archive-number">13</span><div><h3><a href="https://github.com/AREEB-AZHAR/online-web-store-design" target="_blank" rel="noreferrer">Amazing Giant Flowers</a></h3><p>Freelance ecommerce storefront for handcrafted giant floral installations.</p></div><span class="archive-meta">Shopify · Liquid</span><span class="archive-kind">Freelance</span></article>
+        <article class="archive-item reveal"><span class="archive-number">14</span><div><h3><a href="https://github.com/AREEB-AZHAR/Apology" target="_blank" rel="noreferrer">Apology</a> · <a href="https://github.com/AREEB-AZHAR/love-letter-to-you" target="_blank" rel="noreferrer">Love Letter</a></h3><p>Personal interactive microsites exploring expressive web design and motion.</p></div><span class="archive-meta">HTML · CSS · JavaScript</span><span class="archive-kind">Experiments</span></article>
+        <article class="archive-item reveal"><span class="archive-number">15</span><div><h3><a href="https://github.com/AREEB-AZHAR/a-little-something-just-for-you" target="_blank" rel="noreferrer">A Little Something</a> · <a href="https://github.com/AREEB-AZHAR/flowers-messages" target="_blank" rel="noreferrer">Flowers & Messages</a></h3><p>Small personal web experiences grouped together rather than presented as separate major products.</p></div><span class="archive-meta">Web · Interaction</span><span class="archive-kind">Experiments</span></article>
+        <article class="archive-item reveal"><span class="archive-number">16</span><div><h3><a href="https://github.com/AREEB-AZHAR/Flower-garden" target="_blank" rel="noreferrer">Flower Garden</a> · <a href="https://github.com/AREEB-AZHAR/Form" target="_blank" rel="noreferrer">Form</a></h3><p>Compact front-end experiments, including a floral scene and a form interface.</p></div><span class="archive-meta">HTML · CSS · JavaScript</span><span class="archive-kind">Experiments</span></article>
+        <article class="archive-item reveal"><span class="archive-number">17</span><div><h3><a href="https://github.com/AREEB-AZHAR/fyp-project-2026-05-24_04-55-34" target="_blank" rel="noreferrer">Unity Connect-the-Dots Assets</a></h3><p>Regenerable accessibility-minded game asset pack supporting the featured Unity suite.</p></div><span class="archive-meta">Python · Pillow · Unity</span><span class="archive-kind">Tooling</span></article>
+        <article class="archive-item reveal"><span class="archive-number">18</span><div><h3><a href="https://github.com/AREEB-AZHAR/Resume" target="_blank" rel="noreferrer">Resume</a> · <a href="https://github.com/AREEB-AZHAR/Portfolio" target="_blank" rel="noreferrer">Portfolio System</a></h3><p>Career materials and this responsive, accessible project catalogue.</p></div><span class="archive-meta">Vite · JavaScript</span><span class="archive-kind">Ongoing</span></article>
+        <article class="archive-item reveal"><span class="archive-number">19</span><div><h3>Privacy & ZKP Sandbox</h3><p>Interactive prototypes for commitments, nullifiers, Merkle proofs, and repeated-round PIN verification.</p></div><span class="archive-meta">Web Crypto · Merkle trees</span><span class="archive-kind">Academic</span></article>
+        <article class="archive-item reveal"><span class="archive-number">20</span><div><h3>Market Probability Indicator</h3><p>Volume-adaptive bias, ATR risk targets, fair-value gaps, liquidity zones, and signal tracking.</p></div><span class="archive-meta">Pine Script v6</span><span class="archive-kind">Personal</span></article>
+        <article class="archive-item reveal"><span class="archive-number">21</span><div><h3>AI Game Agents</h3><p>Playable board-game agents exploring minimax and alpha-beta pruning across several classic games.</p></div><span class="archive-meta">Python · Pygame</span><span class="archive-kind">Coursework</span></article>
+        <article class="archive-item reveal"><span class="archive-number">22</span><div><h3>Food Ordering Storefront</h3><p>A visual menu and cart experience for a quick-service restaurant concept.</p></div><span class="archive-meta">HTML · CSS · JavaScript</span><span class="archive-kind">School</span></article>
+        <article class="archive-item reveal"><span class="archive-number">23</span><div><h3>Balance Tracker</h3><p>An earlier Flutter budget tracker, consolidated with the evolved Tally finance app.</p></div><span class="archive-meta">Flutter · Dart</span><span class="archive-kind">Earlier version</span></article>
+        <article class="archive-item reveal"><span class="archive-number">24</span><div><h3>Systems Modelling Toolkit</h3><p>Coursework artefacts for use-case diagrams, Gantt plans, interface prototypes, and architecture models.</p></div><span class="archive-meta">Python · Data visualisation</span><span class="archive-kind">Coursework</span></article>
+        <article class="archive-item reveal"><span class="archive-number">25</span><div><h3>DVD Library System</h3><p>Layered Java desktop application with service contracts, DTOs, domain exceptions, and Swing UI.</p></div><span class="archive-meta">Java · Swing · UML</span><span class="archive-kind">Coursework</span></article>
       </div>
       </div>
     </section>
@@ -257,6 +253,10 @@
         <article><span>02</span><h3>Make complexity legible</h3><p>Good software should make difficult systems feel understandable to both users and teammates.</p></article>
         <article><span>03</span><h3>Stay evidence-led</h3><p>Prefer working prototypes, measured behaviour, and honest constraints over impressive-sounding claims.</p></article>
       </div>
+      <article class="certificate-card reveal" aria-label="Rust internship certificate">
+        <a class="certificate-preview" href="./certificates/rust-internship-areeb-azhar.pdf" target="_blank" rel="noreferrer" aria-label="View Areeb Azhar's internship completion certificate PDF"><img src="/certificates/rust-internship-preview.png" alt="Internship completion certificate issued to Areeb Azhar by Hazara University and Rockstable" loading="lazy"></a>
+        <div class="certificate-copy"><p class="eyebrow">Internship certificate · September 2026</p><h3>Blockchain Technology &amp; Rust Programming <span>9 weeks · Hybrid</span></h3><p class="certificate-issuer">Hazara University, Mansehra · Rockstable</p><p>Completed a joint internship covering Rust programming and blockchain fundamentals. Built a Rust chatbot connecting its backend, API integrations, and responsive frontend.</p><a class="certificate-link" href="./certificates/rust-internship-areeb-azhar.pdf" target="_blank" rel="noreferrer">View completion certificate <span>↗</span></a></div>
+      </article>
       </div>
     </section>
 
@@ -270,7 +270,7 @@
       <div class="skill-grid">
         <article class="skill-card reveal"><span>01</span><h3>Web & product</h3><p>React, Vite, JavaScript, HTML, CSS, responsive UI, state management, REST APIs</p></article>
         <article class="skill-card reveal"><span>02</span><h3>Mobile & games</h3><p>Flutter, Dart, Unity, C#, adaptive gameplay, mobile-first interaction, accessibility-minded UI</p></article>
-        <article class="skill-card reveal"><span>03</span><h3>Backend & data</h3><p>Node.js, Express, ASP.NET foundations, SQLite, SQL, CouchDB, authentication flows</p></article>
+        <article class="skill-card reveal"><span>03</span><h3>Backend & data</h3><p>Rust, Node.js, Express, ASP.NET foundations, SQLite, SQL, CouchDB, authentication flows</p></article>
         <article class="skill-card reveal"><span>04</span><h3>AI & algorithms</h3><p>Python, minimax, alpha-beta pruning, A* search, fuzzy logic, data visualisation</p></article>
         <article class="skill-card reveal"><span>05</span><h3>Blockchain</h3><p>Hyperledger Fabric, chaincode, Merkle trees, hashing, ZKP simulations, Docker networking</p></article>
         <article class="skill-card reveal"><span>06</span><h3>Commerce & tooling</h3><p>Shopify Liquid, theme customisation, Git/GitHub, documentation, architecture diagrams</p></article>

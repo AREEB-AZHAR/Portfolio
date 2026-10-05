@@ -305,6 +305,15 @@ menuButton?.addEventListener('click', () => {
 });
 
 mobileNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
+    closeMenu();
+    menuButton.focus();
+  }
+});
+window.matchMedia('(min-width: 761px)').addEventListener('change', (event) => {
+  if (event.matches) closeMenu();
+});
 
 const filters = [...document.querySelectorAll('.filter')];
 const featuredProjects = [...document.querySelectorAll('.project[data-category]')];
@@ -327,8 +336,38 @@ filters.forEach((filter) => {
 });
 
 const caseStudies = {
-  degree: {
+  rustbot: {
     number: '01',
+    type: 'Rust engineering · Nine-week internship',
+    title: 'RustBot',
+    summary: 'A browser-based chatbot and learning project built end to end in Rust, connecting an HTTP backend, API integrations, and a responsive frontend.',
+    challenge: 'Bring together conversational interactions, locally stored knowledge, external data sources, and a usable browser interface in one coherent project.',
+    built: 'A Rust HTTP server serving both the browser experience and JSON API, local matching and knowledge storage, and secure market-data proxy integrations with Binance, CoinGecko, and Kraken.',
+    focus: 'Backend/frontend integration, API boundaries, browser interaction, local knowledge retrieval, and keeping third-party API credentials behind the server.',
+    stack: 'Rust, HTTP/JSON APIs, HTML, CSS, JavaScript, Binance/CoinGecko/Kraken APIs',
+  },
+  tally: {
+    number: '02',
+    type: 'Mobile product · Personal',
+    title: 'Tally',
+    summary: 'A Flutter personal-finance ledger developed from a calculator project into a richer transaction and analytics experience.',
+    challenge: 'Build everyday money-management flows while balancing quick entry, useful summaries, and dependable local data.',
+    built: 'Transaction workflows, analytics, local SQLite persistence, authentication and Firebase sync features documented in the current project README.',
+    focus: 'Cross-platform interface design, evolving a project over time, local persistence, and connecting a mobile client to cloud services.',
+    stack: 'Flutter, Dart, SQLite, Firebase',
+  },
+  gravipop: {
+    number: '03',
+    type: 'Cross-platform game · Personal',
+    title: 'GraviPop',
+    summary: 'A physics-driven merge puzzle developed in Rust for desktop, Android, and web targets.',
+    challenge: 'Keep the same tactile game loop responsive across touch, pointer, and keyboard-oriented platforms.',
+    built: 'A Rust game with a renderer, physics and input systems, adaptive controls, and original game artwork.',
+    focus: 'Cross-platform builds, real-time input, physics-driven interaction, and Rust application structure.',
+    stack: 'Rust, Miniquad, Android, WebAssembly',
+  },
+  degree: {
+    number: '04',
     type: 'Distributed systems · Academic',
     title: 'On-Chain Credential Attestation',
     summary: 'A multi-portal prototype that makes academic credentials independently verifiable while preserving a controlled, auditable issuance process.',
@@ -337,18 +376,18 @@ const caseStudies = {
     focus: 'Permissioned ledger design, document hashing, role separation, chaincode integration, Merkle proof concepts, and deployment architecture for an AWS-hosted prototype.',
     stack: 'Hyperledger Fabric, Node.js, Express, CouchDB, Docker, JavaScript, HTML/CSS, cryptographic hashing',
   },
-  unity: {
-    number: '02',
-    type: 'Adaptive learning · Degree project',
-    title: 'NeuroPlay Game Suite',
-    summary: 'A Unity learning hub with multiple short games, persistent progress, and difficulty that responds to how a player performs.',
-    challenge: 'A one-size-fits-all challenge curve can frustrate or disengage learners. The experience needed predictable feedback, calm visuals, and difficulty changes that stayed understandable.',
-    built: 'A home hub, game carousel, profile and progress systems, adaptive difficulty manager, and three mini-games: card matching, colour paths, and connect-the-dots.',
-    focus: 'Modular C# managers, scene flow, player progress data, accessible interaction states, reusable UI assets, and game-specific result reporting.',
-    stack: 'Unity, C#, adaptive logic, 2D UI, Python/Pillow asset tooling',
+  bunetto: {
+    number: '06',
+    type: 'Ecommerce · Food ordering',
+    title: 'Bunetto Ecommerce',
+    summary: 'A responsive digital storefront for a burger brand, bringing product discovery, cart management, and order handoff together.',
+    challenge: 'Make a rich food menu easy to browse and customise on smaller screens, while keeping the ordering flow understandable.',
+    built: 'A hero carousel, category-based menu, product and deal options, a cart drawer with quantity controls, delivery and pickup selection, and formatted WhatsApp order handoff.',
+    focus: 'Responsive merchandising, product imagery, cart state, configurable order details, and clear interaction feedback.',
+    stack: 'HTML, Tailwind CSS, JavaScript, WhatsApp ordering integration',
   },
   crypto: {
-    number: '03',
+    number: '05',
     type: 'Market data · Personal',
     title: 'CryptoTrader',
     summary: 'A polished market dashboard that combines live crypto data with a risk-free paper-trading and portfolio experience.',
@@ -358,7 +397,7 @@ const caseStudies = {
     stack: 'React 19, Vite, TanStack Query, Zustand, TradingView Lightweight Charts, Framer Motion, CoinGecko API',
   },
   finance: {
-    number: '05',
+    number: '+01',
     type: 'Personal finance · Mobile',
     title: 'Balance Sheet',
     summary: 'A feature-rich Flutter expense tracker designed around everyday account, budget, goal, and transaction workflows.',
@@ -368,7 +407,7 @@ const caseStudies = {
     stack: 'Flutter, Dart, Provider, SQLite, sqflite, fl_chart, shared preferences',
   },
   java: {
-    number: '06',
+    number: '+02',
     type: 'Software architecture · Coursework',
     title: 'DVD Library System',
     summary: 'A Java desktop library application structured to keep the interface independent from domain implementation details.',

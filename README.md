@@ -3,50 +3,47 @@
 [![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-Visit-d8ff3e?style=for-the-badge&labelColor=171916)](https://areeb-azhar.github.io/Portfolio/)
 [![GitHub Pages](https://img.shields.io/badge/Deployed_with-GitHub_Pages-2665ff?style=for-the-badge&labelColor=171916)](https://pages.github.com/)
 
-A responsive, interview-focused portfolio documenting three years of software engineering work across full-stack development, mobile applications, artificial intelligence, blockchain, game development, and ecommerce.
+An interview-focused portfolio highlighting recent software projects alongside a browsable archive of coursework, freelance builds, experiments, and personal work from my BS Software Engineering degree.
 
 **Live site:** [areeb-azhar.github.io/Portfolio](https://areeb-azhar.github.io/Portfolio/)
 
-## Highlights
-
-- Six detailed featured case studies with verified project screenshots
-- Ten-project archive covering coursework, personal builds, and freelance work
-- Responsive animated canvas background
-- Numbered flip-board section transitions
-- Dynamic headline and supporting-text rotations
-- Live reading progress, active-section HUD, and navigation tracking
-- Filterable project gallery and accessible case-study dialogs
-- Pointer-aware project lighting and layered 3D typography
-- Keyboard navigation, semantic markup, and reduced-motion support
-- Responsive layouts for desktop, tablet, and mobile
-
-## Featured Work
+## Featured work
 
 | Project | Focus | Technologies |
 | --- | --- | --- |
-| On-Chain Credential Attestation | Permissioned blockchain degree verification | Hyperledger Fabric, Express, CouchDB, Docker |
-| NeuroPlay Game Suite | Accessible games with adaptive difficulty | Unity, C#, Python, Pillow |
-| CryptoTrader | Live market dashboard and paper trading | React, Vite, TanStack Query, Zustand |
-| Amazing Giant Flowers | Custom freelance ecommerce storefront | Shopify, Liquid, JavaScript, CSS |
-| Balance Sheet | Cross-platform personal finance application | Flutter, Dart, SQLite, Provider |
-| DVD Library System | Layered desktop application architecture | Java, Swing, interfaces, DTOs |
+| [RustBot](https://github.com/AREEB-AZHAR/RustBot) | Rust chatbot connecting backend, APIs, and a browser frontend; completed during a nine-week internship | Rust, HTTP/JSON APIs, HTML, CSS, JavaScript |
+| [Tally](https://github.com/AREEB-AZHAR/flutter_calculator_new) | Flutter personal-finance ledger with analytics and synced data | Flutter, Dart, SQLite, Firebase |
+| [GraviPop](https://github.com/AREEB-AZHAR/gravipop-mobile) | Physics-driven cross-platform merge puzzle | Rust, Miniquad, Android, Web |
+| [Degree Verification](https://github.com/AREEB-AZHAR/Degree-blockchain) | Credential issuance and public verification | Hyperledger Fabric, Express, CouchDB, Docker |
+| [CryptoTrader](https://github.com/AREEB-AZHAR/CryptoDashboard) | Live-market dashboard and paper-trading experience | React, Vite, TanStack Query, Zustand |
+| [Bunetto Ecommerce](https://github.com/AREEB-AZHAR/Bunetto) | Burger storefront, cart, product customisation, and WhatsApp order handoff | HTML, Tailwind CSS, JavaScript |
+
+The project archive also includes ChainShield, a Rust trading-bot foundation (backtest and paper modes; live mode remains fail-closed), coursework, freelance storefront work, personal microsites, and supporting assets. Smaller experiments are grouped so the strongest interview projects stay prominent. Repository details are taken from the project READMEs where available.
+
+## Internship
+
+The portfolio includes the actual [internship completion certificate](public/certificates/rust-internship-areeb-azhar.pdf) for a **nine-week hybrid internship in Blockchain Technology and Rust Programming**, jointly delivered by Hazara University, Mansehra, and Rockstable, awarded in September 2026. The card also describes the Rust chatbot project connecting its backend, API integrations, and frontend.
+
+## Experience and interactions
+
+- Responsive animated canvas background, with reduced-motion support
+- Numbered flip-board section entrances and dynamic copy
+- Filterable featured projects, repository links, and case-study dialogs
+- Project archive with direct repository links
+- Mobile navigation on an opaque, separately layered panel with scroll lock and keyboard dismissal
+- Reading progress, active-section HUD, and pointer-aware project lighting
+- Semantic structure, keyboard focus states, and responsive layouts
 
 ## Technology
 
-- **Core:** HTML5, CSS3, JavaScript
-- **Build tooling:** Vite
-- **Interaction:** Intersection Observer, Canvas API, responsive pointer events
+- **Site:** HTML5, CSS3, framework-free JavaScript, Vite
+- **Interactions:** Intersection Observer, Canvas API, native dialog, responsive pointer events
 - **Typography:** Manrope, Newsreader, DM Mono
 - **Hosting:** GitHub Pages and GitHub Actions
 
-The portfolio intentionally uses framework-free JavaScript for its interface and animation systems. This keeps the runtime small while demonstrating DOM architecture, animation lifecycle management, progressive enhancement, and accessibility handling directly.
+## Run locally
 
-## Run Locally
-
-Requirements:
-
-- Node.js 20 or newer
-- npm
+Requirements: Node.js 20+ and npm.
 
 ```bash
 git clone https://github.com/AREEB-AZHAR/Portfolio.git
@@ -55,8 +52,6 @@ npm install
 npm run dev
 ```
 
-Vite will print the local development URL in the terminal.
-
 ### Production build
 
 ```bash
@@ -64,15 +59,15 @@ npm run build
 npm run preview
 ```
 
-The production output is generated in `dist/`.
+Vite generates production assets in `dist/`.
 
-## Project Structure
+## Project structure
 
 ```text
 Portfolio/
 ├── .github/workflows/     # GitHub Pages deployment
-├── images/                # Existing portfolio imagery
-├── public/projects/       # Verified project screenshots
+├── images/                # Portfolio imagery
+├── public/projects/       # Project artwork and screenshots
 ├── index.html             # Content and semantic page structure
 ├── style.css              # Responsive layout and visual systems
 ├── main.js                # Interactions, animation, filters, and dialogs
@@ -80,22 +75,20 @@ Portfolio/
 └── package.json           # Scripts and dependencies
 ```
 
-## Accessibility and Performance
+## Accessibility and performance
 
-- All primary navigation and project controls are keyboard accessible.
-- Motion-heavy effects respect `prefers-reduced-motion`.
-- Canvas density scales down on smaller displays and pauses in hidden tabs.
-- Project screenshots use lazy loading.
-- Dynamic copy reserves its layout space to reduce content shifting.
-- Pointer effects are enabled only on devices with precise hover input.
+- Navigation and project controls work with a keyboard.
+- Motion effects respect `prefers-reduced-motion`; the canvas pauses in hidden tabs.
+- Mobile navigation locks document scrolling while open and closes on link selection or Escape.
+- Project imagery uses lazy loading and the canvas adapts its density to viewport size.
 
 ## Deployment
 
-Pushes to `main` trigger the workflow in `.github/workflows/deploy.yml`. The workflow installs dependencies, creates a Vite production build, uploads the resulting artifact, and deploys it to GitHub Pages.
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and deploys the artifact to GitHub Pages.
 
 ## Contact
 
-**Areeb Azhar** — BS Software Engineering student
+**Areeb Azhar** — BS Software Engineering student, Karachi, Pakistan
 
 - GitHub: [@AREEB-AZHAR](https://github.com/AREEB-AZHAR)
 - Email: [areebazhar3@gmail.com](mailto:areebazhar3@gmail.com)
