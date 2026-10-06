@@ -43,12 +43,12 @@ The portfolio includes the actual [internship completion certificate](public/cer
 
 ## Run locally
 
-Requirements: Node.js 20+ and npm.
+Requirements: Node.js 24.x and npm.
 
 ```bash
 git clone https://github.com/AREEB-AZHAR/Portfolio.git
 cd Portfolio
-npm install
+npm ci
 npm run dev
 ```
 
@@ -84,7 +84,9 @@ Portfolio/
 
 ## Deployment
 
-Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and deploys the artifact to GitHub Pages.
+Vercel uses `vercel.json` to install locked dependencies with `npm ci`, build with `npm run build`, and serve `dist/` at the domain root. Import this repository into Vercel with the repository root as the project root directory. Node.js 24.x is specified in `package.json`.
+
+Pushes to `main` also trigger `.github/workflows/deploy.yml`, which runs `npm run build:pages` to build with the `/Portfolio/` base path and deploy the artifact to GitHub Pages. For local Pages previews, run `npm run build:pages` followed by `npm run preview -- --base=/Portfolio/`.
 
 ## Contact
 
