@@ -1,49 +1,52 @@
-# Areeb Azhar — Software Engineering Portfolio
+# Areeb Azhar — Engineering & Creative Development
 
-[![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-Visit-d8ff3e?style=for-the-badge&labelColor=171916)](https://areeb-azhar.github.io/Portfolio/)
-[![GitHub Pages](https://img.shields.io/badge/Deployed_with-GitHub_Pages-2665ff?style=for-the-badge&labelColor=171916)](https://pages.github.com/)
+A cinematic software engineering portfolio with an original metallic AA sculpture, scroll-driven storytelling, and real project briefings. Built with semantic HTML, CSS, JavaScript, Vite, Three.js, GSAP, and Lenis.
 
-An interview-focused portfolio highlighting recent software projects alongside a browsable archive of coursework, freelance builds, experiments, and personal work from my BS Software Engineering degree.
+**[Visit the portfolio](https://areeb-azhar.github.io/Portfolio/)** · **[GitHub](https://github.com/AREEB-AZHAR)** · **[Contact](mailto:areebazhar3@gmail.com)**
 
-**Live site:** [areeb-azhar.github.io/Portfolio](https://areeb-azhar.github.io/Portfolio/)
+![Desktop portfolio — original AA sculpture and editorial hero](docs/screenshots/home-desktop.png)
 
-## Featured work
+## The redesign
 
-| Project | Focus | Technologies |
-| --- | --- | --- |
-| [RustBot](https://github.com/AREEB-AZHAR/RustBot) | Rust chatbot connecting backend, APIs, and a browser frontend; completed during a nine-week internship | Rust, HTTP/JSON APIs, HTML, CSS, JavaScript |
-| [Tally](https://github.com/AREEB-AZHAR/flutter_calculator_new) | Flutter personal-finance ledger with analytics and synced data | Flutter, Dart, SQLite, Firebase |
-| [GraviPop](https://github.com/AREEB-AZHAR/gravipop-mobile) | Physics-driven cross-platform merge puzzle | Rust, Miniquad, Android, Web |
-| [Degree Verification](https://github.com/AREEB-AZHAR/Degree-blockchain) | Credential issuance and public verification | Hyperledger Fabric, Express, CouchDB, Docker |
-| [CryptoTrader](https://github.com/AREEB-AZHAR/CryptoDashboard) | Live-market dashboard and paper-trading experience | React, Vite, TanStack Query, Zustand |
-| [Bunetto Ecommerce](https://github.com/AREEB-AZHAR/Bunetto) | Burger storefront, cart, product customisation, and WhatsApp order handoff | HTML, Tailwind CSS, JavaScript |
+- A near-black and warm-ivory visual system with self-hosted Manrope typography.
+- An original procedural metallic AA monogram, with four scroll-driven views, studio reflections, and pointer response.
+- A second sculptural sequence connecting structure, interaction, and delivery through geometric forms.
+- Six expansive project showcases with distinct line illustrations and real project media.
+- **24 static pages:** Home, About/Approach, Projects, Capabilities, Contact, and **19 canonical project briefings**.
+- An opaque full-screen navigation menu with keyboard focus management, Escape dismissal, and scroll restoration.
+- A searchable archive, direct project URLs, browser Back support, and next-project navigation.
+- Persistent motion preferences, system reduced-motion support, a static SVG fallback, and offscreen rendering suspension.
 
-The project archive also includes ChainShield, a Rust trading-bot foundation (backtest and paper modes; live mode remains fail-closed), coursework, freelance storefront work, personal microsites, and supporting assets. Smaller experiments are grouped so the strongest interview projects stay prominent. Repository details are taken from the project READMEs where available.
+The visual direction is inspired by [Mohamed Elgazzar’s portfolio](https://www.thisisgazzar.com/en). The AA identity, geometry, wording, project information, and implementation belong to this portfolio; the reference’s branding and assets are not included.
 
-## Internship
+## Explore the work
 
-The portfolio includes the actual [internship completion certificate](public/certificates/rust-internship-areeb-azhar.pdf) for a **nine-week hybrid internship in Blockchain Technology and Rust Programming**, jointly delivered by Hazara University, Mansehra, and Rockstable, awarded in September 2026. The card also describes the Rust chatbot project connecting its backend, API integrations, and frontend.
+| Project             | Engineering focus                                                      | Source                                                              |
+| ------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| RustBot             | Rust server, chatbot knowledge matching, browser UI, and external APIs | [Repository](https://github.com/AREEB-AZHAR/RustBot)                |
+| Tally               | Flutter finance ledger, SQLite, analytics, Firebase integration        | [Repository](https://github.com/AREEB-AZHAR/flutter_calculator_new) |
+| GraviPop            | Rust game loop, physics, rendering, and cross-platform input           | [Repository](https://github.com/AREEB-AZHAR/gravipop-mobile)        |
+| Degree Verification | Hyperledger Fabric, credential issuance, and public verification       | [Repository](https://github.com/AREEB-AZHAR/Degree-blockchain)      |
+| CryptoTrader        | Live market data, caching, local state, and simulated trading          | [Repository](https://github.com/AREEB-AZHAR/CryptoDashboard)        |
+| Bunetto             | Ecommerce presentation, configurable cart, and WhatsApp order handoff  | [Repository](https://github.com/AREEB-AZHAR/Bunetto)                |
 
-## Experience and interactions
+The archive retains Unity work, ChainShield, a trading-bot foundation, coursework, freelance Shopify work, cryptography experiments, indicators, AI game agents, architecture tooling, and personal web experiments. Earlier names and supporting work resolve to their canonical project and relevant section.
 
-- Responsive animated canvas background, with reduced-motion support
-- Numbered flip-board section entrances and dynamic copy
-- Filterable featured projects, repository links, and case-study dialogs
-- Project archive with direct repository links
-- Mobile navigation on an opaque, separately layered panel with scroll lock and keyboard dismissal
-- Reading progress, active-section HUD, and pointer-aware project lighting
-- Semantic structure, keyboard focus states, and responsive layouts
+Project pages distinguish application screenshots, icons, supporting artwork, and conceptual diagrams. GraviPop and Bunetto use the supplied gameplay and website captures. Local-only work remains discoverable without invented repository links or production claims.
 
-## Technology
+![Project briefing with the supplied Bunetto website capture](docs/screenshots/bunetto-briefing.png)
 
-- **Site:** HTML5, CSS3, framework-free JavaScript, Vite
-- **Interactions:** Intersection Observer, Canvas API, native dialog, responsive pointer events
-- **Typography:** Manrope, Newsreader, DM Mono
-- **Hosting:** GitHub Pages and GitHub Actions
+## Internship certificate
+
+The About page includes the actual [completion certificate](public/certificates/rust-internship-areeb-azhar.pdf) for the **nine-week hybrid internship in Blockchain Technology and Rust Programming**, jointly delivered by **Hazara University, Mansehra, and Rockstable**, awarded in **September 2026**. RustBot’s briefing explains the associated backend, API, and frontend work.
 
 ## Run locally
 
-Requirements: Node.js 24.x and npm.
+### Prerequisites
+
+- **Node.js 24.x**, as specified in `package.json`; install the matching Node release with npm included.
+- Git and a modern browser. WebGL is optional: the site has an SVG fallback.
+- No API keys, database, SDK, JDK, or `.env` file are required.
 
 ```bash
 git clone https://github.com/AREEB-AZHAR/Portfolio.git
@@ -52,49 +55,100 @@ npm ci
 npm run dev
 ```
 
-### Production build
+Open the URL printed by Vite, normally `http://localhost:5173/`. The predev command generates all pages automatically. If a port is occupied, Vite prints the alternative port it selected.
+
+### Build and preview
+
+For a domain-root deployment, including Vercel:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Vite generates production assets in `dist/`.
+For GitHub Pages under `/Portfolio/`:
 
-## Project structure
-
-```text
-Portfolio/
-├── .github/workflows/     # GitHub Pages deployment
-├── images/                # Portfolio imagery
-├── public/projects/       # Project artwork and screenshots
-├── index.html             # Content and semantic page structure
-├── style.css              # Responsive layout and visual systems
-├── main.js                # Interactions, animation, filters, and dialogs
-├── vite.config.js         # Vite and GitHub Pages base path
-└── package.json           # Scripts and dependencies
+```bash
+npm run build:pages
+npm run preview -- --base=/Portfolio/
 ```
 
-## Accessibility and performance
+Open the printed preview URL, including `/Portfolio/` for the Pages build. Both builds generate `dist/`. Their prebuild hooks regenerate pages and validate the project content before bundling.
 
-- Navigation and project controls work with a keyboard.
-- Motion effects respect `prefers-reduced-motion`; the canvas pauses in hidden tabs.
-- Mobile navigation locks document scrolling while open and closes on link selection or Escape.
-- Project imagery uses lazy loading and the canvas adapts its density to viewport size.
+## Architecture
+
+```text
+src/
+  content/projects.mjs     Project records, case-study content, capabilities
+  sculpture.js             Procedural Three.js scenes and rendering lifecycle
+scripts/
+  generate.mjs             Shared templates and static HTML generation
+  check-content.mjs        Content, route, related-link, and media validation
+  verify-browser.mjs       Browser regression checks and screenshot capture
+public/
+  projects/                Original screenshots and project artwork
+  certificates/            Actual internship PDF and preview
+  fonts/                   Self-hosted Manrope files and SIL Open Font License
+docs/screenshots/           Real screenshots of the redesigned portfolio
+main.js                    Menu, scrolling, motion controls, search, email composer
+style.css                  Shared visual system and responsive layouts
+vite.config.js             Multi-page entries and split 3D bundle
+```
+
+`scripts/generate.mjs` renders the shared header, navigation, footer, and page templates into real HTML entry points. Vite then produces static files, so project links work when opened directly or refreshed without an SPA rewrite rule.
+
+The generated `about/`, `projects/`, `capabilities/`, and `contact/` source folders are ignored by Git. They are recreated by the npm scripts. The root `index.html` is generated too and retained in the repository as the landing-page entry. **Edit the manifest or templates, not generated HTML.**
+
+### Update a project
+
+1. Edit its record in `src/content/projects.mjs`. Each project has a stable slug, context, stack, challenge, implementation, decisions, outcome, and workflow.
+2. Put real media in `public/projects/`, and set its path, alternative text, and media kind in the record. Preserve the difference between artwork and an actual interface capture.
+3. Add optional sections for earlier versions, supporting tools, or related source repositories. Keep claims grounded in the project itself.
+4. Run `npm run generate`, `npm test`, and the relevant production build. The generator adds the project to the index and produces `/projects/<slug>/` automatically.
+
+Six records are marked `featured`; those appear in the homepage story. Capabilities link to project slugs in the same manifest. Update the image dimension map in `scripts/generate.mjs` when adding imagery to preserve reserved layout space.
+
+## Interaction and accessibility
+
+- The base HTML contains the content and navigation; animation progressively enhances it.
+- Three.js loads in a separate bundle. Rendering pauses offscreen and in background tabs, pixel density is capped, and touch layouts use a lighter scene cadence.
+- GSAP media contexts reset responsive animation state. Touch uses native scrolling; Lenis smooths desktop wheel input.
+- The motion control persists the visitor’s choice locally. Without a saved choice, the system preference applies.
+- Native modal navigation provides focus containment. Closing restores focus and document scrolling.
+- The contact form validates locally and opens a **mailto draft**. It does not transmit a message or claim that an email was sent; the visitor reviews and sends it in their email application.
+- Images reserve their dimensions, retain their aspect ratios, and load lazily. Fonts are served locally.
+
+## Verification
+
+```bash
+npm test
+```
+
+This regenerates the site and checks unique routes, required content, asset existence, HTTPS source links, related-project references, and the six featured records.
+
+The optional browser suite checks all 24 routes and their internal resources, five viewport widths, menu dismissal/focus/scroll restoration, archive filtering, project refresh/Back/Next behavior, certificate access, motion persistence, and WebGL fallback. It also captures screenshots.
+
+To run it with your own Chromium installation:
+
+```bash
+npm install --no-save --package-lock=false playwright
+npx playwright install chromium
+# Start npm run dev in another terminal, then:
+node scripts/verify-browser.mjs http://localhost:5173/
+```
+
+Use the actual server port if Vite selected a different one. For a Pages preview, supply its complete base URL, for example `http://localhost:4173/Portfolio/`. Screenshots go to ignored `tmp/qa/` by default. `SCREENSHOT_DIR` changes that location, `BROWSER_CHANNEL=msedge` selects installed Edge, and `PLAYWRIGHT_MODULE` can point to an existing Playwright package. `QA_LIGHT=1` runs the alternate-build layout checks at 390px and 1440px while retaining route and resource checks.
 
 ## Deployment
 
-Vercel uses `vercel.json` to install locked dependencies with `npm ci`, build with `npm run build`, and serve `dist/` at the domain root. Import this repository into Vercel with the repository root as the project root directory. Node.js 24.x is specified in `package.json`.
+**Vercel:** `vercel.json` runs `npm ci` and `npm run build`, serves `dist/`, and uses Node.js 24.x from `package.json`. Import the repository with its root as the project root. Real static page directories provide nested URLs without a catch-all rewrite.
 
-Pushes to `main` also trigger `.github/workflows/deploy.yml`, which runs `npm run build:pages` to build with the `/Portfolio/` base path and deploy the artifact to GitHub Pages. For local Pages previews, run `npm run build:pages` followed by `npm run preview -- --base=/Portfolio/`.
+**GitHub Pages:** pushes to `main` trigger `.github/workflows/deploy.yml`. It installs locked dependencies, runs `npm run build:pages`, uploads `dist/`, and deploys to Pages. Asset URLs use `/Portfolio/`; internal navigation and certificate links remain relative to the current deployment.
 
-## Contact
+For a release, validate content, build both variants, run the browser checks against the built files, and then commit and push. To roll back, revert the release commit and let the same workflow publish the previous version.
 
-**Areeb Azhar** — BS Software Engineering student, Karachi, Pakistan
+## Credits and contact
 
-- GitHub: [@AREEB-AZHAR](https://github.com/AREEB-AZHAR)
-- Email: [areebazhar3@gmail.com](mailto:areebazhar3@gmail.com)
+Manrope is distributed under the [SIL Open Font License](public/fonts/OFL.txt). Project screenshots and the internship certificate were supplied for this portfolio. The sculpture and line illustrations are generated in code.
 
----
-
-Designed and developed by Areeb Azhar.
+**Areeb Azhar** · Karachi, Pakistan · [areebazhar3@gmail.com](mailto:areebazhar3@gmail.com)

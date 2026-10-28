@@ -4,11 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "predev": "npm run generate",
     "dev": "vite",
+    "prebuild": "npm run generate && node scripts/check-content.mjs",
     "build": "vite build",
+    "prebuild:pages": "npm run generate && node scripts/check-content.mjs",
     "build:pages": "vite build --base=/Portfolio/",
     "preview": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "npm run generate",
+    "test": "node scripts/check-content.mjs"
   },
   "keywords": [],
   "author": "",
