@@ -15,6 +15,7 @@ A cinematic software engineering portfolio with an original metallic AA sculptur
 - **24 static pages:** Home, About/Approach, Projects, Capabilities, Contact, and **19 canonical project briefings**.
 - An opaque full-screen navigation menu with keyboard focus management, Escape dismissal, and scroll restoration.
 - A searchable archive, direct project URLs, browser Back support, and next-project navigation.
+- The latest four-year education/building history and GitHub profile identity, retained on the About page.
 - Persistent motion preferences, system reduced-motion support, a static SVG fallback, and offscreen rendering suspension.
 
 The visual direction is inspired by [Mohamed Elgazzar’s portfolio](https://www.thisisgazzar.com/en). The AA identity, geometry, wording, project information, and implementation belong to this portfolio; the reference’s branding and assets are not included.

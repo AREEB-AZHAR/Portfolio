@@ -758,6 +758,31 @@ figcaption,
   display: block;
   transition: transform 0.4s;
 }
+.profile-reference {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 45px;
+  width: fit-content;
+}
+.profile-reference img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+.profile-reference span {
+  font-size: 15px;
+}
+.profile-reference small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
 .certificate-preview:hover {
   transform: translateY(-5px);
 }
