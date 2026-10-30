@@ -34,11 +34,72 @@ try {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(1200);
   await page
-    .locator(".hero-stage .has-webgl")
+    .locator(".story-atmosphere .has-webgl")
     .waitFor({ state: "visible", timeout: 10000 });
   await page.screenshot({ path: `${output}/horizontal-home.png` });
   const count = await page.locator(".horizontal-panel").count();
   assert.equal(count, 14, "Footer is the final scene");
+  assert.equal(
+    await page.locator(".story-thread path").count(),
+    1,
+    "All drawings share a single path",
+  );
+  assert.equal(
+    (await page.locator(".story-thread path").getAttribute("d")).match(/M/g)
+      ?.length,
+    1,
+    "The pen never lifts between shapes",
+  );
+  assert.equal(
+    await page.locator(".horizontal-panel .wire-motif").count(),
+    0,
+    "No disconnected scene drawings",
+  );
+  const strand = page.locator(".story-atmosphere .sculpture");
+  assert.equal(
+    await strand.getAttribute("data-mesh-count"),
+    "1",
+    "One opaque morphing mesh",
+  );
+  await page.evaluate(() => {
+    window.originalStoryCanvas = document.querySelector(
+      ".story-atmosphere canvas",
+    );
+  });
+  for (const phase of [2, 2.35, 2.65, 3, 4, 8, 11]) {
+    await page.evaluate(
+      (value) => scrollTo({ top: value * innerWidth, behavior: "instant" }),
+      phase,
+    );
+    await page.waitForFunction(
+      (value) =>
+        Math.abs(
+          Number(
+            document.querySelector(".story-atmosphere .sculpture").dataset
+              .morphPhase,
+          ) - value,
+        ) < 0.01,
+      phase,
+    );
+    assert(
+      await page.evaluate(
+        () =>
+          window.originalStoryCanvas ===
+          document.querySelector(".story-atmosphere canvas"),
+      ),
+      "Canvas is never reparented or replaced",
+    );
+    if (phase === 2.35 || phase === 2.65) {
+      const blend = Number(await strand.getAttribute("data-morph-blend"));
+      assert(
+        blend > 0 && blend < 1,
+        "Intermediate vertices interpolate rather than swapping forms",
+      );
+      await page.screenshot({ path: `${output}/morph-${phase}.png` });
+    }
+  }
+  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await page.waitForTimeout(600);
   assert.equal(
     await page.locator("img").count(),
     0,
@@ -54,8 +115,8 @@ try {
     (x) =>
       new DOMMatrixReadOnly(
         getComputedStyle(document.querySelector(".horizontal-track")).transform,
-      ).m41 >
-      x + 50,
+      ).m41 <
+      x - 50,
     initial,
     { timeout: 1200 },
   );
@@ -71,8 +132,8 @@ try {
     await page.waitForTimeout(35);
   }
   assert(
-    samples.every((x, i) => !i || x >= samples[i - 1] - 0.1),
-    "Story travels in positive X",
+    samples.every((x, i) => !i || x <= samples[i - 1] + 0.1),
+    "Story travels in negative X (right to left)",
   );
   assert(
     new Set(samples.map(Math.round)).size > 1,
@@ -93,13 +154,12 @@ try {
       scrollY > 50 &&
       new DOMMatrixReadOnly(
         getComputedStyle(document.querySelector(".horizontal-track")).transform,
-      ).m41 >
-        -13 * innerWidth + 35,
+      ).m41 < -35,
     null,
     { timeout: 1200 },
   );
   console.log(
-    `Refresh first-wheel response: ${Date.now() - start}ms; positive-X easing passed.`,
+    `Refresh first-wheel response: ${Date.now() - start}ms; right-to-left easing passed.`,
   );
   assert(!(await page.locator("#animation-gate").evaluate((el) => el.open)));
   assert.equal(
@@ -129,6 +189,9 @@ try {
     await page.goto(base, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
     const horizontal = width >= 768;
+    await page
+      .locator(".story-atmosphere .has-webgl")
+      .waitFor({ state: "visible", timeout: 10000 });
     assert.equal(
       await page.evaluate(() =>
         document.documentElement.classList.contains("story-horizontal"),

@@ -5,10 +5,7 @@ export function createHorizontalStory(host) {
   const track = host.querySelector(".horizontal-track");
   const panels = [...host.querySelectorAll(".horizontal-panel")];
   const desktop = matchMedia("(min-width:768px)");
-  const visual = host.querySelector(".approach-visual");
-  const principles = panels.filter((panel) =>
-    panel.matches(".principle-scene"),
-  );
+  const sculpture = host.querySelector(".story-atmosphere .sculpture");
   let motion = false,
     enabled = false,
     width = innerWidth,
@@ -25,7 +22,7 @@ export function createHorizontalStory(host) {
 
   function paint() {
     current = Math.round(rendered);
-    track.style.transform = `translate3d(${(rendered - panels.length + 1) * innerWidth}px,0,0)`;
+    track.style.transform = `translate3d(${-rendered * innerWidth}px,0,0)`;
     panels.forEach((panel, index) => {
       const local = Math.max(-1, Math.min(1, rendered - index));
       panel.classList.toggle("is-current", index === current);
@@ -35,15 +32,9 @@ export function createHorizontalStory(host) {
         (0.16 + 0.84 * (1 - Math.abs(local))).toFixed(4),
       );
     });
-    const hero = panels[0].querySelector(".sculpture");
-    if (hero) hero.dataset.sceneProgress = Math.min(1, rendered);
-    if (visual && principles.includes(panels[current])) {
-      if (visual.parentElement !== panels[current])
-        panels[current].prepend(visual);
-      visual.querySelector(".sculpture").dataset.sceneProgress = Math.max(
-        0,
-        Math.min(1, (rendered - 2) / 2),
-      );
+    if (sculpture) {
+      sculpture.dataset.sceneProgress = rendered;
+      sculpture.style.setProperty("--hero-presence", Math.max(0, 1 - rendered));
     }
   }
   function animate(time) {
@@ -59,7 +50,32 @@ export function createHorizontalStory(host) {
     else lastTime = 0;
   }
   function update(immediate = false) {
-    if (!enabled) return null;
+    if (!enabled) {
+      const index = Math.max(
+        0,
+        panels.findIndex(
+          (panel) => panel.getBoundingClientRect().bottom > innerHeight * 0.5,
+        ),
+      );
+      const rect = panels[index].getBoundingClientRect();
+      const progress = Math.max(
+        0,
+        Math.min(
+          panels.length - 1,
+          index +
+            (innerHeight * 0.5 - rect.top) / Math.max(1, rect.height) -
+            0.5,
+        ),
+      );
+      if (sculpture) {
+        sculpture.dataset.sceneProgress = progress;
+        sculpture.style.setProperty(
+          "--hero-presence",
+          Math.max(0, 1 - progress),
+        );
+      }
+      return null;
+    }
     const target = position();
     if (immediate || Math.abs(target - rendered) > 2) {
       cancelAnimationFrame(frame);
@@ -100,7 +116,6 @@ export function createHorizontalStory(host) {
       frame = 0;
       track.style.removeProperty("transform");
       panels.forEach((panel) => panel.classList.remove("is-current"));
-      if (visual) principles[0].prepend(visual);
     }
     if (preserve) {
       if (enabled) goTo(target);
@@ -139,7 +154,7 @@ export function createHorizontalStory(host) {
           0,
           Math.min(
             panels.length - 1,
-            current + (event.key === "ArrowRight" ? 1 : -1),
+            current + (event.key === "ArrowLeft" ? 1 : -1),
           ),
         )
       ],

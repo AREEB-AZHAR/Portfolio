@@ -40,6 +40,12 @@ export async function createSculpture(host) {
   // Lighting is baked once at development time, not synchronously on each visit.
   // Keep the static sculpture visible while its small asset loads asynchronously.
   const environment = await loadStudio();
+  if (host.dataset.variant === "continuous") {
+    const { createContinuousSculpture } = await import(
+      "./continuous-sculpture.js"
+    );
+    return createContinuousSculpture(host, environment);
+  }
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({

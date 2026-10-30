@@ -2203,10 +2203,10 @@ html:not(.motion-full) .hero-story {
 }
 .story-horizontal .horizontal-track {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   width: calc(var(--panel-count) * 100vw);
   height: 100%;
-  transform: translate3d(calc(-100% + 100vw), 0, 0);
+  transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 .story-horizontal .horizontal-track > .approach-story {
@@ -2658,6 +2658,79 @@ html:not(.motion-full) .hero-story {
 }
 
 /* Native multi-page handoff: no timer before navigation and no reload intro. */
+.horizontal-story {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.story-atmosphere {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: clip;
+}
+.story-atmosphere .sculpture {
+  inset: 0;
+}
+.story-atmosphere .sculpture:not(.has-webgl) .sculpture-fallback {
+  opacity: var(--hero-presence, 1);
+}
+.story-horizontal .story-atmosphere {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  margin: 0;
+}
+.story-horizontal .horizontal-track {
+  position: relative;
+  z-index: 1;
+}
+.horizontal-panel {
+  position: relative;
+  z-index: 1;
+}
+.story-thread {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  stroke: #909181;
+  stroke-width: 0.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.38;
+}
+.motion-reduced .story-atmosphere {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 100svh;
+  margin: 0;
+}
+.story-horizontal .horizontal-panel .reveal,
+.story-horizontal .horizontal-panel.is-current .reveal {
+  transform: translate3d(calc(var(--scene-progress, 0) * -45px), 0, 0);
+}
+.story-horizontal .horizontal-panel .project-bottom,
+.story-horizontal .horizontal-panel .scene-kicker {
+  transform: translate3d(calc(var(--scene-progress, 0) * -18px), 0, 0);
+}
+.story-horizontal .site-footer .footer-wordmark {
+  transform: translate3d(calc(var(--scene-progress, 0) * -35px), 0, 0);
+}
+@media (max-width: 767px) {
+  .story-atmosphere {
+    opacity: 0.65;
+  }
+  .story-thread {
+    opacity: 0.3;
+  }
+}
 .footer-reel,
 .footer-viewport {
   display: contents;
@@ -2682,7 +2755,7 @@ html:not(.motion-full) .hero-story {
     flex-direction: column;
     justify-content: space-between;
     border: 0;
-    transform: translate3d(calc((var(--footer-progress, 0) - 1) * 100vw), 0, 0);
+    transform: translate3d(calc((1 - var(--footer-progress, 0)) * 100vw), 0, 0);
     will-change: transform;
   }
   .motion-full .footer-reel .footer-intro {
@@ -2741,8 +2814,8 @@ html:not(.motion-full) .hero-story {
 }
 @keyframes flow-in {
   from {
-    transform: translate3d(-22vw, 0, 0);
-    clip-path: inset(0 100% 0 0);
+    transform: translate3d(22vw, 0, 0);
+    clip-path: inset(0 0 0 100%);
     opacity: 0.4;
   }
   to {
@@ -2753,7 +2826,7 @@ html:not(.motion-full) .hero-story {
 }
 @keyframes flow-out {
   to {
-    transform: translate3d(12vw, 0, 0);
+    transform: translate3d(-12vw, 0, 0);
     opacity: 0;
   }
 }

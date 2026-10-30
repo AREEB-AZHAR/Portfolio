@@ -214,7 +214,7 @@ try {
   await unavailablePage.waitForTimeout(1000);
   assert(
     await unavailablePage
-      .locator(".hero-stage .sculpture-fallback")
+      .locator(".story-atmosphere .sculpture-fallback")
       .isVisible(),
   );
   assert.equal(await unavailablePage.locator(".has-webgl").count(), 0);

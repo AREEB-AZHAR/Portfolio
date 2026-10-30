@@ -1,4 +1,5 @@
 import { createHorizontalStory, createFooterFlow } from "./src/horizontal.js";
+import { createStoryThread } from "./src/thread.js";
 
 const root = document.documentElement;
 const media = matchMedia("(prefers-reduced-motion: reduce)");
@@ -13,6 +14,7 @@ const story = createHorizontalStory(
   document.querySelector(".horizontal-story"),
 );
 const footerFlow = createFooterFlow(document.querySelector(".footer-reel"));
+const thread = createStoryThread(document.querySelector(".horizontal-story"));
 const motionToggle = document.querySelector(".motion-toggle");
 const gate = document.querySelector("#animation-gate");
 const instances = new Map();
@@ -79,6 +81,7 @@ function setMotion(value, preserve = true) {
     "story-horizontal",
     !reduced && Boolean(story?.isHorizontal()),
   );
+  thread?.refresh();
   root.classList.toggle("motion-reduced", reduced);
   root.classList.toggle("motion-full", !reduced);
   motionToggle.setAttribute("aria-pressed", String(!reduced));
@@ -187,12 +190,13 @@ function scrollUI() {
     activeStory || active?.dataset.section || document.title.split(" — ")[0];
   rail.querySelector(".progress-hint").textContent =
     !reduced && story?.isHorizontal()
-      ? "Scroll down · Story moves right →"
+      ? "Scroll down · Story moves left ←"
       : "Scroll to explore —";
   const hero = document.querySelector(".hero-story");
   if (hero) {
     const heroProgress = Number(
-      hero.querySelector(".sculpture").dataset.sceneProgress || 0,
+      document.querySelector(".story-atmosphere .sculpture")?.dataset
+        .sceneProgress || 0,
     );
     document.querySelector(".hero-phase").textContent =
       `0${Math.min(4, Math.floor(heroProgress * 4) + 1)} / 04`;
