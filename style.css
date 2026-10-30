@@ -2066,3 +2066,438 @@ body::before {
     opacity: 0.55;
   }
 }
+
+/* Native-scroll horizontal storytelling. Static/no-JS remains a normal document. */
+html {
+  scroll-behavior: auto;
+}
+.horizontal-story {
+  display: block;
+}
+html:not(.motion-full) .hero-story {
+  height: auto;
+}
+.horizontal-viewport,
+.horizontal-track {
+  display: contents;
+}
+.hero-story {
+  height: 100svh;
+}
+.hero-stage {
+  position: relative;
+}
+.footer-wordmark {
+  font-size: clamp(40px, 12.8vw, 230px);
+  letter-spacing: -0.075em;
+}
+.motion-control {
+  position: relative;
+}
+.motion-label {
+  display: inline;
+  white-space: nowrap;
+}
+.motion-info {
+  font-size: 13px;
+}
+.motion-help {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 260px;
+  padding: 16px 20px;
+  border: 1px solid #55564c;
+  background: #171814;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.motion-control:hover .motion-help,
+.motion-control:focus-within .motion-help {
+  opacity: 1;
+  visibility: visible;
+}
+.choosing-motion {
+  overflow: hidden;
+}
+.animation-gate {
+  width: min(650px, calc(100% - 32px));
+  max-height: calc(100svh - 32px);
+  padding: clamp(24px, 4vw, 56px);
+  background: #11120f;
+  color: var(--ink);
+  border: 1px solid #494a40;
+  overflow: auto;
+}
+.animation-gate::backdrop {
+  background: #090909d9;
+  backdrop-filter: blur(8px);
+}
+.animation-gate h2 {
+  font-size: clamp(36px, 5vw, 68px);
+  margin-bottom: 24px;
+}
+.animation-gate > p {
+  max-width: 500px;
+}
+.animation-options {
+  display: grid;
+  gap: 12px;
+  margin-top: 30px;
+}
+.animation-options button {
+  text-align: left;
+  padding: 18px 20px;
+  border: 1px solid #66675c;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.animation-options button:first-child {
+  background: var(--ink);
+  color: var(--bg);
+}
+.animation-options button:hover {
+  background: #c4c2b7;
+  color: #090909;
+}
+.animation-options span,
+.animation-options small {
+  display: block;
+}
+.animation-options span {
+  font-size: 15px;
+}
+.animation-options small {
+  font-size: 11px;
+  margin-top: 6px;
+  opacity: 0.75;
+}
+.animation-note {
+  font-size: 10px;
+  margin-top: 24px;
+}
+.motion-reduced .sculpture canvas {
+  visibility: hidden;
+}
+.motion-reduced .sculpture-fallback {
+  visibility: visible;
+}
+.motion-full .horizontal-story {
+  display: block;
+  position: relative;
+  height: calc(100svh + (var(--panel-count) - 1) * 100vw);
+}
+.motion-full .horizontal-viewport {
+  display: block;
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+}
+.motion-full .horizontal-track {
+  display: flex;
+  flex-direction: row-reverse;
+  width: calc(var(--panel-count) * 100vw);
+  height: 100%;
+  transform: translate3d(calc(-100% + 100vw), 0, 0);
+  will-change: transform;
+}
+.motion-full .horizontal-track > .approach-story {
+  display: contents;
+}
+.motion-full .horizontal-panel {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100svh;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  padding: clamp(100px, 13svh, 150px) var(--space) 95px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.motion-full .horizontal-panel.hero-story {
+  display: block;
+  padding: 0;
+}
+.motion-full .horizontal-panel .hero-stage {
+  min-height: 0;
+  height: 100%;
+}
+.motion-full .horizontal-panel .hero-coordinate {
+  top: 115px;
+}
+.motion-full .horizontal-panel .hero-foot {
+  bottom: 100px;
+}
+.motion-full .horizontal-panel .hero-type {
+  top: 23%;
+  font-size: min(12.3vw, 16svh);
+}
+.motion-full .horizontal-panel .display {
+  font-size: min(8.8vw, 11.5svh);
+}
+.motion-full .horizontal-panel .intro-bottom {
+  margin-top: clamp(30px, 6svh, 80px);
+  gap: 35px;
+}
+.motion-full .horizontal-panel .intro-bottom .lede {
+  font-size: clamp(18px, 1.8vw, 28px);
+  line-height: 1.55;
+}
+.motion-full .horizontal-panel .split-intro {
+  margin-top: 6svh;
+}
+.motion-full .horizontal-panel .principle-stage {
+  min-height: 0;
+  flex: 1;
+}
+.motion-full .horizontal-panel .principle-stage h2 {
+  font-size: min(9.2vw, 13svh);
+  max-width: 950px;
+  margin-left: 0;
+}
+.motion-full .horizontal-panel .principle-copy {
+  font-size: clamp(17px, 1.7vw, 24px);
+  position: relative;
+  z-index: 2;
+}
+.motion-full .horizontal-panel .approach-visual {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  height: 100%;
+}
+.motion-full .horizontal-panel.project-scene {
+  justify-content: space-between;
+  gap: 20px;
+}
+.motion-full .horizontal-panel .project-stage {
+  min-height: 0;
+  flex: 1;
+  gap: 30px;
+}
+.motion-full .horizontal-panel .project-title {
+  font-size: min(9.5vw, 13svh);
+}
+.motion-full
+  .horizontal-panel[data-section="Degree Verification"]
+  .project-title {
+  font-size: min(6.2vw, 10svh);
+}
+.motion-full .horizontal-panel[data-section="CryptoTrader"] .project-title {
+  font-size: min(8.1vw, 12svh);
+}
+.motion-full .horizontal-panel .figure-surface {
+  min-height: 0;
+  height: min(43svh, 460px);
+}
+.motion-full .horizontal-panel .project-figure img {
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+}
+.motion-full .horizontal-panel .portrait img {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+.motion-full .horizontal-panel .icon-art img {
+  width: min(180px, 25svh);
+  height: auto;
+}
+.motion-full .horizontal-panel .project-stage > .wire-motif {
+  height: 100%;
+}
+.motion-full .horizontal-panel .project-bottom {
+  align-items: center;
+}
+.motion-full .horizontal-panel .project-bottom p {
+  font-size: clamp(18px, 2vw, 29px);
+}
+.motion-full .horizontal-panel .bridge-bottom {
+  margin-top: 5svh;
+}
+.motion-full .horizontal-panel .reveal {
+  opacity: 0.25;
+  transform: translateX(-16px);
+  transition:
+    opacity 0.65s,
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.motion-full .horizontal-panel.is-current .reveal {
+  opacity: 1;
+  transform: none;
+}
+.motion-full .horizontal-panel .wire-object {
+  transform: rotate(calc(var(--scene-progress, 0) * 30deg));
+}
+.motion-full body:not([data-page="home"]) .reveal {
+  opacity: 0.35;
+  transform: translateX(-25px);
+  transition:
+    opacity 0.7s,
+    transform 0.8s;
+}
+.motion-full body:not([data-page="home"]) .reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (max-width: 767px) {
+  .brand > span {
+    display: none;
+  }
+  .header-actions {
+    gap: 14px;
+  }
+  .motion-toggle {
+    gap: 6px;
+    font-size: 9px;
+  }
+  .motion-icon {
+    font-size: 23px;
+  }
+  .motion-help {
+    right: -65px;
+    width: 240px;
+  }
+  .footer-wordmark {
+    font-size: 12.4vw;
+  }
+  .motion-full .horizontal-panel {
+    padding: 105px var(--space) 90px;
+  }
+  .motion-full .horizontal-panel .display {
+    font-size: clamp(38px, 10.6vw, 78px);
+  }
+  .motion-full .horizontal-panel .hero-coordinate {
+    top: 100px;
+  }
+  .motion-full .horizontal-panel .hero-type {
+    top: 27%;
+    font-size: 13vw;
+  }
+  .motion-full .horizontal-panel .hero-foot {
+    bottom: 85px;
+    gap: 20px;
+  }
+  .motion-full .horizontal-panel .intro-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-top: 35px;
+  }
+  .motion-full .horizontal-panel .intro-bottom .eyebrow {
+    margin-bottom: 0;
+  }
+  .motion-full .horizontal-panel .intro-bottom .line-link {
+    justify-self: start;
+  }
+  .motion-full .horizontal-panel .principle-stage h2 {
+    font-size: clamp(40px, 12vw, 80px);
+  }
+  .motion-full .horizontal-panel .principle-copy {
+    font-size: 16px;
+  }
+  .motion-full .horizontal-panel .split-intro {
+    flex-direction: column;
+    align-items: start;
+    gap: 25px;
+  }
+  .motion-full .horizontal-panel .split-intro p {
+    font-size: 18px;
+  }
+  .motion-full .horizontal-panel .project-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 22px;
+  }
+  .motion-full .horizontal-panel .project-title {
+    font-size: clamp(40px, 10.8vw, 78px);
+  }
+  .motion-full
+    .horizontal-panel[data-section="Degree Verification"]
+    .project-title {
+    font-size: 10.3vw;
+  }
+  .motion-full .horizontal-panel[data-section="CryptoTrader"] .project-title {
+    font-size: 11vw;
+  }
+  .motion-full .horizontal-panel .figure-surface {
+    height: min(28svh, 280px);
+  }
+  .motion-full .horizontal-panel .portrait .figure-surface {
+    height: min(33svh, 340px);
+  }
+  .motion-full .horizontal-panel .project-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .motion-full .horizontal-panel .project-bottom p {
+    font-size: 16px;
+  }
+  .motion-full .horizontal-panel .project-bottom .line-link {
+    justify-self: start;
+    padding-block: 10px;
+  }
+  .motion-full .horizontal-panel figcaption {
+    font-size: 8px;
+  }
+  .motion-full .horizontal-panel .bridge-bottom {
+    flex-direction: column;
+    align-items: start;
+    gap: 15px;
+  }
+  .motion-full .horizontal-panel .bridge-bottom p {
+    font-size: 16px;
+  }
+}
+@media (max-height: 700px) {
+  .motion-full .horizontal-panel {
+    padding-top: 85px;
+    padding-bottom: 70px;
+  }
+  .motion-full .horizontal-panel .scene-kicker {
+    font-size: 8px;
+  }
+  .motion-full .horizontal-panel .hero-coordinate {
+    top: 90px;
+  }
+  .motion-full .horizontal-panel .hero-foot {
+    bottom: 75px;
+  }
+  .motion-full .horizontal-panel .intro-bottom {
+    margin-top: 20px;
+    gap: 12px;
+  }
+  .motion-full .horizontal-panel .intro-bottom .lede {
+    font-size: 16px;
+  }
+  .motion-full .horizontal-panel .eyebrow {
+    margin-bottom: 15px;
+  }
+  .motion-full .horizontal-panel .project-stage {
+    gap: 10px;
+  }
+  .motion-full .horizontal-panel .project-title {
+    font-size: min(10vw, 9svh);
+  }
+  .motion-full .horizontal-panel .project-bottom {
+    gap: 4px;
+  }
+  .motion-full .horizontal-panel .project-bottom p {
+    font-size: 14px;
+  }
+}

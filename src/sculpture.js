@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
-export function createSculpture(host) {
+export async function createSculpture(host) {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -121,6 +121,7 @@ export function createSculpture(host) {
   const top = new THREE.DirectionalLight(0xffffff, 3);
   top.position.set(0, 5, -3);
   scene.add(top);
+  let ready = false;
   let visible = true,
     paused = false,
     reduced = false,
@@ -147,19 +148,21 @@ export function createSculpture(host) {
     camera.updateProjectionMatrix();
     camera.position.z = width < 600 ? 11.5 : 9.5;
     group.scale.setScalar(width < 600 ? 0.94 : 1.32);
-    render(performance.now());
+    if (ready) render(performance.now());
   });
   resize.observe(host);
   const render = (time) => {
     const progress =
-      hero && !reduced
-        ? THREE.MathUtils.clamp(
-            -hero.getBoundingClientRect().top /
-              Math.max(1, hero.offsetHeight - innerHeight),
-            0,
-            1,
-          )
-        : 0;
+      host.dataset.sceneProgress !== undefined && !reduced
+        ? Number(host.dataset.sceneProgress)
+        : hero && !reduced
+          ? THREE.MathUtils.clamp(
+              -hero.getBoundingClientRect().top /
+                Math.max(1, hero.offsetHeight - innerHeight),
+              0,
+              1,
+            )
+          : 0;
     const t = reduced ? 0 : time * 0.00015;
     group.rotation.y =
       -0.5 + progress * Math.PI * 1.35 + Math.sin(t) * 0.055 + pointerX * 0.07;
@@ -195,7 +198,7 @@ export function createSculpture(host) {
     frame = requestAnimationFrame(loop);
   }
   function start() {
-    if (!frame && !paused && visible && !document.hidden && !reduced)
+    if (ready && !frame && !paused && visible && !document.hidden && !reduced)
       frame = requestAnimationFrame(loop);
   }
   function stop() {
@@ -224,6 +227,14 @@ export function createSculpture(host) {
     host.classList.add("has-webgl");
     start();
   });
+  const width = host.clientWidth,
+    height = host.clientHeight;
+  renderer.setSize(width, height, false);
+  camera.aspect = width / Math.max(1, height);
+  camera.updateProjectionMatrix();
+  // Let parallel shader compilation complete before the first visible frame.
+  await renderer.compileAsync(scene, camera);
+  ready = true;
   render(0);
   host.classList.add("has-webgl");
   start();
@@ -232,7 +243,7 @@ export function createSculpture(host) {
       reduced = value;
       if (value) {
         stop();
-        render(0);
+        // Static mode uses the SVG, and does not submit another GPU frame.
       } else start();
     },
     pause() {

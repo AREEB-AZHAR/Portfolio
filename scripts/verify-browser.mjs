@@ -20,6 +20,7 @@ try {
   });
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(base, { waitUntil: "networkidle" });
+  await page.locator('[data-motion="full"]').click();
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(900);
   await page.screenshot({ path: `${output}/home-desktop.png` });
@@ -45,7 +46,15 @@ try {
     [".project-scene", "selected-work"],
     [".capability-bridge", "capabilities-bridge"],
   ]) {
-    await page.locator(selector).first().scrollIntoViewIfNeeded();
+    await page
+      .locator(selector)
+      .first()
+      .evaluate((el) =>
+        scrollTo({
+          top: Number(el.dataset.panelIndex) * innerWidth,
+          behavior: "instant",
+        }),
+      );
     await page.waitForTimeout(500);
     if (selector === ".project-scene")
       await page
@@ -192,6 +201,7 @@ try {
   const fallback = await browser.newContext({ reducedMotion: "reduce" });
   const fallbackPage = await fallback.newPage();
   await fallbackPage.goto(base, { waitUntil: "networkidle" });
+  await fallbackPage.locator('[data-motion="reduced"]').click();
   assert(await fallbackPage.locator(".sculpture-fallback").isVisible());
   await fallback.close();
   const unavailable = await browser.newContext();
@@ -205,6 +215,8 @@ try {
   });
   const unavailablePage = await unavailable.newPage();
   await unavailablePage.goto(base, { waitUntil: "networkidle" });
+  await unavailablePage.locator('[data-motion="full"]').click();
+  await unavailablePage.waitForTimeout(1000);
   assert(
     await unavailablePage
       .locator(".hero-stage .sculpture-fallback")
