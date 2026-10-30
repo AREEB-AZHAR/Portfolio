@@ -56,11 +56,6 @@ try {
         }),
       );
     await page.waitForTimeout(500);
-    if (selector === ".project-scene")
-      await page
-        .locator(".project-scene img")
-        .first()
-        .evaluate((img) => img.decode());
     await page.screenshot({ path: `${output}/${name}.png` });
   }
   const resources = new Set();

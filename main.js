@@ -1,4 +1,4 @@
-import { createHorizontalStory } from "./src/horizontal.js";
+import { createHorizontalStory, createFooterFlow } from "./src/horizontal.js";
 
 const root = document.documentElement;
 const media = matchMedia("(prefers-reduced-motion: reduce)");
@@ -12,6 +12,7 @@ let reduced = sessionChoice !== "full";
 const story = createHorizontalStory(
   document.querySelector(".horizontal-story"),
 );
+const footerFlow = createFooterFlow(document.querySelector(".footer-reel"));
 const motionToggle = document.querySelector(".motion-toggle");
 const gate = document.querySelector("#animation-gate");
 const instances = new Map();
@@ -53,8 +54,9 @@ async function loadVisibleSculptures() {
       const instance = await module.createSculpture(host);
       instances.set(host, instance);
       instance?.setReduced(reduced);
-    } catch {
+    } catch (error) {
       instances.set(host, null);
+      console.warn("Using the static sculpture:", error.message);
     }
     pending.delete(host);
     queueSculptures();
@@ -73,6 +75,10 @@ function queueSculptures() {
 function setMotion(value, preserve = true) {
   reduced = value !== "full";
   story?.setEnabled(!reduced, preserve);
+  root.classList.toggle(
+    "story-horizontal",
+    !reduced && Boolean(story?.isHorizontal()),
+  );
   root.classList.toggle("motion-reduced", reduced);
   root.classList.toggle("motion-full", !reduced);
   motionToggle.setAttribute("aria-pressed", String(!reduced));
@@ -159,6 +165,7 @@ let frame = 0;
 function scrollUI() {
   frame = 0;
   const activeStory = story?.update();
+  footerFlow?.update();
   const range = root.scrollHeight - innerHeight;
   const progress = range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
   rail.querySelector(".progress-track i").style.transform =
@@ -179,7 +186,7 @@ function scrollUI() {
   rail.querySelector(".progress-label").textContent =
     activeStory || active?.dataset.section || document.title.split(" — ")[0];
   rail.querySelector(".progress-hint").textContent =
-    !reduced && story
+    !reduced && story?.isHorizontal()
       ? "Scroll down · Story moves right →"
       : "Scroll to explore —";
   const hero = document.querySelector(".hero-story");

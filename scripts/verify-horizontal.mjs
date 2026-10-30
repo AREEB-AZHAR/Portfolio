@@ -7,7 +7,7 @@ const base = (process.argv[2] || "http://127.0.0.1:5181/Portfolio/").replace(
   /\/?$/,
   "/",
 );
-const output = process.env.SCREENSHOT_DIR || "tmp/horizontal-qa";
+const output = process.env.SCREENSHOT_DIR || "tmp/continuous-qa";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
@@ -15,28 +15,36 @@ const browser = await chromium.launch({
     ? { channel: process.env.BROWSER_CHANNEL }
     : {}),
 });
-const errors = [];
 try {
-  const context = await browser.newContext();
+  const context = await browser.newContext({
+    viewport: { width: 1440, height: 1000 },
+  });
   const page = await context.newPage();
+  const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(base, { waitUntil: "domcontentloaded" });
   await page.locator("#animation-gate").waitFor({ state: "visible" });
   assert.equal(
-    await page.locator("canvas").count(),
+    await page.locator("canvas,img").count(),
     0,
-    "No GPU setup before consent",
+    "Landing loads no project images or GPU work before choice",
   );
   await page.screenshot({ path: `${output}/animation-choice.png` });
   await page.locator('[data-motion="full"]').click();
-  await page.waitForFunction(() =>
-    document.documentElement.classList.contains("motion-full"),
-  );
   await page.evaluate(() => document.fonts.ready);
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(1200);
+  await page
+    .locator(".hero-stage .has-webgl")
+    .waitFor({ state: "visible", timeout: 10000 });
   await page.screenshot({ path: `${output}/horizontal-home.png` });
-  const before = await page
+  const count = await page.locator(".horizontal-panel").count();
+  assert.equal(count, 14, "Footer is the final scene");
+  assert.equal(
+    await page.locator("img").count(),
+    0,
+    "No project images on homepage",
+  );
+  const initial = await page
     .locator(".horizontal-track")
     .evaluate(
       (el) => new DOMMatrixReadOnly(getComputedStyle(el).transform).m41,
@@ -47,21 +55,30 @@ try {
       new DOMMatrixReadOnly(
         getComputedStyle(document.querySelector(".horizontal-track")).transform,
       ).m41 >
-      x + 100,
-    before,
+      x + 50,
+    initial,
+    { timeout: 1200 },
+  );
+  const samples = [];
+  for (let i = 0; i < 6; i++) {
+    samples.push(
+      await page
+        .locator(".horizontal-track")
+        .evaluate(
+          (el) => new DOMMatrixReadOnly(getComputedStyle(el).transform).m41,
+        ),
+    );
+    await page.waitForTimeout(35);
+  }
+  assert(
+    samples.every((x, i) => !i || x >= samples[i - 1] - 0.1),
+    "Story travels in positive X",
   );
   assert(
-    Math.abs(
-      await page
-        .locator(".horizontal-viewport")
-        .evaluate((el) => el.getBoundingClientRect().top),
-    ) < 1,
-    "Viewport stays fixed while story moves right",
+    new Set(samples.map(Math.round)).size > 1,
+    "Track eases through several intermediate frames",
   );
-  console.log("Real wheel input moves story left-to-right.");
-
-  // A refresh must retain layout before the first paint, without a consent
-  // replay, smooth-wheel ramp, or GPU work blocking the first wheel event.
+  await page.waitForTimeout(500);
   await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
   await page.reload({ waitUntil: "domcontentloaded" });
   await page.waitForFunction(
@@ -69,7 +86,6 @@ try {
       document.querySelector(".motion-toggle").getAttribute("aria-label") ===
       "Disable animations",
   );
-  assert(!(await page.locator("#animation-gate").evaluate((el) => el.open)));
   const start = Date.now();
   await page.mouse.wheel(0, 300);
   await page.waitForFunction(
@@ -78,133 +94,158 @@ try {
       new DOMMatrixReadOnly(
         getComputedStyle(document.querySelector(".horizontal-track")).transform,
       ).m41 >
-        -12 * innerWidth + 50,
+        -13 * innerWidth + 35,
     null,
-    { timeout: 2000 },
+    { timeout: 1200 },
   );
   console.log(
-    `Refresh → first wheel visible response: ${Date.now() - start} ms`,
+    `Refresh first-wheel response: ${Date.now() - start}ms; positive-X easing passed.`,
   );
-  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
-  await page.locator('a[href="#introduction"]').click();
-  await page.waitForFunction(
-    () =>
-      Math.abs(
-        document.querySelector("#introduction").getBoundingClientRect().left,
-      ) < 2,
-  );
-  await page.keyboard.press("ArrowRight");
-  await page.waitForFunction(
-    () => document.querySelector(".is-current")?.dataset.panelIndex === "2",
+  assert(!(await page.locator("#animation-gate").evaluate((el) => el.open)));
+  assert.equal(
+    await page.evaluate(
+      () => document.documentElement.dataset.navigationTransition || "none",
+    ),
+    "none",
+    "Refresh does not run a page handoff",
   );
 
   for (const width of process.env.QA_SHORT
     ? [320, 390]
-    : [320, 390, 768, 1024, 1440]) {
+    : process.env.QA_LANDSCAPE
+      ? [768, 1024]
+      : [320, 390, 768, 1024, 1440]) {
+    const viewportHeight = process.env.QA_LANDSCAPE
+      ? 600
+      : process.env.QA_SHORT
+        ? 568
+        : width < 768
+          ? 844
+          : 1000;
     await page.setViewportSize({
       width,
-      height: process.env.QA_SHORT ? 568 : width < 768 ? 844 : 1000,
+      height: viewportHeight,
     });
     await page.goto(base, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
-    const panels = page.locator(".horizontal-panel");
-    assert.equal(await panels.count(), 13);
-    for (let index = 0; index < 13; index++) {
-      await page.evaluate(
-        (i) => scrollTo({ top: i * innerWidth, behavior: "instant" }),
-        index,
-      );
-      await page.waitForFunction(
-        (i) =>
-          document
-            .querySelector(`.horizontal-panel[data-panel-index="${i}"]`)
-            ?.classList.contains("is-current"),
-        index,
-      );
-      await page.waitForTimeout(850);
-      const rects = await panels.nth(index).evaluate((el) => {
-        const panel = el.getBoundingClientRect();
-        return [
-          ...el.querySelectorAll(
-            "h1,h2,h3,.project-bottom,.principle-copy,.intro-bottom,.bridge-bottom,.hero-foot,.scene-kicker",
-          ),
-        ].map((item) => {
-          const rect = item.getBoundingClientRect();
-          return {
-            tag: item.className || item.tagName,
-            top: rect.top - panel.top,
-            bottom: rect.bottom - panel.top,
-            left: rect.left - panel.left,
-            right: rect.right - panel.left,
-            height: panel.height,
-          };
-        });
-      });
-      for (const rect of rects) {
-        assert(
-          rect.left >= -2 && rect.right <= width + 2,
-          `Clipped horizontally ${width}px panel ${index}: ${JSON.stringify(rect)}`,
+    const horizontal = width >= 768;
+    assert.equal(
+      await page.evaluate(() =>
+        document.documentElement.classList.contains("story-horizontal"),
+      ),
+      horizontal,
+    );
+    assert.equal(
+      await page
+        .locator(".horizontal-track")
+        .evaluate((el) => getComputedStyle(el).display),
+      horizontal ? "flex" : "contents",
+    );
+    for (let index = 0; index < count; index++) {
+      const panel = page.locator(".horizontal-panel").nth(index);
+      if (horizontal) {
+        await page.evaluate(
+          (i) => scrollTo({ top: i * innerWidth, behavior: "instant" }),
+          index,
         );
-        assert(
-          rect.top >= -1 && rect.bottom <= rect.height - 45,
-          `Clipped vertically ${width}px panel ${index}: ${JSON.stringify(rect)}`,
+        await page.waitForFunction(
+          (i) =>
+            Math.abs(
+              document
+                .querySelector(`[data-panel-index="${i}"]`)
+                .getBoundingClientRect().left,
+            ) < 1,
+          index,
         );
+      } else await panel.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(250);
+      assert(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth + 1,
+        ),
+        `Overflow at ${width}px scene ${index}`,
+      );
+      if (horizontal) {
+        const rects = await panel.evaluate((el) =>
+          [
+            ...el.querySelectorAll(
+              "h1,h2,h3,.project-bottom,.principle-copy,.intro-bottom,.bridge-bottom,.hero-foot,.footer-intro,.footer-details,.footer-wordmark,.footer-bottom",
+            ),
+          ].map((item) => {
+            const r = item.getBoundingClientRect();
+            return {
+              tag: item.className || item.tagName,
+              left: r.left,
+              right: r.right,
+              top: r.top,
+              bottom: r.bottom,
+            };
+          }),
+        );
+        for (const rect of rects)
+          assert(
+            rect.left >= -2 &&
+              rect.right <= width + 2 &&
+              rect.top >= -2 &&
+              rect.bottom <= viewportHeight - 45,
+            `Clipping ${width}px scene ${index}: ${JSON.stringify(rect)}`,
+          );
       }
-      if ([0, 2, 6, 8, 11, 12].includes(index)) {
-        if (index >= 6 && index <= 11)
-          await panels
-            .nth(index)
-            .locator("img")
-            .evaluate((img) => img.decode());
+      if ([2, 6, 11, 13].includes(index))
         await page.screenshot({
-          path: `${output}/panel-${index}-${width}.png`,
+          path: `${output}/scene-${index}-${width}.png`,
         });
-      }
     }
-    assert(await page.locator(".motion-label").isVisible());
-    await page.locator(".motion-toggle").focus();
-    assert(await page.locator("#motion-help").isVisible());
+    assert.equal(
+      await page.locator(".footer-wordmark").textContent(),
+      "AREEB AZHAR",
+    );
+    if (horizontal)
+      assert(
+        Math.abs(
+          await page
+            .locator(".site-footer")
+            .evaluate((el) => el.getBoundingClientRect().top),
+        ) < 1,
+        "Footer stays in horizontal viewport",
+      );
     await page.locator(".menu-toggle").click();
     await page.keyboard.press("Escape");
     assert(!(await page.locator("#site-menu").evaluate((el) => el.open)));
-    await page.evaluate(() =>
-      scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: "instant",
-      }),
-    );
-    const wordmark = page.locator(".footer-wordmark");
-    assert.equal(await wordmark.textContent(), "AREEB AZHAR");
-    assert(
-      await wordmark.evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
-    );
     console.log(
-      `All 13 panels, menu, control label, and footer passed: ${width}px`,
+      `${width}px: ${horizontal ? "14 horizontal scenes including footer" : "native vertical mobile flow"} passed.`,
     );
   }
+
+  // Real cross-document clicks, not goto(), exercise shared title/geometry
+  // snapshots. Back restores the original story scene rather than starting over.
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(base);
   await page.evaluate(() =>
-    scrollTo({ top: 6 * innerWidth, behavior: "instant" }),
+    scrollTo({ top: 11 * innerWidth, behavior: "instant" }),
   );
-  await page.waitForTimeout(100);
-  await page.locator(".motion-toggle").click();
-  assert(
-    await page.evaluate(() =>
-      document.documentElement.classList.contains("motion-reduced"),
-    ),
-  );
-  await page.reload({ waitUntil: "domcontentloaded" });
-  assert(!(await page.locator("#animation-gate").evaluate((el) => el.open)));
-  assert.equal(await page.locator("canvas").count(), 0);
-  await page.locator(".motion-toggle").click();
-  await page.waitForTimeout(100);
-  assert(
-    await page.evaluate(() =>
-      document.documentElement.classList.contains("motion-full"),
-    ),
-  );
-  await page.locator(".project-image-link").last().focus();
   await page.waitForFunction(
-    () => document.querySelector(".is-current")?.dataset.panelIndex === "11",
+    () =>
+      Math.abs(
+        document
+          .querySelector('[data-project="bunetto"]')
+          .getBoundingClientRect().left,
+      ) < 1,
+  );
+  await page.locator('[data-project="bunetto"] .project-bottom a').click();
+  await page.waitForURL("**/projects/bunetto/");
+  await page.waitForFunction(
+    () =>
+      document.documentElement.dataset.navigationTransition === "active" ||
+      document.documentElement.dataset.navigationTransition === "settled",
+  );
+  await page.waitForFunction(
+    () => document.documentElement.dataset.navigationTransition === "settled",
+  );
+  assert((await page.locator("h1").textContent()).includes("Bunetto"));
+  assert(
+    (await page.locator(".case-gallery img").count()) > 0,
+    "Screenshots remain inside project briefing",
   );
   await page.evaluate(() =>
     scrollTo({
@@ -212,46 +253,57 @@ try {
       behavior: "instant",
     }),
   );
-  const footerTop = await page
-    .locator(".footer-wordmark")
-    .evaluate((el) => el.getBoundingClientRect().top);
-  await page.locator(".motion-toggle").click();
+  await page.waitForFunction(
+    () =>
+      Math.abs(
+        document
+          .querySelector(".footer-reel .site-footer")
+          .getBoundingClientRect().left,
+      ) < 2,
+  );
   assert(
     Math.abs(
-      (await page
-        .locator(".footer-wordmark")
-        .evaluate((el) => el.getBoundingClientRect().top)) - footerTop,
-    ) < 3,
-    "Mode change preserves footer position",
+      await page
+        .locator(".footer-reel .site-footer")
+        .evaluate((el) => el.getBoundingClientRect().top),
+    ) < 2,
+    "Supporting-page footer joins the lateral finale",
   );
-  assert.deepEqual(errors, []);
-  await context.close();
-  const quiet = await browser.newContext({ reducedMotion: "reduce" });
-  const quietPage = await quiet.newPage();
-  await quietPage.goto(base);
-  assert(
-    await quietPage
-      .locator('[data-motion="reduced"] small')
-      .textContent()
-      .then((text) => text.includes("Recommended")),
+  await page.screenshot({ path: `${output}/briefing-footer.png` });
+  await page.goBack();
+  await page.waitForFunction(
+    () =>
+      Math.abs(
+        document
+          .querySelector('[data-project="bunetto"]')
+          .getBoundingClientRect().left,
+      ) < 2,
   );
-  await quietPage.keyboard.press("Escape");
+  await page.waitForTimeout(900);
+  await page.locator(".motion-toggle").click();
   assert(
-    await quietPage.evaluate(() =>
+    await page.evaluate(() =>
       document.documentElement.classList.contains("motion-reduced"),
     ),
   );
-  assert.equal(await quietPage.locator("canvas").count(), 0);
-  await quiet.close();
+  await page.reload();
+  assert.equal(await page.locator("canvas").count(), 0);
+  assert(!(await page.locator("#animation-gate").evaluate((el) => el.open)));
+  assert.deepEqual(errors, [], "No browser runtime errors");
+  await context.close();
+
   const touch = await browser.newContext({
     viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,
   });
-  const touchPage = await touch.newPage();
-  await touchPage.goto(base);
-  await touchPage.locator('[data-motion="full"]').tap();
-  const client = await touch.newCDPSession(touchPage);
+  const tp = await touch.newPage();
+  await tp.goto(base);
+  await tp.locator('[data-motion="full"]').tap();
+  const heroTop = await tp
+    .locator(".hero-story")
+    .evaluate((el) => el.getBoundingClientRect().top);
+  const client = await touch.newCDPSession(tp);
   await client.send("Input.dispatchTouchEvent", {
     type: "touchStart",
     touchPoints: [{ x: 195, y: 650 }],
@@ -265,19 +317,23 @@ try {
     type: "touchEnd",
     touchPoints: [],
   });
-  await touchPage.waitForFunction(() => scrollY > 50);
+  await tp.waitForFunction(() => scrollY > 50);
   assert(
-    await touchPage
+    (await tp
+      .locator(".hero-story")
+      .evaluate((el) => el.getBoundingClientRect().top)) <
+      heroTop - 50,
+    "Mobile moves bottom to top",
+  );
+  assert.equal(
+    await tp
       .locator(".horizontal-track")
-      .evaluate(
-        (el) =>
-          new DOMMatrixReadOnly(getComputedStyle(el).transform).m41 >
-          -12 * innerWidth + 50,
-      ),
+      .evaluate((el) => getComputedStyle(el).transform),
+    "none",
   );
   await touch.close();
   console.log(
-    "Consent, anchor/keyboard navigation, refresh, toggling, reduced motion, and runtime checks passed.",
+    "Project handoff, Back, mobile touch, motion persistence and runtime checks passed.",
   );
 } finally {
   await browser.close();

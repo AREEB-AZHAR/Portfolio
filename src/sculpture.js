@@ -1,7 +1,45 @@
 import * as THREE from "three";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+let studioPromise;
+function loadStudio() {
+  studioPromise ||= fetch(
+    `${import.meta.env.BASE_URL}lighting/studio.cubeuv.bin.gz`,
+  ).then(async (response) => {
+    if (!response.ok) throw new Error("Studio lighting unavailable");
+    const payload = await response.arrayBuffer();
+    const magic = new Uint8Array(payload, 0, 2);
+    // Some static hosts transparently decode .gz responses; others serve the
+    // compressed bytes. Inspect the payload to avoid double decompression.
+    const bytes =
+      magic[0] === 31 && magic[1] === 139
+        ? await new Response(
+            new Blob([payload])
+              .stream()
+              .pipeThrough(new DecompressionStream("gzip")),
+          ).arrayBuffer()
+        : payload;
+    const header = new DataView(bytes);
+    const texture = new THREE.DataTexture(
+      new Uint16Array(bytes, 8),
+      header.getUint32(0, true),
+      header.getUint32(4, true),
+      THREE.RGBAFormat,
+      THREE.HalfFloatType,
+    );
+    texture.mapping = THREE.CubeUVReflectionMapping;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = false;
+    texture.colorSpace = THREE.LinearSRGBColorSpace;
+    texture.needsUpdate = true;
+    return texture;
+  });
+  return studioPromise;
+}
 
 export async function createSculpture(host) {
+  // Lighting is baked once at development time, not synchronously on each visit.
+  // Keep the static sculpture visible while its small asset loads asynchronously.
+  const environment = await loadStudio();
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -21,12 +59,7 @@ export async function createSculpture(host) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 100);
   camera.position.set(0, 0.15, 9.5);
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const room = new RoomEnvironment();
-  const environment = pmrem.fromScene(room, 0.04);
-  scene.environment = environment.texture;
-  room.dispose();
-  pmrem.dispose();
+  scene.environment = environment;
   const shape = new THREE.Shape();
   shape.moveTo(-1.05, -1.25);
   shape.lineTo(-0.2, 1.25);

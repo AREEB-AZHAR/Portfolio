@@ -2188,12 +2188,12 @@ html:not(.motion-full) .hero-story {
 .motion-reduced .sculpture-fallback {
   visibility: visible;
 }
-.motion-full .horizontal-story {
+.story-horizontal .horizontal-story {
   display: block;
   position: relative;
   height: calc(100svh + (var(--panel-count) - 1) * 100vw);
 }
-.motion-full .horizontal-viewport {
+.story-horizontal .horizontal-viewport {
   display: block;
   position: sticky;
   top: 0;
@@ -2201,7 +2201,7 @@ html:not(.motion-full) .hero-story {
   overflow: clip;
   isolation: isolate;
 }
-.motion-full .horizontal-track {
+.story-horizontal .horizontal-track {
   display: flex;
   flex-direction: row-reverse;
   width: calc(var(--panel-count) * 100vw);
@@ -2209,10 +2209,10 @@ html:not(.motion-full) .hero-story {
   transform: translate3d(calc(-100% + 100vw), 0, 0);
   will-change: transform;
 }
-.motion-full .horizontal-track > .approach-story {
+.story-horizontal .horizontal-track > .approach-story {
   display: contents;
 }
-.motion-full .horizontal-panel {
+.story-horizontal .horizontal-panel {
   flex: 0 0 100vw;
   width: 100vw;
   height: 100svh;
@@ -2225,68 +2225,68 @@ html:not(.motion-full) .hero-story {
   flex-direction: column;
   justify-content: center;
 }
-.motion-full .horizontal-panel.hero-story {
+.story-horizontal .horizontal-panel.hero-story {
   display: block;
   padding: 0;
 }
-.motion-full .horizontal-panel .hero-stage {
+.story-horizontal .horizontal-panel .hero-stage {
   min-height: 0;
   height: 100%;
 }
-.motion-full .horizontal-panel .hero-coordinate {
+.story-horizontal .horizontal-panel .hero-coordinate {
   top: 115px;
 }
-.motion-full .horizontal-panel .hero-foot {
+.story-horizontal .horizontal-panel .hero-foot {
   bottom: 100px;
 }
-.motion-full .horizontal-panel .hero-type {
+.story-horizontal .horizontal-panel .hero-type {
   top: 23%;
   font-size: min(12.3vw, 16svh);
 }
-.motion-full .horizontal-panel .display {
+.story-horizontal .horizontal-panel .display {
   font-size: min(8.8vw, 11.5svh);
 }
-.motion-full .horizontal-panel .intro-bottom {
+.story-horizontal .horizontal-panel .intro-bottom {
   margin-top: clamp(30px, 6svh, 80px);
   gap: 35px;
 }
-.motion-full .horizontal-panel .intro-bottom .lede {
+.story-horizontal .horizontal-panel .intro-bottom .lede {
   font-size: clamp(18px, 1.8vw, 28px);
   line-height: 1.55;
 }
-.motion-full .horizontal-panel .split-intro {
+.story-horizontal .horizontal-panel .split-intro {
   margin-top: 6svh;
 }
-.motion-full .horizontal-panel .principle-stage {
+.story-horizontal .horizontal-panel .principle-stage {
   min-height: 0;
   flex: 1;
 }
-.motion-full .horizontal-panel .principle-stage h2 {
+.story-horizontal .horizontal-panel .principle-stage h2 {
   font-size: min(9.2vw, 13svh);
   max-width: 950px;
   margin-left: 0;
 }
-.motion-full .horizontal-panel .principle-copy {
+.story-horizontal .horizontal-panel .principle-copy {
   font-size: clamp(17px, 1.7vw, 24px);
   position: relative;
   z-index: 2;
 }
-.motion-full .horizontal-panel .approach-visual {
+.story-horizontal .horizontal-panel .approach-visual {
   position: absolute;
   inset: 0;
   margin: 0;
   height: 100%;
 }
-.motion-full .horizontal-panel.project-scene {
+.story-horizontal .horizontal-panel.project-scene {
   justify-content: space-between;
   gap: 20px;
 }
-.motion-full .horizontal-panel .project-stage {
+.story-horizontal .horizontal-panel .project-stage {
   min-height: 0;
   flex: 1;
   gap: 30px;
 }
-.motion-full .horizontal-panel .project-title {
+.story-horizontal .horizontal-panel .project-title {
   font-size: min(9.5vw, 13svh);
 }
 .motion-full
@@ -2294,51 +2294,53 @@ html:not(.motion-full) .hero-story {
   .project-title {
   font-size: min(6.2vw, 10svh);
 }
-.motion-full .horizontal-panel[data-section="CryptoTrader"] .project-title {
+.story-horizontal
+  .horizontal-panel[data-section="CryptoTrader"]
+  .project-title {
   font-size: min(8.1vw, 12svh);
 }
-.motion-full .horizontal-panel .figure-surface {
+.story-horizontal .horizontal-panel .figure-surface {
   min-height: 0;
   height: min(43svh, 460px);
 }
-.motion-full .horizontal-panel .project-figure img {
+.story-horizontal .horizontal-panel .project-figure img {
   max-height: 100%;
   width: 100%;
   height: auto;
 }
-.motion-full .horizontal-panel .portrait img {
+.story-horizontal .horizontal-panel .portrait img {
   width: auto;
   height: 100%;
   object-fit: contain;
 }
-.motion-full .horizontal-panel .icon-art img {
+.story-horizontal .horizontal-panel .icon-art img {
   width: min(180px, 25svh);
   height: auto;
 }
-.motion-full .horizontal-panel .project-stage > .wire-motif {
+.story-horizontal .horizontal-panel .project-stage > .wire-motif {
   height: 100%;
 }
-.motion-full .horizontal-panel .project-bottom {
+.story-horizontal .horizontal-panel .project-bottom {
   align-items: center;
 }
-.motion-full .horizontal-panel .project-bottom p {
+.story-horizontal .horizontal-panel .project-bottom p {
   font-size: clamp(18px, 2vw, 29px);
 }
-.motion-full .horizontal-panel .bridge-bottom {
+.story-horizontal .horizontal-panel .bridge-bottom {
   margin-top: 5svh;
 }
-.motion-full .horizontal-panel .reveal {
+.story-horizontal .horizontal-panel .reveal {
   opacity: 0.25;
   transform: translateX(-16px);
   transition:
     opacity 0.65s,
     transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.motion-full .horizontal-panel.is-current .reveal {
+.story-horizontal .horizontal-panel.is-current .reveal {
   opacity: 1;
   transform: none;
 }
-.motion-full .horizontal-panel .wire-object {
+.story-horizontal .horizontal-panel .wire-object {
   transform: rotate(calc(var(--scene-progress, 0) * 30deg));
 }
 .motion-full body:not([data-page="home"]) .reveal {
@@ -2373,57 +2375,57 @@ html:not(.motion-full) .hero-story {
   .footer-wordmark {
     font-size: 12.4vw;
   }
-  .motion-full .horizontal-panel {
+  .story-horizontal .horizontal-panel {
     padding: 105px var(--space) 90px;
   }
-  .motion-full .horizontal-panel .display {
+  .story-horizontal .horizontal-panel .display {
     font-size: clamp(38px, 10.6vw, 78px);
   }
-  .motion-full .horizontal-panel .hero-coordinate {
+  .story-horizontal .horizontal-panel .hero-coordinate {
     top: 100px;
   }
-  .motion-full .horizontal-panel .hero-type {
+  .story-horizontal .horizontal-panel .hero-type {
     top: 27%;
     font-size: 13vw;
   }
-  .motion-full .horizontal-panel .hero-foot {
+  .story-horizontal .horizontal-panel .hero-foot {
     bottom: 85px;
     gap: 20px;
   }
-  .motion-full .horizontal-panel .intro-bottom {
+  .story-horizontal .horizontal-panel .intro-bottom {
     display: grid;
     grid-template-columns: 1fr;
     gap: 22px;
     margin-top: 35px;
   }
-  .motion-full .horizontal-panel .intro-bottom .eyebrow {
+  .story-horizontal .horizontal-panel .intro-bottom .eyebrow {
     margin-bottom: 0;
   }
-  .motion-full .horizontal-panel .intro-bottom .line-link {
+  .story-horizontal .horizontal-panel .intro-bottom .line-link {
     justify-self: start;
   }
-  .motion-full .horizontal-panel .principle-stage h2 {
+  .story-horizontal .horizontal-panel .principle-stage h2 {
     font-size: clamp(40px, 12vw, 80px);
   }
-  .motion-full .horizontal-panel .principle-copy {
+  .story-horizontal .horizontal-panel .principle-copy {
     font-size: 16px;
   }
-  .motion-full .horizontal-panel .split-intro {
+  .story-horizontal .horizontal-panel .split-intro {
     flex-direction: column;
     align-items: start;
     gap: 25px;
   }
-  .motion-full .horizontal-panel .split-intro p {
+  .story-horizontal .horizontal-panel .split-intro p {
     font-size: 18px;
   }
-  .motion-full .horizontal-panel .project-stage {
+  .story-horizontal .horizontal-panel .project-stage {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
     gap: 22px;
   }
-  .motion-full .horizontal-panel .project-title {
+  .story-horizontal .horizontal-panel .project-title {
     font-size: clamp(40px, 10.8vw, 78px);
   }
   .motion-full
@@ -2431,73 +2433,409 @@ html:not(.motion-full) .hero-story {
     .project-title {
     font-size: 10.3vw;
   }
-  .motion-full .horizontal-panel[data-section="CryptoTrader"] .project-title {
+  .story-horizontal
+    .horizontal-panel[data-section="CryptoTrader"]
+    .project-title {
     font-size: 11vw;
   }
-  .motion-full .horizontal-panel .figure-surface {
+  .story-horizontal .horizontal-panel .figure-surface {
     height: min(28svh, 280px);
   }
-  .motion-full .horizontal-panel .portrait .figure-surface {
+  .story-horizontal .horizontal-panel .portrait .figure-surface {
     height: min(33svh, 340px);
   }
-  .motion-full .horizontal-panel .project-bottom {
+  .story-horizontal .horizontal-panel .project-bottom {
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  .motion-full .horizontal-panel .project-bottom p {
+  .story-horizontal .horizontal-panel .project-bottom p {
     font-size: 16px;
   }
-  .motion-full .horizontal-panel .project-bottom .line-link {
+  .story-horizontal .horizontal-panel .project-bottom .line-link {
     justify-self: start;
     padding-block: 10px;
   }
-  .motion-full .horizontal-panel figcaption {
+  .story-horizontal .horizontal-panel figcaption {
     font-size: 8px;
   }
-  .motion-full .horizontal-panel .bridge-bottom {
+  .story-horizontal .horizontal-panel .bridge-bottom {
     flex-direction: column;
     align-items: start;
     gap: 15px;
   }
-  .motion-full .horizontal-panel .bridge-bottom p {
+  .story-horizontal .horizontal-panel .bridge-bottom p {
     font-size: 16px;
   }
 }
 @media (max-height: 700px) {
-  .motion-full .horizontal-panel {
+  .story-horizontal .horizontal-panel {
     padding-top: 85px;
     padding-bottom: 70px;
   }
-  .motion-full .horizontal-panel .scene-kicker {
+  .story-horizontal .horizontal-panel .scene-kicker {
     font-size: 8px;
   }
-  .motion-full .horizontal-panel .hero-coordinate {
+  .story-horizontal .horizontal-panel .hero-coordinate {
     top: 90px;
   }
-  .motion-full .horizontal-panel .hero-foot {
+  .story-horizontal .horizontal-panel .hero-foot {
     bottom: 75px;
   }
-  .motion-full .horizontal-panel .intro-bottom {
+  .story-horizontal .horizontal-panel .intro-bottom {
     margin-top: 20px;
     gap: 12px;
   }
-  .motion-full .horizontal-panel .intro-bottom .lede {
+  .story-horizontal .horizontal-panel .intro-bottom .lede {
     font-size: 16px;
   }
-  .motion-full .horizontal-panel .eyebrow {
+  .story-horizontal .horizontal-panel .eyebrow {
     margin-bottom: 15px;
   }
-  .motion-full .horizontal-panel .project-stage {
+  .story-horizontal .horizontal-panel .project-stage {
     gap: 10px;
   }
-  .motion-full .horizontal-panel .project-title {
+  .story-horizontal .horizontal-panel .project-title {
     font-size: min(10vw, 9svh);
   }
-  .motion-full .horizontal-panel .project-bottom {
+  .story-horizontal .horizontal-panel .project-bottom {
     gap: 4px;
   }
-  .motion-full .horizontal-panel .project-bottom p {
+  .story-horizontal .horizontal-panel .project-bottom p {
     font-size: 14px;
+  }
+}
+
+/* One visual language: lateral, layered desktop scenes; direct vertical mobile. */
+.motion-full .sculpture canvas {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+.motion-full .sculpture.has-webgl canvas {
+  opacity: 1;
+}
+.motion-full .sculpture-fallback {
+  transition: opacity 0.65s ease;
+}
+.motion-full .sculpture.has-webgl .sculpture-fallback {
+  visibility: visible;
+  opacity: 0;
+}
+.project-scene .project-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 65svh;
+  isolation: isolate;
+}
+.project-scene .project-title {
+  pointer-events: auto;
+  max-width: 100%;
+}
+.project-title a {
+  display: inline-block;
+}
+.project-tools {
+  position: relative;
+  z-index: 3;
+  margin-top: 35px;
+  padding-top: 18px;
+  border-top: 1px solid #55564a;
+  max-width: 600px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.project-scene .project-stage > .wire-motif {
+  width: 85%;
+  height: 100%;
+  inset: 0 -10% auto auto;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.story-horizontal .horizontal-panel .project-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 0;
+}
+.story-horizontal .horizontal-panel .project-title {
+  font-size: min(13vw, 19svh);
+}
+.story-horizontal
+  .horizontal-panel[data-section="Degree Verification"]
+  .project-title {
+  font-size: min(9vw, 14svh);
+  max-width: 80%;
+}
+.story-horizontal
+  .horizontal-panel[data-section="CryptoTrader"]
+  .project-title {
+  font-size: min(11.5vw, 17svh);
+}
+.story-horizontal .horizontal-panel .reveal,
+.story-horizontal .horizontal-panel.is-current .reveal {
+  opacity: var(--scene-visibility, 1);
+  transform: translate3d(calc(var(--scene-progress, 0) * 65px), 0, 0);
+  transition: none;
+}
+.story-horizontal .horizontal-panel .project-stage > .wire-motif {
+  transform: translate3d(calc(var(--scene-progress, 0) * -100px), 0, 0)
+    rotate(calc(var(--scene-progress, 0) * -6deg));
+}
+.story-horizontal .horizontal-panel .project-bottom,
+.story-horizontal .horizontal-panel .scene-kicker {
+  transform: translate3d(calc(var(--scene-progress, 0) * 22px), 0, 0);
+  opacity: var(--scene-visibility, 1);
+}
+.story-horizontal .horizontal-panel.site-footer {
+  justify-content: space-between;
+  gap: 0;
+  padding-top: 110px;
+  padding-bottom: 95px;
+  border: 0;
+}
+.story-horizontal .site-footer .footer-intro {
+  padding-bottom: 3svh;
+}
+.story-horizontal .site-footer .footer-intro h2 {
+  font-size: min(6.5vw, 9svh);
+}
+.story-horizontal .site-footer .footer-details {
+  margin-top: 3svh;
+  gap: 35px;
+}
+.story-horizontal .site-footer .footer-wordmark {
+  font-size: min(12.8vw, 22svh);
+  margin: 3svh 0 1svh;
+  transform: translate3d(calc(var(--scene-progress, 0) * 45px), 0, 0);
+}
+@media (max-width: 767px) {
+  .motion-full body[data-page="home"] .reveal {
+    opacity: 0.4;
+    transform: translateY(20px);
+    transition:
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.7s;
+  }
+  .motion-full body[data-page="home"] .reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+  .project-scene .project-stage {
+    min-height: 48svh;
+  }
+  .project-scene .project-title {
+    font-size: clamp(46px, 14vw, 100px);
+  }
+  .project-tools {
+    font-size: 9px;
+    line-height: 1.8;
+    max-width: 85%;
+  }
+  .project-scene .project-stage > .wire-motif {
+    width: 130%;
+    right: -35%;
+  }
+}
+@media (max-height: 700px) and (min-width: 768px) {
+  .story-horizontal .horizontal-panel.site-footer {
+    padding-top: 85px;
+    padding-bottom: 70px;
+  }
+  .story-horizontal .site-footer .footer-details {
+    margin-top: 15px;
+  }
+  .story-horizontal .site-footer .footer-details .eyebrow {
+    margin-bottom: 8px;
+  }
+  .story-horizontal .site-footer .footer-wordmark {
+    font-size: min(12vw, 19svh);
+    margin-block: 2svh;
+  }
+}
+
+/* Native multi-page handoff: no timer before navigation and no reload intro. */
+.footer-reel,
+.footer-viewport {
+  display: contents;
+}
+@media (min-width: 768px) {
+  .motion-full .footer-reel {
+    display: block;
+    position: relative;
+    height: calc(100svh + 70vw);
+  }
+  .motion-full .footer-viewport {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: clip;
+  }
+  .motion-full .footer-reel .site-footer {
+    height: 100svh;
+    padding: 110px var(--space) 95px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 0;
+    transform: translate3d(calc((var(--footer-progress, 0) - 1) * 100vw), 0, 0);
+    will-change: transform;
+  }
+  .motion-full .footer-reel .footer-intro {
+    padding-bottom: 3svh;
+  }
+  .motion-full .footer-reel .footer-intro h2 {
+    font-size: min(6.5vw, 9svh);
+  }
+  .motion-full .footer-reel .footer-details {
+    margin-top: 3svh;
+    gap: 35px;
+  }
+  .motion-full .footer-reel .footer-wordmark {
+    font-size: min(12.8vw, 22svh);
+    margin: 3svh 0 1svh;
+  }
+}
+@view-transition {
+  navigation: auto;
+}
+.motion-full .site-header {
+  view-transition-name: site-header;
+}
+.motion-full .progress-rail {
+  view-transition-name: site-progress;
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(*) {
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+::view-transition-old(root) {
+  animation: flow-out 0.8s cubic-bezier(0.22, 0.8, 0.2, 1) both;
+}
+::view-transition-new(root) {
+  animation: flow-in 0.8s cubic-bezier(0.22, 0.8, 0.2, 1) both;
+}
+::view-transition-old(site-header),
+::view-transition-new(site-header),
+::view-transition-old(site-progress),
+::view-transition-new(site-progress) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-group(story-title),
+::view-transition-group(story-geometry) {
+  z-index: 4;
+}
+::view-transition-old(story-title) {
+  animation: title-out 0.65s ease both;
+}
+::view-transition-new(story-title) {
+  animation: title-in 0.8s ease both;
+}
+@keyframes flow-in {
+  from {
+    transform: translate3d(-22vw, 0, 0);
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    clip-path: inset(0);
+    opacity: 1;
+  }
+}
+@keyframes flow-out {
+  to {
+    transform: translate3d(12vw, 0, 0);
+    opacity: 0;
+  }
+}
+@keyframes title-in {
+  from {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes title-out {
+  to {
+    opacity: 0;
+  }
+}
+@media (max-width: 767px) {
+  ::view-transition-old(root) {
+    animation-name: flow-up-out;
+  }
+  ::view-transition-new(root) {
+    animation-name: flow-up-in;
+  }
+  @keyframes flow-up-in {
+    from {
+      transform: translate3d(0, 8svh, 0);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes flow-up-out {
+    to {
+      transform: translate3d(0, -5svh, 0);
+      opacity: 0;
+    }
+  }
+}
+.motion-reduced::view-transition-group(*),
+.motion-reduced::view-transition-old(*),
+.motion-reduced::view-transition-new(*) {
+  animation: none !important;
+}
+@media (min-width: 768px) and (max-height: 700px) {
+  .story-horizontal .horizontal-panel.site-footer,
+  .motion-full .footer-reel .site-footer {
+    padding-top: 85px;
+    padding-bottom: 70px;
+  }
+  .story-horizontal .site-footer .footer-intro,
+  .motion-full .footer-reel .footer-intro {
+    padding-bottom: 12px;
+  }
+  .story-horizontal .site-footer .footer-intro h2,
+  .motion-full .footer-reel .footer-intro h2 {
+    font-size: min(5.5vw, 7svh);
+  }
+  .story-horizontal .site-footer .footer-details,
+  .motion-full .footer-reel .footer-details {
+    grid-template-columns: 1.5fr 1fr 0.5fr;
+    gap: 22px;
+    margin-top: 12px;
+  }
+  .story-horizontal .site-footer .footer-details > div:last-child,
+  .motion-full .footer-reel .footer-details > div:last-child {
+    grid-column: auto;
+  }
+  .story-horizontal .site-footer .footer-wordmark,
+  .motion-full .footer-reel .footer-wordmark {
+    font-size: min(12vw, 17svh);
+    margin-block: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

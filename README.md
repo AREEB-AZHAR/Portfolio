@@ -8,14 +8,16 @@ A cinematic software engineering portfolio with an original metallic AA sculptur
 
 ## The redesign
 
-- **Latest update:** scrolling down moves the 13-scene homepage story **left to right**. There is no long opening hold or smooth-wheel startup delay. Supporting pages retain their readable editorial layout.
+- **Latest update:** a gently eased, layered **left-to-right** desktop story connects **14 scenes, including the complete footer**. Native scroll input remains immediate, with no opening hold or reload entrance animation. Mobile uses natural **bottom-to-top** scrolling instead of a horizontal track.
+- Native cross-document View Transitions connect project titles and linework to their briefing pages, while keeping the header anchored. Other page changes share the same lateral visual language (vertical on mobile). Navigation begins immediately; wheel, touch, or keyboard input can interrupt a handoff. Unsupported browsers use regular links.
+- Project screenshots and artwork appear inside their briefing pages, not on the homepage or project index. The landing showcase uses oversized titles, project stacks, and original line illustrations.
 - A first-visit animation chooser explains both modes. The always-visible **Animations on/off** control includes a keyboard-accessible information label. The choice is retained across refreshes and navigation for the current browsing session.
 - Optional WebGL setup waits until after consent and scroll idle; only visible sculptures initialize. The initial page and scrolling never wait for the 3D bundle. Shader compilation completes asynchronously before the sculpture appears.
 - The shared footer now displays the complete **AREEB AZHAR** wordmark.
 - A near-black and warm-ivory visual system with self-hosted Manrope typography.
 - An original procedural metallic AA monogram, with four scroll-driven views, studio reflections, and pointer response.
 - A second sculptural sequence connecting structure, interaction, and delivery through geometric forms.
-- Six expansive project showcases with distinct line illustrations and real project media.
+- Six expansive, typography-led project showcases with distinct line illustrations; real project media lives in the briefings.
 - **24 static pages:** Home, About/Approach, Projects, Capabilities, Contact, and **19 canonical project briefings**.
 - An opaque full-screen navigation menu with keyboard focus management, Escape dismissal, and scroll restoration.
 - A searchable archive, direct project URLs, browser Back support, and next-project navigation.
@@ -27,6 +29,8 @@ The visual direction is inspired by [Mohamed Elgazzar’s portfolio](https://www
 ![First-visit animation choice, captured from the running portfolio](docs/screenshots/animation-choice.png)
 
 ![Bunetto scene in the horizontal homepage sequence](docs/screenshots/horizontal-bunetto.png)
+
+![Full-name footer as the final desktop scene](docs/screenshots/horizontal-footer.png)
 
 ## Explore the work
 
@@ -91,15 +95,18 @@ src/
   content/projects.mjs     Project records, case-study content, capabilities
   sculpture.js             Procedural Three.js scenes and rendering lifecycle
   horizontal.js            Native vertical-scroll to positive-X story mapping
+  page-transitions.mjs     Early native page-handoff and shared-title setup
 scripts/
   generate.mjs             Shared templates and static HTML generation
   check-content.mjs        Content, route, related-link, and media validation
   verify-browser.mjs       Browser regression checks and screenshot capture
-  verify-horizontal.mjs    All 13 scenes, consent, startup, and responsive checks
+  verify-horizontal.mjs    Desktop scenes, mobile flow, startup, page-handoff QA
+  bake-studio.mjs          Optional offline studio reflection precomputation
 public/
   projects/                Original screenshots and project artwork
   certificates/            Actual internship PDF and preview
   fonts/                   Self-hosted Manrope files and SIL Open Font License
+  lighting/                Precomputed studio reflections; no runtime PMREM bake
 docs/screenshots/           Real screenshots of the redesigned portfolio
 main.js                    Menu, scrolling, motion controls, search, email composer
 style.css                  Shared visual system and responsive layouts
@@ -122,8 +129,9 @@ Six records are marked `featured`; those appear in the homepage story. Capabilit
 ## Interaction and accessibility
 
 - The base HTML contains the content and navigation; animation progressively enhances it.
-- Before animation consent, the page uses the static SVG and does not initialize WebGL. Three.js loads in a separate bundle after an idle interval; rendering pauses offscreen and in background tabs, pixel density is capped, and touch layouts use a lighter scene cadence.
-- Native document scrolling drives a sticky, reversed horizontal track. Ordinary wheel input, touch scrolling, Page Down, and the scrollbar all work without wheel interception or a smoothing library. Left/Right arrow keys advance scenes; focused links and same-page shortcuts bring their scene into view.
+- Before animation consent, the page uses the static SVG and does not initialize WebGL. Three.js loads in a separate bundle after an idle interval; rendering pauses offscreen and in background tabs, pixel density is capped, and touch layouts use a lighter scene cadence. Studio reflections are baked from the original Three.js RoomEnvironment once, avoiding synchronous reflection generation in each visitor’s browser.
+- Native document scrolling drives a reversed desktop track with a short frame-rate-independent presentation ease, layered title/linework depth, and a final full-name footer scene. The document itself is never smoothed or wheel-intercepted. Anchors, focused links, refresh restoration, and keyboard jumps synchronize immediately. Supporting pages keep editorial content vertical and join a lateral footer finale. Below 768px, all sections and footers remain naturally vertical.
+- Early, inline `pageswap`/`pagereveal` listeners enable native multi-page transitions without a render-blocking script request or a client-side router. Project titles and geometry become shared elements. Reloads do not run a handoff, reduced-motion mode skips it, and browser Back restores the original scene.
 - The animation chooser appears once per tab session. Its choice survives refreshes and internal navigation through `sessionStorage`; a new session asks again. The device’s reduced-motion setting recommends the static option, and Escape chooses it. Without JavaScript, the content remains a regular readable page.
 - Turning animations off restores the vertical document and stops GPU rendering. Turning them on preserves the current scene. The header button always states its status, and its information label appears on hover or keyboard focus.
 - Native modal navigation provides focus containment. Closing restores focus and document scrolling.
@@ -152,7 +160,17 @@ node scripts/verify-horizontal.mjs http://localhost:5173/
 
 Use the actual server port if Vite selected a different one. For a Pages preview, supply its complete base URL, for example `http://localhost:4173/Portfolio/`. Screenshots go to ignored `tmp/qa/` (general suite) or `tmp/horizontal-qa/` (horizontal suite). `SCREENSHOT_DIR` changes that location, `BROWSER_CHANNEL=msedge` selects installed Edge, and `PLAYWRIGHT_MODULE` can point to an existing Playwright package. `QA_LIGHT=1` runs the alternate-build layout checks at 390px and 1440px while retaining route and resource checks.
 
-The horizontal suite exercises real wheel input after refresh, positive-X movement, all 13 panels at 320/390/768/1024/1440px, clipping, full-name footer, animation consent, same-page shortcuts, arrow keys, offscreen keyboard focus, touch scrolling, footer-position preservation, and static-mode persistence. Set `QA_SHORT=1` to check 320/390px-wide phones at 568px height. Its timing output is a local smoke-test measurement, not a universal performance guarantee.
+The cinematic suite exercises real wheel input after refresh, positive-X easing, all 14 desktop scenes including the footer, 320/390/768/1024/1440px layouts, native vertical mobile flow, absence of homepage images, project-title page handoffs, Back restoration, mobile touch, and static-mode persistence. Set `QA_SHORT=1` to check 320/390px-wide phones at 568px height, or `QA_LANDSCAPE=1` for 768/1024px widths at 600px height. Its timing output is a local smoke-test measurement, not a universal performance guarantee.
+
+### Rebuild studio lighting (optional)
+
+The precomputed lighting asset is committed; ordinary setup and deployment do **not** require Playwright or an asset bake. Only regenerate it after intentionally changing the studio environment or compatible Three.js texture layout. With the dev server running and the optional browser-test prerequisites installed:
+
+```bash
+node scripts/bake-studio.mjs http://localhost:5173/scripts/studio-bake.html
+```
+
+This writes `public/lighting/studio.cubeuv.bin.gz`: a gzip-compressed, little-endian width/height header followed by RGBA half-float CubeUV pixels. Runtime loading handles both raw gzip bytes and hosts that transparently decode gzip. Rebuild and visually verify the sculpture after regenerating it.
 
 ## Deployment
 

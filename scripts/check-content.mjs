@@ -53,6 +53,7 @@ for (const asset of [
   "fonts/manrope-light.ttf",
   "fonts/manrope-regular.ttf",
   "fonts/manrope-medium.ttf",
+  "lighting/studio.cubeuv.bin.gz",
 ])
   await access(new URL(`../public/${asset}`, import.meta.url));
 assert.equal(projects.filter((p) => p.featured).length, 6);
