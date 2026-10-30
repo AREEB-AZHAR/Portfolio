@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { createStrandGeometry } from "./strand-geometry.mjs";
-
 export async function createContinuousSculpture(host, environment) {
   let renderer;
   try {
@@ -15,24 +14,40 @@ export async function createContinuousSculpture(host, environment) {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setClearColor(0x090909, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
+  renderer.toneMappingExposure = 1.25;
   renderer.domElement.setAttribute("aria-hidden", "true");
   host.append(renderer.domElement);
   const scene = new THREE.Scene();
   scene.environment = environment;
-  const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 100);
-  camera.position.set(0, 0, 10.5);
-  const { geometry, sequence } = createStrandGeometry();
+  const camera = new THREE.OrthographicCamera(-6, 6, 4, -4, 0.1, 100);
+  camera.position.z = 10;
+  const { geometry, update, centerline } = createStrandGeometry();
   const material = new THREE.MeshStandardMaterial({
-    color: 0x44463e,
-    metalness: 1,
-    roughness: 0.28,
-    envMapIntensity: 1.3,
+    color: 0x9fa393,
+    metalness: 0.95,
+    roughness: 0.3,
+    envMapIntensity: 1.4,
   });
+  let shader;
+  material.onBeforeCompile = (program) => {
+    shader = program;
+    program.uniforms.wireFlow = { value: 0 };
+    program.vertexShader = "varying float vWireU;\n" + program.vertexShader;
+    program.vertexShader = program.vertexShader.replace(
+      "#include <uv_vertex>",
+      "#include <uv_vertex>\nvWireU=uv.x;",
+    );
+    program.fragmentShader =
+      "varying float vWireU;uniform float wireFlow;\n" + program.fragmentShader;
+    program.fragmentShader = program.fragmentShader.replace(
+      "#include <color_fragment>",
+      "#include <color_fragment>\nfloat energy=pow(0.5+0.5*cos(6.2831853*(vWireU+wireFlow)),24.0);diffuseColor.rgb*=0.52+energy*0.75;",
+    );
+  };
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
   for (const [color, intensity, position] of [
-    [0xe4e1d9, 6, [-4, 4, 3]],
+    [0xe4e1d9, 5, [-4, 4, 3]],
     [0x939989, 3, [5, -1, 1]],
     [0xffffff, 3, [0, 5, -3]],
   ]) {
@@ -45,44 +60,16 @@ export async function createContinuousSculpture(host, environment) {
     paused = false,
     reduced = false,
     frame = 0,
-    last = 0;
+    last = 0,
+    aspect = 1.44;
   function render(time) {
-    const phase = Math.max(
-      0,
-      Math.min(sequence.length - 1, Number(host.dataset.sceneProgress || 0)),
-    );
-    const index = Math.min(sequence.length - 2, Math.floor(phase));
-    const u = phase - index,
-      blend = u * u * (3 - 2 * u);
-    const from = sequence[index],
-      to = sequence[index + 1];
-    mesh.morphTargetInfluences.fill(0);
-    if (from > 0) mesh.morphTargetInfluences[from - 1] += 1 - blend;
-    if (to > 0) mesh.morphTargetInfluences[to - 1] += blend;
-    mesh.rotation.set(
-      -0.12 + Math.sin(phase * 0.5) * 0.12,
-      -0.4 - Math.sin(phase * 0.65) * 0.3,
-      -0.12 + Math.sin(phase * 0.45) * 0.12,
-    );
-    mesh.position.set(
-      0.55 - (phase / (sequence.length - 1)) * 1.1,
-      0.35 -
-        (phase / (sequence.length - 1)) * 0.65 +
-        Math.sin(time * 0.00012) * 0.025,
-      0,
-    );
-    const heroWeight = 1 - Math.min(1, phase);
-    material.color.setRGB(
-      0.18 + heroWeight * 0.07,
-      0.19 + heroWeight * 0.07,
-      0.16 + heroWeight * 0.06,
-    );
-    host.style.opacity = String(0.34 + heroWeight * 0.26);
+    const phase = Number(host.dataset.sceneProgress || 0);
+    update(phase, aspect, time * 0.001);
+    if (shader) shader.uniforms.wireFlow.value = phase * 0.8 + time * 0.00009;
     renderer.render(scene, camera);
     host.dataset.morphPhase = phase.toFixed(4);
-    host.dataset.morphFrom = String(from);
-    host.dataset.morphTo = String(to);
-    host.dataset.morphBlend = blend.toFixed(4);
+    // A real vertex readback sample for debugging, not a replacement for visual QA.
+    host.dataset.wireVertex = `${centerline[288].toFixed(4)},${centerline[289].toFixed(4)}`;
   }
   function stop() {
     cancelAnimationFrame(frame);
@@ -105,11 +92,11 @@ export async function createContinuousSculpture(host, environment) {
     const w = host.clientWidth,
       h = host.clientHeight;
     if (!w || !h) return;
+    aspect = w / h;
     renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.position.z = w < 600 ? 13.5 : 10.5;
+    camera.left = -4 * aspect;
+    camera.right = 4 * aspect;
     camera.updateProjectionMatrix();
-    mesh.scale.setScalar(w < 600 ? 0.82 : 1.1);
     if (ready) render(performance.now());
   }
   new ResizeObserver(resize).observe(host);
@@ -136,7 +123,6 @@ export async function createContinuousSculpture(host, environment) {
   host.classList.add("has-webgl");
   start();
   host.dataset.meshCount = "1";
-  host.dataset.morphTargetCount = String(sequence.length);
   return {
     setReduced(value) {
       reduced = value;

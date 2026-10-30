@@ -10,6 +10,7 @@ export function createHorizontalStory(host) {
     enabled = false,
     width = innerWidth,
     current = 0;
+  let anchorNavigating = false;
   let rendered = 0,
     frame = 0,
     lastTime = 0;
@@ -86,11 +87,14 @@ export function createHorizontalStory(host) {
     } else if (!frame) animate(performance.now());
     return panels[Math.round(target)].dataset.section;
   }
-  function goTo(panel) {
+  function goTo(panel, smooth = false) {
     const index = panels.indexOf(panel);
     if (!enabled || index < 0) return;
-    window.scrollTo({ top: top() + index * innerWidth, behavior: "instant" });
-    update(true);
+    window.scrollTo({
+      top: top() + index * innerWidth,
+      behavior: smooth ? "smooth" : "instant",
+    });
+    if (!smooth) update(true);
   }
   function setEnabled(value, preserve = true) {
     motion = value;
@@ -125,19 +129,27 @@ export function createHorizontalStory(host) {
   }
   document.addEventListener("click", (event) => {
     const anchor = event.target.closest('a[href^="#"]');
-    if (!enabled || !anchor) return;
+    if (!anchor) return;
     const target = document.getElementById(anchor.hash.slice(1));
     const panel = target?.closest(".horizontal-panel");
     if (!panel && anchor.hash !== "#main") return;
     event.preventDefault();
     history.pushState(null, "", anchor.hash);
-    goTo(panel || panels[0]);
+    if (enabled) goTo(panel || panels[0], motion);
+    else
+      target?.scrollIntoView({
+        behavior: motion ? "smooth" : "instant",
+        block: "start",
+      });
     target?.setAttribute("tabindex", "-1");
+    anchorNavigating = true;
     target?.focus({ preventScroll: true });
+    anchorNavigating = false;
   });
   document.addEventListener("focusin", (event) => {
     const panel = event.target.closest(".horizontal-panel");
-    if (enabled && panel && panel !== panels[current]) goTo(panel);
+    if (!anchorNavigating && enabled && panel && panel !== panels[current])
+      goTo(panel);
   });
   document.addEventListener("keydown", (event) => {
     if (

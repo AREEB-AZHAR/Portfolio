@@ -2675,6 +2675,77 @@ html:not(.motion-full) .hero-story {
 .story-atmosphere .sculpture {
   inset: 0;
 }
+.story-atmosphere .sculpture-fallback {
+  display: none;
+}
+.story-atmosphere .story-thread {
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+.story-atmosphere:has(.has-webgl) .story-thread {
+  opacity: 0;
+}
+.wire-base {
+  stroke: #858a7c;
+  stroke-width: 1.15;
+  opacity: 0.75;
+}
+.wire-current {
+  stroke: #e4e1d9;
+  stroke-width: 2;
+  opacity: 0.9;
+}
+.intro-skip.quiet-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 15px 20px;
+  min-height: 52px;
+  background: var(--ink);
+  color: #090909;
+  border: 1px solid #f5f2e9;
+  border-radius: 4px;
+  box-shadow:
+    0 3px 0 #77796b,
+    0 10px 26px #0008;
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.intro-skip span {
+  font-size: 19px;
+  transition: transform 0.25s;
+}
+.intro-skip:hover {
+  background: #fffdf5;
+  transform: translateY(-2px);
+  box-shadow:
+    0 5px 0 #77796b,
+    0 14px 30px #000a;
+}
+.intro-skip:hover span {
+  transform: translateX(-5px);
+}
+.intro-skip:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #77796b;
+}
+.intro-skip:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 6px;
+}
+@media (max-width: 767px) {
+  .hero-shortcuts .intro-skip {
+    padding: 14px 12px;
+    gap: 10px;
+    max-width: 100%;
+  }
+  .intro-skip span {
+    font-size: 16px;
+  }
+}
 .story-atmosphere .sculpture:not(.has-webgl) .sculpture-fallback {
   opacity: var(--hero-presence, 1);
 }

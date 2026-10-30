@@ -9,7 +9,8 @@ A cinematic software engineering portfolio with an original metallic AA sculptur
 ## The redesign
 
 - **Latest update:** a gently eased, layered **right-to-left** desktop story connects **14 scenes, including the complete footer**. Native scroll input remains immediate, with no opening hold or reload entrance animation. Mobile uses natural **bottom-to-top** scrolling instead of a horizontal track.
-- The drawings now form **one continuous SVG path**, with no pen lifts between shapes. A **single persistent 3D strand** bends between an AA monogram, ring, frame, infinity loop, and project-related forms as the whole story progresses. It uses one opaque indexed mesh with matching position/normal morph targets, not separate crossfading objects or reparented canvases.
+- **Living-string correction:** the line itself now unwinds, travels, and gathers into each next drawing with scroll. The SVG fallback and metallic 3D wire use **the same open curve**, attached beyond both screen edges. Geometry is updated vertex-by-vertex; the object no longer floats or rotates as a substitute for deformation. Travelling highlights and small local tension waves keep the string alive at rest.
+- **Skip to introduction** is a raised, filled button with hover/press/focus states. Clicking it smoothly glides to the next section on desktop and mobile; reduced-motion mode, refresh restoration, and keyboard focus remain immediate.
 - Native cross-document View Transitions connect project titles and linework to their briefing pages, while keeping the header anchored. Other page changes share the same lateral visual language (vertical on mobile). Navigation begins immediately; wheel, touch, or keyboard input can interrupt a handoff. Unsupported browsers use regular links.
 - Project screenshots and artwork appear inside their briefing pages, not on the homepage or project index. The landing showcase uses oversized titles, project stacks, and original line illustrations.
 - A first-visit animation chooser explains both modes. The always-visible **Animations on/off** control includes a keyboard-accessible information label. The choice is retained across refreshes and navigation for the current browsing session.
@@ -29,11 +30,9 @@ The visual direction is inspired by [Mohamed Elgazzar’s portfolio](https://www
 
 ![First-visit animation choice, captured from the running portfolio](docs/screenshots/animation-choice.png)
 
-![Bunetto scene in the horizontal homepage sequence](docs/screenshots/horizontal-bunetto.png)
+![Twelve actual frames: the wire releases a frame, flows, and gathers into a ring as the visitor scrolls](docs/screenshots/living-wire-scroll-sequence.png)
 
-![Full-name footer as the final desktop scene](docs/screenshots/horizontal-footer.png)
-
-![One metallic strand between two geometric forms, captured during an actual scroll](docs/screenshots/continuous-strand-morph.png)
+The [local behavior test report](docs/verification/living-wire-results.json) records the intro glide positions, rendered pixel differences, idle motion, refresh response, and mobile checks. It does not claim deployment verification.
 
 ## Explore the work
 
@@ -98,16 +97,18 @@ src/
   content/projects.mjs     Project records, case-study content, capabilities
   sculpture.js             Procedural Three.js scenes and rendering lifecycle
   horizontal.js            Native vertical-scroll to negative-X story mapping
-  thread.js                One uninterrupted SVG route through all home scenes
-  continuous-sculpture.js  Persistent single-mesh 3D rendering lifecycle
-  strand-geometry.mjs      Shared topology, positions and normals for GPU morphs
+  thread.js                Animated SVG fallback using the live shared curve
+  living-strand.mjs        Shared curve sampler: release, flow, gather, tension
+  continuous-sculpture.js  Fixed-camera 3D wire and travelling energy shader
+  strand-geometry.mjs      Dynamic open-tube vertices and normals
   page-transitions.mjs     Early native page-handoff and shared-title setup
 scripts/
   generate.mjs             Shared templates and static HTML generation
   check-content.mjs        Content, route, related-link, and media validation
-  check-strand.mjs         Morph topology, vertex count and finite-buffer checks
+  check-strand.mjs         Real deformation, endpoint, continuity and buffer checks
   verify-browser.mjs       Browser regression checks and screenshot capture
   verify-horizontal.mjs    Desktop scenes, mobile flow, startup, page-handoff QA
+  verify-living-wire.mjs   Pixel-level scroll deformation and smooth-button QA
   bake-studio.mjs          Optional offline studio reflection precomputation
 public/
   projects/                Original screenshots and project artwork
@@ -137,7 +138,7 @@ Six records are marked `featured`; those appear in the homepage story. Capabilit
 
 - The base HTML contains the content and navigation; animation progressively enhances it.
 - Before animation consent, the page uses the static SVG and does not initialize WebGL. Three.js loads in a separate bundle after an idle interval; rendering pauses offscreen and in background tabs, pixel density is capped, and touch layouts use a lighter scene cadence. Studio reflections are baked from the original Three.js RoomEnvironment once, avoiding synchronous reflection generation in each visitor’s browser.
-- Native document scrolling drives a **right-to-left** desktop track with a short frame-rate-independent presentation ease, layered title/linework depth, and a final full-name footer scene. The document itself is never smoothed or wheel-intercepted. Anchors, focused links, refresh restoration, and keyboard jumps synchronize immediately; Left advances and Right returns to the previous scene. Supporting pages keep editorial content vertical and join a matching right-to-left footer finale. Below 768px, all sections and footers remain naturally vertical.
+- Native document scrolling drives a **right-to-left** desktop track with a short frame-rate-independent presentation ease, layered title/linework depth, and a final full-name footer scene. The document itself is never smoothed or wheel-intercepted. Clicked section shortcuts glide with native smooth scrolling; refresh restoration and keyboard-focus jumps remain immediate. Left advances and Right returns to the previous scene. Supporting pages keep editorial content vertical and join a matching right-to-left footer finale. Below 768px, all sections and footers remain naturally vertical.
 - Early, inline `pageswap`/`pagereveal` listeners enable native multi-page transitions without a render-blocking script request or a client-side router. Project titles and geometry become shared elements. Reloads do not run a handoff, reduced-motion mode skips it, and browser Back restores the original scene.
 - The animation chooser appears once per tab session. Its choice survives refreshes and internal navigation through `sessionStorage`; a new session asks again. The device’s reduced-motion setting recommends the static option, and Escape chooses it. Without JavaScript, the content remains a regular readable page.
 - Turning animations off restores the vertical document and stops GPU rendering. Turning them on preserves the current scene. The header button always states its status, and its information label appears on hover or keyboard focus.
@@ -151,7 +152,7 @@ Six records are marked `featured`; those appear in the homepage story. Capabilit
 npm test
 ```
 
-This regenerates the site and checks unique routes, required content, asset existence, HTTPS source links, related-project references, and the six featured records. It also validates the strand’s shared topology and finite position/normal morph buffers; both production prebuild hooks include that check.
+This regenerates the site and checks unique routes, required content, asset existence, HTTPS source links, related-project references, and the six featured records. The wire check validates fixed offscreen endpoints, actual vertex deformation, reversible poses, finite buffers, and continuity for small scroll steps across three aspect ratios. Both prebuild hooks include it.
 
 The optional browser suite checks all 24 routes and their internal resources, five viewport widths, menu dismissal/focus/scroll restoration, archive filtering, project refresh/Back/Next behavior, certificate access, motion persistence, and WebGL fallback. It also captures screenshots.
 
@@ -163,11 +164,14 @@ npx playwright install chromium
 # Start npm run dev in another terminal, then:
 node scripts/verify-browser.mjs http://localhost:5173/
 node scripts/verify-horizontal.mjs http://localhost:5173/
+node scripts/verify-living-wire.mjs http://localhost:5173/
 ```
 
 Use the actual server port if Vite selected a different one. For a Pages preview, supply its complete base URL, for example `http://localhost:4173/Portfolio/`. Screenshots go to ignored `tmp/qa/` (general suite) or `tmp/horizontal-qa/` (horizontal suite). `SCREENSHOT_DIR` changes that location, `BROWSER_CHANNEL=msedge` selects installed Edge, and `PLAYWRIGHT_MODULE` can point to an existing Playwright package. `QA_LIGHT=1` runs the alternate-build layout checks at 390px and 1440px while retaining route and resource checks.
 
-The cinematic suite exercises real wheel input after refresh, negative-X/right-to-left easing, one-path SVG continuity, unchanged canvas identity, intermediate morph blends, all 14 desktop scenes including the footer, 320/390/768/1024/1440px layouts, native vertical mobile flow, absence of homepage images, project-title page handoffs, Back restoration, mobile touch, and static-mode persistence. Run `node scripts/check-strand.mjs` for matching morph topology and finite position/normal buffers. Set `QA_SHORT=1` to check 320/390px-wide phones at 568px height, or `QA_LANDSCAPE=1` for 768/1024px widths at 600px height. Its timing output is a local smoke-test measurement, not a universal performance guarantee.
+The focused living-wire suite takes **12 actual rendered frames during small wheel scrolls**, with page text hidden to isolate the wire. It compares pixel changes, checks that scroll-driven deformation exceeds idle motion, verifies the SVG path changes, and writes a motion contact sheet plus `results.json`. It also samples the intro button’s intermediate scroll positions, checks its filled/raised appearance, and exercises mobile SVG fallback and smooth skipping. It needs the optional `sharp` package (`npm install --no-save --package-lock=false playwright sharp`); `SHARP_MODULE` can point to an existing installation. These are local behavior tests, not deployment-status checks.
+
+The broader cinematic suite retains layout, navigation, and reduced-motion checks. Set `QA_SHORT=1` for short phones, or `QA_LANDSCAPE=1` for compact desktop heights. Timing output is a local smoke-test measurement, not a universal performance guarantee.
 
 ### Rebuild studio lighting (optional)
 

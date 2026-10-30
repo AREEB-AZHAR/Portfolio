@@ -81,9 +81,9 @@ function setMotion(value, preserve = true) {
     "story-horizontal",
     !reduced && Boolean(story?.isHorizontal()),
   );
-  thread?.refresh();
   root.classList.toggle("motion-reduced", reduced);
   root.classList.toggle("motion-full", !reduced);
+  thread?.refresh();
   motionToggle.setAttribute("aria-pressed", String(!reduced));
   motionToggle.setAttribute(
     "aria-label",
@@ -168,6 +168,7 @@ let frame = 0;
 function scrollUI() {
   frame = 0;
   const activeStory = story?.update();
+  thread?.update();
   footerFlow?.update();
   const range = root.scrollHeight - innerHeight;
   const progress = range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;

@@ -1,0 +1,78 @@
+[
+  {
+    "check": "Raised skip button + smooth glide",
+    "samples": [
+      0,
+      29,
+      446,
+      959,
+      1219,
+      1326,
+      1388,
+      1428,
+      1439
+    ]
+  },
+  {
+    "check": "Twelve visible 3D deformation frames from real small wheel inputs",
+    "changes": [
+      {
+        "changedPixels": 33393,
+        "meanDifference": 3.0670694444444444
+      },
+      {
+        "changedPixels": 35629,
+        "meanDifference": 3.5309886574074074
+      },
+      {
+        "changedPixels": 29336,
+        "meanDifference": 2.992286574074074
+      },
+      {
+        "changedPixels": 24396,
+        "meanDifference": 2.5348895833333334
+      },
+      {
+        "changedPixels": 20125,
+        "meanDifference": 2.0876756944444446
+      },
+      {
+        "changedPixels": 18231,
+        "meanDifference": 1.5761733796296296
+      },
+      {
+        "changedPixels": 20193,
+        "meanDifference": 1.9082578703703703
+      },
+      {
+        "changedPixels": 23877,
+        "meanDifference": 2.408149537037037
+      },
+      {
+        "changedPixels": 28610,
+        "meanDifference": 2.878629861111111
+      },
+      {
+        "changedPixels": 30963,
+        "meanDifference": 2.9927819444444443
+      },
+      {
+        "changedPixels": 17371,
+        "meanDifference": 1.188762037037037
+      }
+    ]
+  },
+  {
+    "check": "Travelling energy / local breathing",
+    "changedPixels": 14322,
+    "meanDifference": 0.668818287037037
+  },
+  {
+    "check": "Immediate first scroll after refresh",
+    "responseMs": 25
+  },
+  {
+    "check": "Mobile SVG deformation, button fit and smooth skip",
+    "passed": true
+  }
+]

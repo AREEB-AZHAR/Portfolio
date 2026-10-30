@@ -41,12 +41,13 @@ try {
   assert.equal(count, 14, "Footer is the final scene");
   assert.equal(
     await page.locator(".story-thread path").count(),
-    1,
-    "All drawings share a single path",
+    2,
+    "One shared curve rendered as base and travelling highlight",
   );
   assert.equal(
-    (await page.locator(".story-thread path").getAttribute("d")).match(/M/g)
-      ?.length,
+    (await page.locator(".story-thread path").first().getAttribute("d")).match(
+      /M/g,
+    )?.length,
     1,
     "The pen never lifts between shapes",
   );
@@ -90,10 +91,9 @@ try {
       "Canvas is never reparented or replaced",
     );
     if (phase === 2.35 || phase === 2.65) {
-      const blend = Number(await strand.getAttribute("data-morph-blend"));
       assert(
-        blend > 0 && blend < 1,
-        "Intermediate vertices interpolate rather than swapping forms",
+        await strand.getAttribute("data-wire-vertex"),
+        "Actual deformed centerline is available",
       );
       await page.screenshot({ path: `${output}/morph-${phase}.png` });
     }
