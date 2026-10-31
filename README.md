@@ -9,7 +9,8 @@ A cinematic software engineering portfolio with an original metallic AA sculptur
 ## The redesign
 
 - **Latest update:** a gently eased, layered **right-to-left** desktop story connects **14 scenes, including the complete footer**. Native scroll input remains immediate, with no opening hold or reload entrance animation. Mobile uses natural **bottom-to-top** scrolling instead of a horizontal track.
-- **Living-string correction:** the line itself now unwinds, travels, and gathers into each next drawing with scroll. The SVG fallback and metallic 3D wire use **the same open curve**, attached beyond both screen edges. Geometry is updated vertex-by-vertex; the object no longer floats or rotates as a substitute for deformation. Travelling highlights and small local tension waves keep the string alive at rest.
+- **Text-safe scene composition:** the hero now reserves separate areas for its headline, biography, controls, and artwork in both motion modes. Each section has its own formation position and cable route; long headings wrap before entering the artwork area. Mobile uses smaller formations above the reading area. The artwork gently recedes before the footer wordmark.
+- **Living wire + restored chrome AA:** the cable itself unwinds, travels, and gathers into drawings using a shared SVG/WebGL curve. Stronger layered waves keep it moving between formations. A separate beveled metallic AA sculpture bends vertex-by-vertex under smooth, irregular gusts, with independently moving letters and studio reflections. Its movement complements the string rather than replacing the string's deformation.
 - **Skip to introduction** is a raised, filled button with hover/press/focus states. Clicking it smoothly glides to the next section on desktop and mobile; reduced-motion mode, refresh restoration, and keyboard focus remain immediate.
 - Native cross-document View Transitions connect project titles and linework to their briefing pages, while keeping the header anchored. Other page changes share the same lateral visual language (vertical on mobile). Navigation begins immediately; wheel, touch, or keyboard input can interrupt a handoff. Unsupported browsers use regular links.
 - Project screenshots and artwork appear inside their briefing pages, not on the homepage or project index. The landing showcase uses oversized titles, project stacks, and original line illustrations.
@@ -17,7 +18,7 @@ A cinematic software engineering portfolio with an original metallic AA sculptur
 - Optional WebGL setup waits until after consent and scroll idle; only visible sculptures initialize. The initial page and scrolling never wait for the 3D bundle. Shader compilation completes asynchronously before the sculpture appears.
 - The shared footer now displays the complete **AREEB AZHAR** wordmark.
 - A near-black and warm-ivory visual system with self-hosted Manrope typography.
-- An original procedural metallic AA strand with precomputed studio reflections; the same mesh continues through the full homepage. Supporting pages retain their AA identity sculpture.
+- An original procedural metallic AA sculpture and continuous cable share one renderer and precomputed studio reflections. Supporting pages retain their AA identity sculpture.
 - Geometric transformations follow the same eased story position on desktop and the document’s natural section progression on mobile.
 - Six expansive, typography-led project showcases with distinct line illustrations; real project media lives in the briefings.
 - **24 static pages:** Home, About/Approach, Projects, Capabilities, Contact, and **19 canonical project briefings**.
@@ -33,6 +34,10 @@ The visual direction is inspired by [Mohamed Elgazzar’s portfolio](https://www
 ![Twelve actual frames: the wire releases a frame, flows, and gathers into a ring as the visitor scrolls](docs/screenshots/living-wire-scroll-sequence.png)
 
 The [local behavior test report](docs/verification/living-wire-results.json) records the intro glide positions, rendered pixel differences, idle motion, refresh response, and mobile checks. It does not claim deployment verification.
+
+![Text-safe approach scene with the restored metallic AA](docs/screenshots/wind-approach.png)
+
+The composition regression checks cover 33 desktop scene/width combinations at 1920, 1440, and 1024 pixels, plus six additional project/capability combinations and mobile captures. They check actual text bounds, cable samples, sculpture clearance, and hero controls. Motion tests also verify twelve rendered deformation frames, smooth intro navigation, reduced motion, and an ungated first scroll after refresh.
 
 ## Explore the work
 
@@ -100,6 +105,8 @@ src/
   thread.js                Animated SVG fallback using the live shared curve
   living-strand.mjs        Shared curve sampler: release, flow, gather, tension
   continuous-sculpture.js  Fixed-camera 3D wire and travelling energy shader
+  wind-sculpture.mjs       Beveled chrome AA with vertex-level bending
+  wind-field.mjs           Continuous irregular gusts and layered sway
   strand-geometry.mjs      Dynamic open-tube vertices and normals
   page-transitions.mjs     Early native page-handoff and shared-title setup
 scripts/
@@ -109,6 +116,7 @@ scripts/
   verify-browser.mjs       Browser regression checks and screenshot capture
   verify-horizontal.mjs    Desktop scenes, mobile flow, startup, page-handoff QA
   verify-living-wire.mjs   Pixel-level scroll deformation and smooth-button QA
+  verify-scene-composition.mjs  Text/art clearance and responsive scene captures
   bake-studio.mjs          Optional offline studio reflection precomputation
 public/
   projects/                Original screenshots and project artwork
@@ -165,6 +173,7 @@ npx playwright install chromium
 node scripts/verify-browser.mjs http://localhost:5173/
 node scripts/verify-horizontal.mjs http://localhost:5173/
 node scripts/verify-living-wire.mjs http://localhost:5173/
+node scripts/verify-scene-composition.mjs http://localhost:5173/
 ```
 
 Use the actual server port if Vite selected a different one. For a Pages preview, supply its complete base URL, for example `http://localhost:4173/Portfolio/`. Screenshots go to ignored `tmp/qa/` (general suite) or `tmp/horizontal-qa/` (horizontal suite). `SCREENSHOT_DIR` changes that location, `BROWSER_CHANNEL=msedge` selects installed Edge, and `PLAYWRIGHT_MODULE` can point to an existing Playwright package. `QA_LIGHT=1` runs the alternate-build layout checks at 390px and 1440px while retaining route and resource checks.

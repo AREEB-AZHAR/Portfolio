@@ -1,4 +1,4 @@
-import { sampleLivingStrand } from "./living-strand.mjs";
+import { sampleLivingStrand, storyArtPresence } from "./living-strand.mjs";
 export function createStoryThread(host) {
   if (!host) return null;
   const svg = host.querySelector(".story-thread"),
@@ -12,6 +12,7 @@ export function createStoryThread(host) {
       height = svg.clientHeight || innerHeight,
       aspect = width / height;
     const phase = active ? Number(sculpture.dataset.sceneProgress || 0) : 0;
+    svg.style.opacity = active ? String(storyArtPresence(phase)) : "0";
     const curve = sampleLivingStrand(phase, {
       aspect,
       time: active ? time * 0.001 : 0,

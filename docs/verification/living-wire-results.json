@@ -2,74 +2,74 @@
   {
     "check": "Raised skip button + smooth glide",
     "samples": [
-      0,
-      29,
-      446,
-      959,
-      1219,
-      1326,
-      1388,
-      1428,
-      1439
+      2,
+      162,
+      845,
+      1169,
+      1296,
+      1383,
+      1419,
+      1439,
+      1440
     ]
   },
   {
     "check": "Twelve visible 3D deformation frames from real small wheel inputs",
     "changes": [
       {
-        "changedPixels": 33393,
-        "meanDifference": 3.0670694444444444
+        "changedPixels": 66322,
+        "meanDifference": 4.3873645833333335
       },
       {
-        "changedPixels": 35629,
-        "meanDifference": 3.5309886574074074
+        "changedPixels": 71669,
+        "meanDifference": 5.111543055555556
       },
       {
-        "changedPixels": 29336,
-        "meanDifference": 2.992286574074074
+        "changedPixels": 75749,
+        "meanDifference": 5.640924537037037
       },
       {
-        "changedPixels": 24396,
-        "meanDifference": 2.5348895833333334
+        "changedPixels": 83867,
+        "meanDifference": 5.69378587962963
       },
       {
-        "changedPixels": 20125,
-        "meanDifference": 2.0876756944444446
+        "changedPixels": 74175,
+        "meanDifference": 3.907734027777778
       },
       {
-        "changedPixels": 18231,
-        "meanDifference": 1.5761733796296296
+        "changedPixels": 65938,
+        "meanDifference": 3.4341747685185187
       },
       {
-        "changedPixels": 20193,
-        "meanDifference": 1.9082578703703703
+        "changedPixels": 66225,
+        "meanDifference": 3.7493421296296296
       },
       {
-        "changedPixels": 23877,
-        "meanDifference": 2.408149537037037
+        "changedPixels": 73132,
+        "meanDifference": 4.4230474537037034
       },
       {
-        "changedPixels": 28610,
-        "meanDifference": 2.878629861111111
+        "changedPixels": 77468,
+        "meanDifference": 4.905207638888889
       },
       {
-        "changedPixels": 30963,
-        "meanDifference": 2.9927819444444443
+        "changedPixels": 78917,
+        "meanDifference": 5.273818055555555
       },
       {
-        "changedPixels": 17371,
-        "meanDifference": 1.188762037037037
+        "changedPixels": 54820,
+        "meanDifference": 3.375078240740741
       }
     ]
   },
   {
     "check": "Travelling energy / local breathing",
-    "changedPixels": 14322,
-    "meanDifference": 0.668818287037037
+    "changedPixels": 67894,
+    "meanDifference": 3.8247858796296295
   },
   {
     "check": "Immediate first scroll after refresh",
-    "responseMs": 25
+    "responseMs": 62
   },
   {
     "check": "Mobile SVG deformation, button fit and smooth skip",

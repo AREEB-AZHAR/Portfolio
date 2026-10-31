@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { createStrandGeometry } from "./strand-geometry.mjs";
+import { createWindSculpture } from "./wind-sculpture.mjs";
+import { storyArtPresence } from "./living-strand.mjs";
 export async function createContinuousSculpture(host, environment) {
   let renderer;
   try {
@@ -14,7 +16,7 @@ export async function createContinuousSculpture(host, environment) {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setClearColor(0x090909, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.25;
+  renderer.toneMappingExposure = 1.07;
   renderer.domElement.setAttribute("aria-hidden", "true");
   host.append(renderer.domElement);
   const scene = new THREE.Scene();
@@ -23,10 +25,11 @@ export async function createContinuousSculpture(host, environment) {
   camera.position.z = 10;
   const { geometry, update, centerline } = createStrandGeometry();
   const material = new THREE.MeshStandardMaterial({
-    color: 0x9fa393,
-    metalness: 0.95,
-    roughness: 0.3,
-    envMapIntensity: 1.4,
+    color: 0x74786f,
+    metalness: 0.9,
+    roughness: 0.38,
+    envMapIntensity: 1.05,
+    transparent: true,
   });
   let shader;
   material.onBeforeCompile = (program) => {
@@ -41,11 +44,13 @@ export async function createContinuousSculpture(host, environment) {
       "varying float vWireU;uniform float wireFlow;\n" + program.fragmentShader;
     program.fragmentShader = program.fragmentShader.replace(
       "#include <color_fragment>",
-      "#include <color_fragment>\nfloat energy=pow(0.5+0.5*cos(6.2831853*(vWireU+wireFlow)),24.0);diffuseColor.rgb*=0.52+energy*0.75;",
+      "#include <color_fragment>\nfloat energy=pow(0.5+0.5*cos(6.2831853*(vWireU+wireFlow)),24.0);diffuseColor.rgb*=0.37+energy*0.8;",
     );
   };
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
+  const sculpture = createWindSculpture();
+  scene.add(sculpture.group);
   for (const [color, intensity, position] of [
     [0xe4e1d9, 5, [-4, 4, 3]],
     [0x939989, 3, [5, -1, 1]],
@@ -64,12 +69,18 @@ export async function createContinuousSculpture(host, environment) {
     aspect = 1.44;
   function render(time) {
     const phase = Number(host.dataset.sceneProgress || 0);
-    update(phase, aspect, time * 0.001);
+    const seconds = time * 0.001;
+    const presence = storyArtPresence(phase);
+    material.opacity = presence;
+    mesh.visible = presence > 0.005;
+    update(phase, aspect, seconds);
+    const wind = sculpture.update(phase, aspect, seconds, reduced);
     if (shader) shader.uniforms.wireFlow.value = phase * 0.8 + time * 0.00009;
     renderer.render(scene, camera);
     host.dataset.morphPhase = phase.toFixed(4);
     // A real vertex readback sample for debugging, not a replacement for visual QA.
     host.dataset.wireVertex = `${centerline[288].toFixed(4)},${centerline[289].toFixed(4)}`;
+    host.dataset.windBend = wind.x.toFixed(4);
   }
   function stop() {
     cancelAnimationFrame(frame);
@@ -122,7 +133,7 @@ export async function createContinuousSculpture(host, environment) {
   render(0);
   host.classList.add("has-webgl");
   start();
-  host.dataset.meshCount = "1";
+  host.dataset.meshCount = "3";
   return {
     setReduced(value) {
       reduced = value;

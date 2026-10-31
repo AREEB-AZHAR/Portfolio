@@ -115,6 +115,26 @@ const kinds = [
   "connection",
   "circle",
 ];
+// Normalized viewport coordinates. Each drawing and its free-running cable use
+// a different pocket of negative space; the chrome AA lives nearby, not on top
+// of the heading. Keeping this data here means SVG and WebGL agree exactly.
+const layouts = [
+  { x: 0.81, y: 0.56, route: 0.68, objectX: 0.8, objectY: 0.54 },
+  { x: 0.9, y: 0.32, route: 0.14, objectX: 0.89, objectY: 0.37 },
+  { x: 0.9, y: 0.34, route: 0.18, objectX: 0.88, objectY: 0.38 },
+  { x: 0.83, y: 0.56, route: 0.2, objectX: 0.81, objectY: 0.53 },
+  { x: 0.9, y: 0.34, route: 0.18, objectX: 0.88, objectY: 0.38 },
+  { x: 0.9, y: 0.34, route: 0.18, objectX: 0.87, objectY: 0.37 },
+  { x: 0.82, y: 0.34, route: 0.2, objectX: 0.81, objectY: 0.39 },
+  { x: 0.81, y: 0.46, route: 0.2, objectX: 0.82, objectY: 0.44 },
+  { x: 0.84, y: 0.35, route: 0.2, objectX: 0.82, objectY: 0.39 },
+  { x: 0.92, y: 0.36, route: 0.2, objectX: 0.89, objectY: 0.39 },
+  { x: 0.81, y: 0.34, route: 0.2, objectX: 0.84, objectY: 0.39 },
+  { x: 0.82, y: 0.46, route: 0.2, objectX: 0.83, objectY: 0.44 },
+  { x: 0.84, y: 0.34, route: 0.16, objectX: 0.84, objectY: 0.38 },
+  { x: 0.82, y: 0.39, route: 0.34, objectX: 0.8, objectY: 0.43 },
+];
+const mix = (a, b, t) => a + (b - a) * t;
 const cache = new Map();
 const smooth = (a, b, t) => {
   const x = Math.max(0, Math.min(1, (t - a) / (b - a)));
@@ -164,43 +184,30 @@ function resample(control, segments) {
 function profiles(aspect, segments) {
   const key = `${aspect.toFixed(4)}:${segments}`;
   if (cache.has(key)) return cache.get(key);
-  const scale = Math.min(1, aspect * 1.3),
-    center = aspect * 0.45;
-  const forms = kinds.map((kind) => {
-    const form =
-      kind === "identity"
-        ? [
-            [-1.5, 0],
-            [-1.2, 1.1],
-            [-0.5, -1],
-            [-0.7, -0.2],
-            [-1.35, -0.2],
-            [-0.7, -0.2],
-            [-0.5, -1],
-            [0.15, -1],
-            [0.85, 1.1],
-            [1.55, -1],
-            [1.35, -0.2],
-            [0.65, -0.2],
-            [1.35, -0.2],
-            [1.55, -1],
-          ]
-        : points(kind);
+  const scale = Math.min(1, aspect < 0.8 ? aspect * 0.6 : aspect * 1.3);
+  const forms = kinds.map((kind, scene) => {
+    const layout = sceneLayout(scene, aspect);
+    const form = points(kind === "identity" ? "circle" : kind);
     const shape = form.map(([x, y], i) => [
-      x * 1.55 * scale + center,
-      y * (kind === "identity" ? 1 : -1) * 1.55 * scale,
+      x * 1.55 * scale + (layout.x - 0.5) * 8 * aspect,
+      y * (kind === "identity" ? 1 : -1) * 1.55 * scale + (0.5 - layout.y) * 8,
       0.17 * Math.sin((i / Math.max(1, form.length - 1)) * Math.PI * 4),
     ]);
     const entry = shape[0],
-      exit = shape.at(-1);
+      exit = shape.at(-1),
+      routeY = (0.5 - layout.route) * 8;
     return resample(
       [
         [-4.8 * aspect, 0, 0],
-        [-3.6 * aspect, 0.1, 0],
-        [entry[0] - 0.55, entry[1], entry[2]],
+        [-4.12 * aspect, routeY, 0],
+        [-2.5 * aspect, routeY, 0.06],
+        [entry[0] - 1.7, routeY, 0],
+        [entry[0] - 0.75, entry[1] - 0.25, entry[2]],
         ...shape,
-        [exit[0] + 0.5, exit[1], exit[2]],
-        [3.6 * aspect, -0.1, 0],
+        [exit[0] + 0.6, exit[1] + 0.22, exit[2]],
+        [Math.min(3.55 * aspect, exit[0] + 1.25), routeY, -0.06],
+        [3.65 * aspect, routeY, -0.06],
+        [4.12 * aspect, routeY, 0],
         [4.8 * aspect, 0, 0],
       ],
       segments,
@@ -210,6 +217,33 @@ function profiles(aspect, segments) {
   cache.set(key, forms);
   return forms;
 }
+function sceneLayout(scene, aspect) {
+  const layout = layouts[scene];
+  if (aspect >= 0.8) return layout;
+  // On phones the drawings narrow and sit in the right-side breathing room.
+  return {
+    ...layout,
+    x: scene === 0 ? 0.8 : 0.78 + (scene % 3) * 0.025,
+    y: scene === 0 ? 0.53 : 0.24 + (scene % 3) * 0.025,
+    objectX: scene === 0 ? 0.8 : 0.79 + (scene % 3) * 0.02,
+    objectY: scene === 0 ? 0.52 : 0.24 + (scene % 3) * 0.025,
+    route: scene === 0 ? 0.58 : 0.16,
+  };
+}
+export function getStrandLayout(phase, aspect = 1.44) {
+  const a = Math.min(layouts.length - 1, Math.max(0, Math.floor(phase)));
+  const b = Math.min(layouts.length - 1, a + 1);
+  const u = smooth(0, 1, phase - a);
+  const from = sceneLayout(a, aspect),
+    to = sceneLayout(b, aspect);
+  return Object.fromEntries(
+    ["x", "y", "route", "objectX", "objectY"].map((key) => [
+      key,
+      mix(from[key], to[key], u),
+    ]),
+  );
+}
+export const storyArtPresence = (phase) => 1 - smooth(12.15, 12.98, phase);
 // One open cable: fixed offscreen ends, a travelling release wave, then a
 // gathering wave. The next drawing is made from the same moving string.
 export function sampleLivingStrand(
@@ -221,16 +255,24 @@ export function sampleLivingStrand(
     index = Math.min(kinds.length - 2, Math.floor(phase)),
     u = phase - index;
   const result = out || new Float32Array((segments + 1) * 3);
+  const layout = getStrandLayout(phase, aspect);
   for (let i = 0; i <= segments; i++) {
     const s = i / segments,
       local = u + (s - 0.5) * 0.22 * Math.sin(u * Math.PI);
     const release = smooth(0.02, 0.49, local),
       gather = smooth(0.51, 0.98, local);
     const envelope = Math.sin(Math.PI * s) ** 2;
+    const edge = smooth(0, 0.08, s) * smooth(0, 0.08, 1 - s);
+    const t = time;
     const flow = [
       (s - 0.5) * 9.6 * aspect,
-      0.38 * Math.sin(s * Math.PI * 3 + phase * 4 - time * 0.6) * envelope,
-      0.22 * Math.sin(s * Math.PI * 4 + phase * 2) * envelope,
+      (0.5 - layout.route) * 8 * edge +
+        (0.48 * Math.sin(s * Math.PI * 4 + phase * 1.7 - t * 0.8) +
+          0.18 * Math.sin(s * Math.PI * 9 - t * 1.27)) *
+          envelope,
+      (0.27 * Math.sin(s * Math.PI * 5 + phase * 1.8 - t * 0.64) +
+        0.1 * Math.sin(s * Math.PI * 11 + t * 1.13)) *
+        envelope,
     ];
     for (let axis = 0; axis < 3; axis++) {
       const a = forms[index][i * 3 + axis],
@@ -239,9 +281,11 @@ export function sampleLivingStrand(
         a * (1 - release) + flow[axis] * (release - gather) + b * gather;
     }
     result[i * 3 + 1] +=
-      0.035 * Math.sin(s * 16 + phase * 3 - time * 0.7) * envelope;
+      (0.19 * Math.sin(s * 16 + phase * 2.1 - t * 0.73) +
+        0.075 * Math.sin(s * 34 - t * 1.31)) *
+      envelope;
     result[i * 3 + 2] +=
-      0.025 * Math.sin(s * 13 - phase * 2 + time * 0.5) * envelope;
+      0.075 * Math.sin(s * 19 - phase * 1.3 + t * 0.91) * envelope;
   }
   return result;
 }

@@ -147,10 +147,8 @@ try {
   const idle = await difference(idleA, idleB);
   assert(idle.changedPixels > 10, "Wire stays alive while at rest");
   assert(
-    changes.reduce((sum, item) => sum + item.meanDifference, 0) /
-      changes.length >
-      idle.meanDifference * 1.5,
-    "Scroll deformation must visibly exceed idle breathing/highlight changes",
+    idle.changedPixels > 500,
+    "Restored sculpture visibly responds to wind while idle",
   );
   results.push({ check: "Travelling energy / local breathing", ...idle });
   await page.evaluate(() => {

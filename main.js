@@ -99,6 +99,7 @@ function setMotion(value, preserve = true) {
 }
 function chooseMotion(value) {
   const firstChoice = !sessionChoice;
+  const fromGate = gate.open;
   sessionChoice = value;
   try {
     sessionStorage.setItem("portfolio-session-motion", value);
@@ -110,7 +111,11 @@ function chooseMotion(value) {
   document.body.classList.remove("choosing-motion");
   setMotion(value);
   if (firstChoice) story?.followHash();
-  motionToggle.focus({ preventScroll: true });
+  if (fromGate) {
+    const title = document.querySelector("main h1");
+    title?.setAttribute("tabindex", "-1");
+    title?.focus({ preventScroll: true });
+  }
 }
 motionToggle.addEventListener("click", () =>
   chooseMotion(reduced ? "full" : "reduced"),

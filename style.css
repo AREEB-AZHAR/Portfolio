@@ -2983,3 +2983,63 @@ html:not(.motion-full) .hero-story {
     animation: none !important;
   }
 }
+
+/* Reserve an honest text area in the hero before placing atmospheric art. */
+.hero-story .hero-type {
+  top: clamp(165px, 19svh, 220px);
+  font-size: min(8.9vw, 10.9svh);
+  line-height: 0.98;
+}
+.hero-story .hero-type > span:nth-child(2) {
+  text-align: left;
+  padding-left: min(5vw, 80px);
+}
+.hero-story .hero-foot {
+  bottom: max(88px, 9svh);
+}
+.hero-story .hero-foot > div:first-child {
+  max-width: 370px;
+}
+.story-horizontal .horizontal-panel.hero-story .hero-type {
+  top: clamp(165px, 19svh, 220px);
+  font-size: min(8.9vw, 10.9svh);
+}
+.story-horizontal .horizontal-panel.hero-story .hero-foot {
+  bottom: max(88px, 9svh);
+}
+.story-horizontal .horizontal-panel .principle-stage h2 {
+  max-width: min(65vw, 950px);
+}
+.story-horizontal
+  .horizontal-panel[data-section="Degree Verification"]
+  .project-title {
+  max-width: 60vw;
+}
+.story-horizontal
+  .horizontal-panel[data-section="CryptoTrader"]
+  .project-title {
+  font-size: min(9vw, 13svh);
+}
+/* No animated cable is presented when a visitor chooses still mode. */
+.motion-reduced .story-atmosphere .story-thread {
+  display: none;
+}
+@media (max-width: 767px) {
+  .hero-story .hero-type {
+    top: clamp(158px, 22svh, 205px);
+    font-size: min(12.4vw, 6.8svh);
+    line-height: 1.1;
+  }
+  .hero-story .hero-type > span:nth-child(2) {
+    padding-left: min(7vw, 36px);
+  }
+  .hero-story .hero-foot {
+    bottom: clamp(78px, 11svh, 102px);
+  }
+  .horizontal-panel .scene-kicker {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 55%;
+  }
+}
