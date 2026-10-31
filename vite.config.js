@@ -13,6 +13,7 @@ export default defineConfig({
         "projects/index.html",
         "capabilities/index.html",
         "contact/index.html",
+        "motion-study/index.html",
         ...projects.map((p) => `projects/${p.slug}/index.html`),
       ].map((p) => resolve(import.meta.dirname, p)),
       output: {

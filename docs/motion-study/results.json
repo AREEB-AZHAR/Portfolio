@@ -1,0 +1,199 @@
+[
+  {
+    "index": 0,
+    "art": {
+      "minX": 852.1823850274086,
+      "maxX": 1301.6386878490448,
+      "minY": 283.1764966249466,
+      "maxY": 590.4247865080833
+    },
+    "texts": [
+      {
+        "x": 77.75,
+        "y": 153,
+        "right": 281.28125,
+        "bottom": 168.296875,
+        "text": "\n              01 / FROM INTENTION TO IMPLEMENTATION\n            "
+      },
+      {
+        "x": 77.75,
+        "y": 261,
+        "right": 826.546875,
+        "bottom": 547.171875,
+        "text": "\n                From idea.To system.To experience.\n              "
+      },
+      {
+        "x": 77.75,
+        "y": 577.171875,
+        "right": 826.546875,
+        "bottom": 639.359375,
+        "text": "\n                Software engineering student.Building the interface—and\n                what’s behind it.\n              "
+      },
+      {
+        "x": 77.75,
+        "y": 703,
+        "right": 277.828125,
+        "bottom": 765,
+        "text": "Skip to introduction ↗"
+      },
+      {
+        "x": 1211.84375,
+        "y": 734.40625,
+        "right": 1362.25,
+        "bottom": 765,
+        "text": "\n              KARACHI, PKAVAILABLE FOR OPPORTUNITIES\n            "
+      }
+    ],
+    "filamentWidth": "1px"
+  },
+  {
+    "index": 1,
+    "art": {
+      "minX": 146.60041451454163,
+      "maxX": 574.3829530477524,
+      "minY": 383.6116589605808,
+      "maxY": 706.4174115657806
+    },
+    "texts": [
+      {
+        "x": 77.75,
+        "y": 153,
+        "right": 213.703125,
+        "bottom": 168.296875,
+        "text": "02 / BEYOND THE INTERFACE"
+      },
+      {
+        "x": 777.59375,
+        "y": 243,
+        "right": 1353.59375,
+        "bottom": 467.34375,
+        "text": "\n                Logic underneath.Purpose in everyinteraction.\n              "
+      },
+      {
+        "x": 777.59375,
+        "y": 505.34375,
+        "right": 1247.59375,
+        "bottom": 598.625,
+        "text": "\n                I build across web, mobile, Rust, blockchain, and games.\n                Different technologies. The same intention: make the whole\n                product work, and make it make sense.\n              "
+      },
+      {
+        "x": 77.75,
+        "y": 734.40625,
+        "right": 208.078125,
+        "bottom": 765,
+        "text": "\n              ONE CONTINUOUS THREAD.MANY WAYS TO THINK.\n            "
+      }
+    ],
+    "filamentWidth": "1px"
+  },
+  {
+    "index": 2,
+    "art": {
+      "minX": 851.8704172968864,
+      "maxX": 1253.981305360794,
+      "minY": 160.0509524345398,
+      "maxY": 470.4990338534117
+    },
+    "texts": [
+      {
+        "x": 77.75,
+        "y": 153,
+        "right": 190.546875,
+        "bottom": 168.296875,
+        "text": "03 / A WAY OF WORKING"
+      },
+      {
+        "x": 77.75,
+        "y": 477,
+        "right": 840.9375,
+        "bottom": 671.59375,
+        "text": "\n                Understandthe system.\n              "
+      },
+      {
+        "x": 892.796875,
+        "y": 648,
+        "right": 1310.390625,
+        "bottom": 741.28125,
+        "text": "\n              Start with the problem, its dependencies, and the people it needs\n              to serve. A clear model makes the next decision easier.\n            "
+      },
+      {
+        "x": 77.75,
+        "y": 216,
+        "right": 185.265625,
+        "bottom": 246.59375,
+        "text": "STEP BACK.THEN MOVE FORWARD."
+      }
+    ],
+    "filamentWidth": "1px"
+  },
+  {
+    "index": 3,
+    "art": {
+      "minX": 215.17205357551575,
+      "maxX": 607.3443111777306,
+      "minY": 307.7207341790199,
+      "maxY": 596.2185457348824
+    },
+    "texts": [
+      {
+        "x": 77.75,
+        "y": 153,
+        "right": 233.625,
+        "bottom": 168.296875,
+        "text": "04 / THE DETAILS ARE THE WORK"
+      },
+      {
+        "x": 806.390625,
+        "y": 297,
+        "right": 1353.578125,
+        "bottom": 468.71875,
+        "text": "\n                Clarify theinteraction.\n              "
+      },
+      {
+        "x": 806.390625,
+        "y": 508.71875,
+        "right": 1236.390625,
+        "bottom": 602,
+        "text": "\n                Layout, feedback, state, and timing shape how a product is\n                understood. The interface should make the system easier to use.\n              "
+      },
+      {
+        "x": 77.75,
+        "y": 734.40625,
+        "right": 244.546875,
+        "bottom": 765,
+        "text": "\n              A VISUAL PROTOTYPE.THE REST FOLLOWS AFTER REVIEW.\n            "
+      }
+    ],
+    "filamentWidth": "1px"
+  },
+  {
+    "smoothSkip": [
+      0,
+      55,
+      587,
+      1015,
+      1269,
+      1368,
+      1411,
+      1437
+    ]
+  },
+  {
+    "firstScrollMs": 72
+  },
+  {
+    "transitionCollisions": [],
+    "performance": {
+      "rafMs": {
+        "median": 17.699999999999818,
+        "p95": 18.299999999999272,
+        "samples": 562
+      },
+      "cpuDrawMs": {
+        "median": 5.299999982118607,
+        "p95": 8.399999976158142,
+        "samples": 562
+      }
+    }
+  }
+]

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090909" />
+    <meta name="robots" content="noindex" />
+    <title>Motion study — Areeb Azhar</title>
+    <link rel="stylesheet" href="./study.css" />
+  </head>
+  <body>
+    <header class="study-header">
+      <a class="identity" href="../" aria-label="Areeb Azhar portfolio"
+        ><svg viewBox="0 0 76 42" aria-hidden="true">
+          <path d="M2 38 21 3 40 38M10 24h23M36 38 55 3 74 38M44 24h23" /></svg
+        ><span>AREEB AZHAR<br />SOFTWARE ENGINEERING</span></a
+      >
+      <div class="header-right">
+        <span class="study-label">MOTION STUDY / 01</span
+        ><button class="motion-switch" aria-pressed="true">
+          <span class="status-dot"></span
+          ><span class="motion-copy">Motion on</span>
+        </button>
+      </div>
+    </header>
+    <main class="study" id="study">
+      <div class="viewport">
+        <div class="art" aria-hidden="true">
+          <svg class="filament"><path /></svg>
+          <div class="ribbon-stage"></div>
+        </div>
+        <div class="chapters">
+          <section
+            class="chapter opening"
+            data-scene="0"
+            aria-labelledby="opening-title"
+          >
+            <p class="eyebrow scene-caption">
+              01 / FROM INTENTION TO IMPLEMENTATION
+            </p>
+            <div class="text-block">
+              <h1 id="opening-title">
+                From idea.<br /><span>To system.</span><br />To experience.
+              </h1>
+              <p class="description">
+                Software engineering student.<br />Building the interface—and
+                what’s behind it.
+              </p>
+            </div>
+            <div class="mobile-art-space"></div>
+            <a class="skip" href="#introduction"
+              >Skip to introduction <span aria-hidden="true">↗</span></a
+            >
+            <p class="scene-note">
+              KARACHI, PK<br />AVAILABLE FOR OPPORTUNITIES
+            </p>
+          </section>
+          <section
+            class="chapter introduction"
+            id="introduction"
+            data-scene="1"
+            aria-labelledby="intro-title"
+          >
+            <p class="eyebrow scene-caption">02 / BEYOND THE INTERFACE</p>
+            <div class="text-block">
+              <h2 id="intro-title">
+                Logic underneath.<br /><span>Purpose in every</span
+                ><br />interaction.
+              </h2>
+              <p class="description">
+                I build across web, mobile, Rust, blockchain, and games.
+                Different technologies. The same intention: make the whole
+                product work, and make it make sense.
+              </p>
+            </div>
+            <div class="mobile-art-space"></div>
+            <p class="scene-note">
+              ONE CONTINUOUS THREAD.<br />MANY WAYS TO THINK.
+            </p>
+          </section>
+          <section
+            class="chapter system"
+            data-scene="2"
+            aria-labelledby="system-title"
+          >
+            <p class="eyebrow scene-caption">03 / A WAY OF WORKING</p>
+            <div class="text-block">
+              <h2 id="system-title">
+                Understand<br /><span>the system.</span>
+              </h2>
+            </div>
+            <div class="mobile-art-space"></div>
+            <p class="description secondary-copy">
+              Start with the problem, its dependencies, and the people it needs
+              to serve. A clear model makes the next decision easier.
+            </p>
+            <p class="scene-note">STEP BACK.<br />THEN MOVE FORWARD.</p>
+          </section>
+          <section
+            class="chapter interaction"
+            data-scene="3"
+            aria-labelledby="interaction-title"
+          >
+            <p class="eyebrow scene-caption">04 / THE DETAILS ARE THE WORK</p>
+            <div class="text-block">
+              <h2 id="interaction-title">
+                Clarify the<br /><span>interaction.</span>
+              </h2>
+              <p class="description">
+                Layout, feedback, state, and timing shape how a product is
+                understood. The interface should make the system easier to use.
+              </p>
+            </div>
+            <div class="mobile-art-space"></div>
+            <p class="scene-note">
+              A VISUAL PROTOTYPE.<br />THE REST FOLLOWS AFTER REVIEW.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="study-rail">
+      <span class="chapter-name">FROM IDEA</span>
+      <nav aria-label="Study chapters">
+        <button data-go="0" aria-label="Opening" aria-current="true">01</button
+        ><button data-go="1" aria-label="Introduction">02</button
+        ><button data-go="2" aria-label="Understand the system">03</button
+        ><button data-go="3" aria-label="Clarify the interaction">04</button>
+      </nav>
+      <span class="scroll-hint">SCROLL TO UNFOLD ←</span>
+      <div class="progress"><i></i></div>
+    </footer>
+    <script type="module" src="../src/motion-study/main.js"></script>
+  </body>
+</html>

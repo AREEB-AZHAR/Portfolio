@@ -8,6 +8,39 @@ A cinematic software engineering portfolio with an original metallic AA sculptur
 
 ## The redesign
 
+### Living filament study — awaiting visual approval
+
+The new direction is isolated at **`/motion-study/`** on branch `codex/filament-ribbon-study`. The existing homepage and all project briefings remain unchanged. This is the four-scene approval checkpoint, not the completed fourteen-scene rollout.
+
+- One fixed-topology beveled ribbon releases the AA signature into an open loop, folded frame, and nested curves. Parallel-transported frames keep the cross-section coherent while its centerline deforms.
+- A **1 CSS-pixel, 32%-opacity warm-grey filament** follows the same motion field. There is no bloom or white cable outline.
+- Artwork alternates between right, lower-left, upper-right, and left-center compositions. Text has a shorter lateral travel path to preserve its reading space.
+- Desktop uses native scrolling with a short visual interpolation; mobile uses vertical layouts with dedicated artwork space. Deferred WebGL initialization never gates scrolling.
+- Cached poses and preallocated geometry buffers avoid rebuilding meshes. This prototype uses CPU deformation rather than claiming GPU morph-target interpolation.
+
+**Review:** [full browser recording](docs/motion-study/ribbon-study.webm) · [artwork-only recording](docs/motion-study/ribbon-isolated.webm) · [browser test report](docs/motion-study/results.json).
+
+![Actual browser capture of the ribbon prototype](docs/motion-study/scene-0.png)
+
+To try it locally, follow the Node.js 24 setup below, run `npm run dev`, then open `http://localhost:5173/motion-study/`. Scroll normally, reverse direction, try **Skip to introduction**, and toggle **Motion on/off**. No accounts, environment variables, new backend, or paid services are required.
+
+Prototype source:
+
+| File | Responsibility |
+| --- | --- |
+| `motion-study/index.html` / `study.css` | Four editorial layouts and responsive negative space |
+| `src/motion-study/choreography.mjs` | Cached poses, scene anchors, travel curves, and shared gust field |
+| `src/motion-study/ribbon.js` | Fixed-topology beveled surface and studio lighting |
+| `src/motion-study/main.js` | Native-scroll timeline, filament, controls, and deferred rendering |
+
+Checks: `node scripts/check-ribbon-study.mjs` tests continuity and reversibility. With Playwright installed and Microsoft Edge available, run `node scripts/check-study-controls.mjs`, `node scripts/check-study-clearance.mjs`, and `node scripts/verify-ribbon-study.mjs` against the local server on port 5184 (`npm run dev -- --port 5184`). For recordings, install Playwright's FFmpeg helper (`npx playwright install ffmpeg`). `PLAYWRIGHT_MODULE` can point to an existing Playwright installation; `PLAYWRIGHT_BROWSERS_PATH` can select its browser/helper cache. Captures default to ignored `tmp/ribbon-study/`.
+
+The remaining project scenes, full-site navigation integration, and final performance/device audit are intentionally pending approval of this visual prototype. Browser captures are evidence of local behavior, not deployment verification.
+
+Local verification covered 320, 390, 768, 1024, 1440, and 1920-pixel widths plus a 1440×650 laptop view. The 61-position desktop sweep found no ribbon/filament intersections with visible text at its tested opacity threshold (25%). The refresh test observed the first scroll in 72 ms; intro skipping progressed through eight distinct scroll positions. Unrecorded rendering measured 17.7 ms median / 18.3 ms p95 animation-frame intervals and 5.3 ms median / 8.4 ms p95 CPU draw submission time on this machine. These are local measurements, not a cross-device frame-rate guarantee. Keyboard controls, toggle restoration, OS reduced motion, and forced WebGL fallback passed. Both root and `/Portfolio/` builds passed; Vite still reports the deferred Three.js chunk above 500 kB.
+
+### Current production design
+
 - **Latest update:** a gently eased, layered **right-to-left** desktop story connects **14 scenes, including the complete footer**. Native scroll input remains immediate, with no opening hold or reload entrance animation. Mobile uses natural **bottom-to-top** scrolling instead of a horizontal track.
 - **Text-safe scene composition:** the hero now reserves separate areas for its headline, biography, controls, and artwork in both motion modes. Each section has its own formation position and cable route; long headings wrap before entering the artwork area. Mobile uses smaller formations above the reading area. The artwork gently recedes before the footer wordmark.
 - **Living wire + restored chrome AA:** the cable itself unwinds, travels, and gathers into drawings using a shared SVG/WebGL curve. Stronger layered waves keep it moving between formations. A separate beveled metallic AA sculpture bends vertex-by-vertex under smooth, irregular gusts, with independently moving letters and studio reflections. Its movement complements the string rather than replacing the string's deformation.
