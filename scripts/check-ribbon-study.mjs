@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
-import { sampleRibbon, sceneState } from "../src/motion-study/choreography.mjs";
+import {
+  sampleRibbon,
+  sceneState,
+  scenes,
+} from "../src/motion-study/choreography.mjs";
 for (const aspect of [0.43, 0.85, 1.6, 2.1])
-  for (let phase = 0; phase <= 3; phase += 0.01) {
+  for (let phase = 0; phase <= scenes.length - 1; phase += 0.01) {
     const a = sampleRibbon(phase, { aspect, time: 0 }),
       b = sampleRibbon(phase + 0.001, { aspect, time: 0 });
     assert(a.every(Number.isFinite));

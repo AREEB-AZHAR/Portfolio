@@ -1,0 +1,428 @@
+/* The approved study's composition, scoped to the homepage only. */
+.ribbon-story {
+  --ribbon-edge: clamp(24px, 5.4vw, 110px);
+}
+.ribbon-atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.ribbon-stage,
+.ribbon-filament {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ribbon-filament {
+  overflow: hidden;
+}
+.ribbon-filament path {
+  fill: none;
+  stroke: #a49d8d;
+  stroke-width: 1;
+  stroke-opacity: 0.32;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.ribbon-stage canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.65s;
+}
+.ribbon-stage.ready canvas {
+  opacity: 1;
+}
+.motion-reduced .ribbon-atmosphere {
+  display: none;
+}
+.ribbon-story .ribbon-panel {
+  position: relative;
+  background: transparent;
+  border: 0;
+  padding: 130px var(--ribbon-edge) 110px;
+  min-height: 100svh;
+}
+.ribbon-panel h1,
+.ribbon-panel h2 {
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: -0.065em;
+  line-height: 1.06;
+  text-transform: none;
+}
+.ribbon-panel h1 span,
+.ribbon-panel h2 span {
+  color: #8c8b83;
+}
+.ribbon-panel .ribbon-caption,
+.ribbon-note,
+.ribbon-tools {
+  font-size: 11px;
+  line-height: 1.7;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #97978d;
+}
+.ribbon-panel .ribbon-description {
+  font-size: clamp(14px, 1.2vw, 19px);
+  line-height: 1.8;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  color: #a5a49a;
+  max-width: 470px;
+  margin: 30px 0 0;
+}
+.ribbon-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 24px;
+}
+.ribbon-link {
+  display: flex;
+  justify-content: space-between;
+  gap: 26px;
+  align-items: center;
+  font-size: 12px;
+  line-height: 1.5;
+  border-bottom: 1px solid #77776c;
+  padding: 12px 0;
+  min-width: 180px;
+  max-width: 100%;
+}
+.ribbon-link span {
+  font-size: 19px;
+}
+.ribbon-link:hover {
+  color: #fff;
+  border-color: #e4e1d9;
+}
+.ribbon-opening-actions {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.ribbon-opening-actions a:first-child {
+  padding: 17px 22px;
+  background: #d7d2c6;
+  color: #11120f;
+  border: 1px solid #b5b0a0;
+  border-radius: 2px;
+  box-shadow: 0 3px 0 #7a796e;
+}
+.ribbon-opening-actions a:first-child:hover {
+  background: #f1ece0;
+  transform: translateY(-2px);
+}
+.ribbon-mobile-space {
+  height: 260px;
+}
+.ribbon-tools {
+  max-width: 440px;
+  margin-top: 24px;
+  font-size: 10px;
+}
+.ribbon-note {
+  margin-top: 28px;
+}
+.story-horizontal .ribbon-atmosphere {
+  position: absolute;
+}
+.story-horizontal .ribbon-story .ribbon-panel {
+  padding: 0;
+  display: block;
+  min-height: 0;
+  overflow: visible;
+}
+.story-horizontal .ribbon-panel .ribbon-caption {
+  position: absolute;
+  top: 17%;
+  left: var(--ribbon-edge);
+  margin: 0;
+}
+.story-horizontal .ribbon-panel .ribbon-copy {
+  position: absolute;
+  left: var(--ribbon-edge);
+  top: 29%;
+  width: 45%;
+}
+.story-horizontal .ribbon-panel h1 {
+  font-size: min(6.9vw, 10svh);
+}
+.story-horizontal .ribbon-panel h2 {
+  font-size: min(5.4vw, 8.6svh);
+}
+.story-horizontal .ribbon-opening .ribbon-copy {
+  width: 52%;
+}
+.story-horizontal .ribbon-opening .ribbon-description {
+  margin-top: 18px;
+}
+.story-horizontal .ribbon-opening-actions {
+  position: absolute;
+  left: var(--ribbon-edge);
+  bottom: 14%;
+}
+.story-horizontal .ribbon-note {
+  position: absolute;
+  right: var(--ribbon-edge);
+  bottom: 15%;
+  text-align: right;
+  margin: 0;
+  font-size: 10px;
+}
+.story-horizontal .ribbon-right .ribbon-copy {
+  left: 54%;
+  top: 27%;
+  width: 40%;
+}
+.story-horizontal .ribbon-right .ribbon-note {
+  left: var(--ribbon-edge);
+  right: auto;
+  text-align: left;
+}
+.story-horizontal .ribbon-lower-left .ribbon-copy {
+  left: var(--ribbon-edge);
+  top: 48%;
+  width: 48%;
+}
+.story-horizontal #understand .ribbon-copy {
+  top: 52%;
+}
+.story-horizontal #skills .ribbon-actions {
+  flex-direction: row;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+}
+.story-horizontal .ribbon-lower-left .ribbon-description {
+  font-size: clamp(13px, 1.1vw, 17px);
+  margin-top: 20px;
+  max-width: 520px;
+}
+.story-horizontal .ribbon-lower-left h2 {
+  font-size: min(5.8vw, 8.3svh);
+}
+.story-horizontal .ribbon-upper .ribbon-copy {
+  top: 24%;
+  width: 82%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7vw;
+  align-items: start;
+}
+.story-horizontal .ribbon-upper .ribbon-description {
+  margin-top: 10px;
+  max-width: 420px;
+}
+.story-horizontal .ribbon-upper h2 {
+  font-size: min(5.8vw, 8.4svh);
+}
+.story-horizontal .ribbon-project h2 {
+  font-size: min(6vw, 9svh);
+  overflow-wrap: normal;
+}
+.story-horizontal .ribbon-project[data-project="degree-verification"] h2 {
+  font-size: min(5vw, 8svh);
+}
+.story-horizontal .ribbon-mobile-space {
+  display: none;
+}
+.story-horizontal .ribbon-footer .footer-intro {
+  position: absolute;
+  left: var(--ribbon-edge);
+  top: 22%;
+  display: block;
+}
+.story-horizontal .ribbon-footer .footer-intro h2 {
+  font-size: min(5.2vw, 8svh);
+}
+.story-horizontal .ribbon-footer .footer-intro .line-link {
+  margin-top: 20px;
+}
+.story-horizontal .ribbon-footer .footer-details {
+  position: absolute;
+  top: 53%;
+  left: var(--ribbon-edge);
+  right: var(--ribbon-edge);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.65fr;
+  gap: 35px;
+  margin: 0;
+}
+.story-horizontal .ribbon-footer .footer-details p,
+.story-horizontal .ribbon-footer .footer-details a {
+  font-size: clamp(12px, 1vw, 16px);
+}
+.story-horizontal .ribbon-footer .footer-details nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  max-width: 260px;
+}
+.story-horizontal .ribbon-footer .footer-wordmark {
+  position: absolute;
+  top: 72%;
+  left: var(--ribbon-edge);
+  right: var(--ribbon-edge);
+  font-size: min(13.5vw, 15svh);
+  line-height: 1;
+  letter-spacing: -0.07em;
+  transform: none;
+  white-space: nowrap;
+}
+.story-horizontal .ribbon-footer .footer-bottom {
+  position: absolute;
+  left: var(--ribbon-edge);
+  right: var(--ribbon-edge);
+  bottom: 8%;
+  margin: 0;
+}
+.ribbon-panel:focus {
+  outline: none;
+}
+.ribbon-panel:focus-visible {
+  outline: 1px solid #777;
+  outline-offset: -4px;
+}
+@media (min-width: 768px) and (max-height: 740px) {
+  .story-horizontal .ribbon-panel .ribbon-caption {
+    top: 19%;
+    font-size: 9px;
+  }
+  .story-horizontal .ribbon-opening .ribbon-copy {
+    top: 30%;
+  }
+  .story-horizontal .ribbon-panel h1 {
+    font-size: 9svh;
+  }
+  .story-horizontal .ribbon-panel h2 {
+    font-size: min(5vw, 8svh);
+  }
+  .story-horizontal .ribbon-panel .ribbon-description {
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 16px;
+  }
+  .story-horizontal .ribbon-actions {
+    margin-top: 12px;
+    gap: 4px;
+  }
+  .story-horizontal .ribbon-link {
+    font-size: 11px;
+    padding: 8px 0;
+  }
+  .story-horizontal .ribbon-opening-actions a:first-child {
+    padding: 12px 18px;
+  }
+  .story-horizontal .ribbon-opening-actions {
+    bottom: 13%;
+  }
+  .story-horizontal .ribbon-lower-left .ribbon-copy {
+    top: 43%;
+  }
+  .story-horizontal .ribbon-footer .footer-details {
+    top: 52%;
+  }
+  .story-horizontal .ribbon-footer .footer-details p,
+  .story-horizontal .ribbon-footer .footer-details a {
+    font-size: 11px;
+  }
+  .story-horizontal .ribbon-footer .footer-bottom {
+    bottom: 10%;
+    font-size: 9px;
+  }
+  .story-horizontal .ribbon-footer .footer-wordmark {
+    top: 70%;
+    font-size: 14svh;
+  }
+}
+@media (max-width: 767px) {
+  .ribbon-story .ribbon-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 130px 24px 100px;
+    min-height: 100svh;
+  }
+  .ribbon-panel .ribbon-caption {
+    font-size: 9px;
+    margin: 0 0 34px;
+  }
+  .ribbon-panel h1,
+  .ribbon-panel h2 {
+    font-size: clamp(35px, 10.6vw, 70px);
+    line-height: 1.12;
+  }
+  .ribbon-panel .ribbon-description {
+    font-size: 14px;
+    margin-top: 25px;
+  }
+  .ribbon-mobile-space {
+    flex: none;
+    height: clamp(200px, 30svh, 280px);
+    margin: 15px -10px;
+  }
+  .ribbon-opening-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ribbon-opening-actions .ribbon-link {
+    font-size: 11px;
+  }
+  .ribbon-note {
+    font-size: 9px;
+  }
+  .ribbon-footer .footer-intro {
+    display: block;
+  }
+  .ribbon-footer .footer-intro h2 {
+    font-size: clamp(35px, 10.6vw, 70px);
+  }
+  .ribbon-footer .footer-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin: 20px 0;
+  }
+  .ribbon-footer .footer-details nav {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .ribbon-footer .footer-wordmark {
+    font-size: 14vw;
+    white-space: nowrap;
+    letter-spacing: -0.06em;
+    line-height: 1.2;
+    margin: 30px 0;
+  }
+  .ribbon-footer .footer-bottom {
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 10px;
+  }
+}
+.motion-reduced .ribbon-panel {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.motion-reduced .ribbon-mobile-space {
+  height: 25px;
+}
+.motion-reduced .ribbon-panel h1,
+.motion-reduced .ribbon-panel h2 {
+  font-size: clamp(36px, 6vw, 90px);
+  max-width: 900px;
+}
+.motion-reduced .ribbon-panel .ribbon-copy {
+  max-width: 900px;
+}
+.motion-reduced .ribbon-opening-actions {
+  margin-top: 32px;
+}

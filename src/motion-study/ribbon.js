@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { loadStudio } from "../sculpture.js";
-import { sampleRibbon, sceneState } from "./choreography.mjs";
+import { sampleRibbon, sceneState, smooth } from "./choreography.mjs";
 
 export function makeRibbonGeometry(count = 256, sides = 16) {
   const geometry = new THREE.BufferGeometry(),
@@ -67,8 +67,9 @@ export function makeRibbonGeometry(count = 256, sides = 16) {
         taper = 0.12 + 0.88 * Math.sin(Math.PI * s) ** 0.35;
       const size =
         opts.scale ?? state.scale * Math.min(1, (opts.aspect || 1.6) / 1.6);
-      const width = 0.27 * taper * size,
-        depth = 0.047 * taper * size;
+      const release = 1 - 0.94 * smooth(12.25, 13, phase);
+      const width = 0.27 * taper * size * release,
+        depth = 0.047 * taper * size * release;
       for (let j = 0; j < sides; j++) {
         const angle = (j / sides) * Math.PI * 2,
           co = Math.cos(angle),

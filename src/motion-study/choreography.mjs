@@ -26,7 +26,7 @@ export const scenes = [
     scale: 1.2,
     yaw: -0.37,
     tilt: -0.18,
-    route: [0.30, 0.61],
+    route: [0.3, 0.61],
     travel: [0.52, 0.2],
   },
   {
@@ -38,6 +38,106 @@ export const scenes = [
     tilt: 0.14,
     route: [0.25, 0.85],
     travel: [0.27, 0.49],
+  },
+  {
+    name: "DELIVER THE WHOLE LOOP",
+    pose: "weave",
+    center: [0.5, 0.72],
+    scale: 1.05,
+    yaw: 0.18,
+    tilt: 0.1,
+    route: [0.73, 0.78],
+    travel: [0.42, 0.75],
+  },
+  {
+    name: "SELECTED WORK",
+    pose: "arc",
+    center: [0.25, 0.43],
+    scale: 1.12,
+    yaw: -0.25,
+    tilt: 0.16,
+    route: [0.38, 0.86],
+    travel: [0.5, 0.75],
+  },
+  {
+    name: "RUSTBOT",
+    pose: "dialogue",
+    center: [0.75, 0.51],
+    scale: 1.12,
+    yaw: 0.25,
+    tilt: -0.08,
+    route: [0.82, 0.76],
+    travel: [0.5, 0.75],
+  },
+  {
+    name: "TALLY",
+    pose: "steps",
+    center: [0.25, 0.5],
+    scale: 1.13,
+    yaw: -0.25,
+    tilt: 0.16,
+    route: [0.37, 0.86],
+    travel: [0.5, 0.32],
+  },
+  {
+    name: "GRAVIPOP",
+    pose: "orbit",
+    center: [0.72, 0.35],
+    scale: 1.05,
+    yaw: 0.2,
+    tilt: 0.3,
+    route: [0.32, 0.55],
+    travel: [0.75, 0.45],
+  },
+  {
+    name: "DEGREE VERIFICATION",
+    pose: "links",
+    center: [0.75, 0.54],
+    scale: 1.03,
+    yaw: -0.22,
+    tilt: 0.08,
+    route: [0.82, 0.78],
+    travel: [0.5, 0.78],
+  },
+  {
+    name: "CRYPTOTRADER",
+    pose: "helix",
+    center: [0.25, 0.5],
+    scale: 1.08,
+    yaw: 0.25,
+    tilt: 0.08,
+    route: [0.34, 0.86],
+    travel: [0.5, 0.3],
+  },
+  {
+    name: "BUNETTO",
+    pose: "canopy",
+    center: [0.73, 0.34],
+    scale: 1.12,
+    yaw: -0.2,
+    tilt: 0.3,
+    route: [0.32, 0.55],
+    travel: [0.5, 0.25],
+  },
+  {
+    name: "CAPABILITIES",
+    pose: "lattice",
+    center: [0.25, 0.5],
+    scale: 1.1,
+    yaw: 0.2,
+    tilt: -0.15,
+    route: [0.36, 0.9],
+    travel: [0.5, 0.3],
+  },
+  {
+    name: "LET’S TALK",
+    pose: "exit",
+    center: [0.76, 0.27],
+    scale: 0.6,
+    yaw: -0.15,
+    tilt: 0.2,
+    route: [0.12, 0.16],
+    travel: [0.76, 0.27],
   },
 ];
 export const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -138,15 +238,100 @@ function poses(count) {
     [1.02, 0.35, 0.4],
     [1.02, -0.55, 0.15],
   ];
-  const data = [signature, loop, frame, folds, bridge].map((p) =>
-    catmull(p, count),
+  const weave = [],
+    arc = [],
+    dialogue = [],
+    steps = [],
+    orbit = [],
+    links = [],
+    helix = [],
+    canopy = [],
+    lattice = [],
+    exit = [];
+  for (let i = 0; i <= 100; i++) {
+    const u = i / 100,
+      t = u * Math.PI * 2;
+    weave.push([
+      1.65 * Math.sin(t),
+      0.85 * Math.sin(t * 2),
+      0.55 * Math.cos(t),
+    ]);
+    const a = -Math.PI * 0.15 + u * Math.PI * 1.4;
+    arc.push([1.7 * Math.cos(a), 1.1 * Math.sin(a), 0.35 * Math.sin(a * 2)]);
+    dialogue.push([
+      1.65 * Math.sin(t),
+      0.9 * Math.sin(t * 2),
+      0.65 * Math.cos(t),
+    ]);
+    orbit.push([
+      1.65 * Math.cos(t * 1.7),
+      1.05 * Math.sin(t * 1.7),
+      0.65 * Math.sin(t * 0.85),
+    ]);
+    helix.push([
+      1.25 * Math.cos(t * 1.7),
+      (u - 0.5) * 2.6,
+      0.7 * Math.sin(t * 1.7),
+    ]);
+    canopy.push([
+      (u - 0.5) * 3.4,
+      Math.sin(u * Math.PI) * 1.6 - 0.6,
+      0.6 * Math.sin(u * Math.PI * 3),
+    ]);
+    lattice.push([
+      (u - 0.5) * 3.1,
+      0.95 * Math.sin(u * Math.PI * 5),
+      0.6 * Math.sin(u * Math.PI * 2.5),
+    ]);
+    exit.push([(u - 0.5) * 4, 0.23 * Math.sin(t), 0.1 * Math.sin(t)]);
+  }
+  steps.push(
+    [-1.5, -1, 0],
+    [-1.5, 0.1, 0],
+    [-0.6, 0.1, 0.1],
+    [-0.6, 1, 0.2],
+    [0.2, 1, 0.3],
+    [0.2, -0.8, 0.4],
+    [1.2, -0.8, 0.2],
+    [1.2, 0.5, 0],
+    [1.7, 0.5, 0],
   );
+  links.push(
+    [-1.6, 0, 0],
+    [-0.8, 1, 0.2],
+    [0.25, 0, 0.4],
+    [-0.8, -1, 0.2],
+    [-1.6, 0, 0],
+    [-0.5, 0.35, -0.5],
+    [0.7, 1, 0.1],
+    [1.65, 0, 0.3],
+    [0.7, -1, 0.1],
+    [-0.25, 0, -0.2],
+    [0.7, 1, 0.1],
+  );
+  const data = [
+    signature,
+    loop,
+    frame,
+    folds,
+    weave,
+    arc,
+    dialogue,
+    steps,
+    orbit,
+    links,
+    helix,
+    canopy,
+    lattice,
+    exit,
+    bridge,
+  ].map((p) => catmull(p, count));
   cache.set(count, data);
   return data;
 }
 export function sceneState(phase) {
-  phase = clamp(phase, 0, 3);
-  const index = Math.min(2, Math.floor(phase)),
+  phase = clamp(phase, 0, scenes.length - 1);
+  const index = Math.min(scenes.length - 2, Math.floor(phase)),
     u = phase - index,
     t = smooth(0, 1, u),
     a = scenes[index],
@@ -164,7 +349,10 @@ export function sceneState(phase) {
     scale: mix(a.scale, b.scale, t) * (1 - 0.12 * arch),
     yaw: mix(a.yaw, b.yaw, t),
     tilt: mix(a.tilt, b.tilt, t),
-    route: [mix(a.route[0], b.route[0], t), mix(a.route[1], b.route[1], t)],
+    route: [
+      mix(a.route[0], b.route[0], smooth(0.34, 0.66, u)),
+      mix(a.route[1], b.route[1], smooth(0.34, 0.66, u)),
+    ],
   };
 }
 // Fixed topology; only this centerline and the bevel frame change over time.
@@ -194,15 +382,15 @@ export function sampleRibbon(
     let x =
       p[state.index][i * 3] * wa +
       p[state.index + 1][i * 3] * wb +
-      p[4][i * 3] * wm;
+      p.at(-1)[i * 3] * wm;
     let y =
       p[state.index][i * 3 + 1] * wa +
       p[state.index + 1][i * 3 + 1] * wb +
-      p[4][i * 3 + 1] * wm;
+      p.at(-1)[i * 3 + 1] * wm;
     let z =
       p[state.index][i * 3 + 2] * wa +
       p[state.index + 1][i * 3 + 2] * wb +
-      p[4][i * 3 + 2] * wm;
+      p.at(-1)[i * 3 + 2] * wm;
     y +=
       0.035 * Math.sin(s * 11 - time * 0.68) +
       gust * 0.045 * Math.sin(s * Math.PI);

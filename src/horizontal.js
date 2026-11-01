@@ -6,6 +6,7 @@ export function createHorizontalStory(host) {
   const panels = [...host.querySelectorAll(".horizontal-panel")];
   const desktop = matchMedia("(min-width:768px)");
   const sculpture = host.querySelector(".story-atmosphere .sculpture");
+  const ribbon = host.classList.contains("ribbon-story");
   let motion = false,
     enabled = false,
     width = innerWidth,
@@ -27,6 +28,12 @@ export function createHorizontalStory(host) {
     panels.forEach((panel, index) => {
       const local = Math.max(-1, Math.min(1, rendered - index));
       panel.classList.toggle("is-current", index === current);
+      if (ribbon) {
+        const t = Math.max(0, Math.min(1, (Math.abs(local) - 0.06) / 0.3));
+        panel.style.opacity = String(1 - t * t * t * (t * (t * 6 - 15) + 10));
+        panel.style.transform = `translateX(${(rendered - index) * innerWidth * 0.85}px)`;
+        panel.style.pointerEvents = index === current ? "auto" : "none";
+      }
       panel.style.setProperty("--scene-progress", local.toFixed(4));
       panel.style.setProperty(
         "--scene-visibility",
@@ -68,6 +75,7 @@ export function createHorizontalStory(host) {
             0.5,
         ),
       );
+      rendered = progress;
       if (sculpture) {
         sculpture.dataset.sceneProgress = progress;
         sculpture.style.setProperty(
@@ -119,7 +127,14 @@ export function createHorizontalStory(host) {
       cancelAnimationFrame(frame);
       frame = 0;
       track.style.removeProperty("transform");
-      panels.forEach((panel) => panel.classList.remove("is-current"));
+      panels.forEach((panel) => {
+        panel.classList.remove("is-current");
+        if (ribbon) {
+          panel.style.removeProperty("transform");
+          panel.style.removeProperty("opacity");
+          panel.style.removeProperty("pointer-events");
+        }
+      });
     }
     if (preserve) {
       if (enabled) goTo(target);
@@ -200,7 +215,13 @@ export function createHorizontalStory(host) {
     cancelAnimationFrame(frame);
     frame = 0;
   });
-  return { update, setEnabled, followHash, isHorizontal: () => enabled };
+  return {
+    update,
+    setEnabled,
+    followHash,
+    isHorizontal: () => enabled,
+    getProgress: () => rendered,
+  };
 }
 
 // Supporting pages retain editorial reading, then join the same lateral finale.
