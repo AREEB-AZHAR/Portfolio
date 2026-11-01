@@ -1,5 +1,6 @@
 import { createHorizontalStory, createFooterFlow } from "./src/horizontal.js";
-import { createStoryThread } from "./src/thread.js";
+import { createRibbonStory } from "./src/ribbon-home.js";
+import "./src/ribbon-home.css";
 
 const root = document.documentElement;
 const media = matchMedia("(prefers-reduced-motion: reduce)");
@@ -14,7 +15,10 @@ const story = createHorizontalStory(
   document.querySelector(".horizontal-story"),
 );
 const footerFlow = createFooterFlow(document.querySelector(".footer-reel"));
-const thread = createStoryThread(document.querySelector(".horizontal-story"));
+const thread = createRibbonStory(
+  document.querySelector(".ribbon-story"),
+  story,
+);
 const motionToggle = document.querySelector(".motion-toggle");
 const gate = document.querySelector("#animation-gate");
 const instances = new Map();

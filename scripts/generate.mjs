@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { projects, capabilities } from "../src/content/projects.mjs";
 import { pageTransitions } from "../src/page-transitions.mjs";
+import { livingHome } from "../src/templates/living-home.mjs";
 
 const esc = (value) =>
   String(value ?? "").replace(
@@ -62,7 +63,18 @@ function shell({
     )
     .join("");
   const footer = `<footer class="site-footer${page === "home" ? " horizontal-panel" : ""}" data-section="Let’s talk" role="contentinfo"><div class="footer-intro"><h2>Let’s build<br>what comes next.</h2>${link(`${root}contact/`, "Start a conversation")}</div><div class="footer-details"><div><p class="eyebrow">Direct contact</p><a class="footer-email" href="mailto:${email}">${email}</a><p>A role, a product, a useful conversation.</p></div><div><p class="eyebrow">Continue exploring</p><nav>${routes.map(([path, name]) => `<a href="${root}${path}">${name}</a>`).join("")}</nav></div><div><p class="eyebrow">Karachi / Local time</p><time class="local-time">PKT</time></div></div><a class="footer-wordmark" href="${root}" aria-label="Areeb Azhar home">AREEB AZHAR</a><div class="footer-bottom"><a href="https://github.com/AREEB-AZHAR" target="_blank" rel="noreferrer">GitHub ↗</a><span>© ${new Date().getFullYear()} Areeb Azhar</span><a href="#main">Back to top ↑</a></div></footer>`;
-  content = content.replace("<!--STORY_FOOTER-->", footer);
+  content = content.replace(
+    "<!--STORY_FOOTER-->",
+    footer
+      .replace(
+        'class="site-footer horizontal-panel"',
+        'class="site-footer horizontal-panel ribbon-panel ribbon-footer"',
+      )
+      .replace(
+        '<div class="footer-details">',
+        '<div class="ribbon-mobile-space" aria-hidden="true"></div><div class="footer-details">',
+      ),
+  );
   return `<!doctype html>
 <html lang="en"><head><meta charset="UTF-8"><style>@view-transition{navigation:auto}</style><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><meta name="description" content="${esc(description)}"><meta property="og:title" content="${esc(title)} — Areeb Azhar"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><title>${esc(title)} — Areeb Azhar</title><script>try{const full=sessionStorage.getItem('portfolio-session-motion')==='full';document.documentElement.classList.add(full?'motion-full':'motion-reduced');if(full&&${page === "home"}&&matchMedia('(min-width:768px)').matches)document.documentElement.classList.add('story-horizontal')}catch{document.documentElement.classList.add('motion-reduced')}</script><link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script>(${pageTransitions.toString()})();</script></head>
 <body data-page="${page}"><a class="skip-link" href="#main">Skip to content</a>
@@ -125,7 +137,7 @@ const homeSections = `<section class="hero-story" data-section="Introduction"><d
 <section class="work-intro section" id="work" data-section="Selected projects"><p class="eyebrow">From intention to implementation</p><h2 class="display reveal">Ideas,<br>put into practice.</h2><div class="split-intro"><span>06 selected projects / 2026</span><p>Different problems. Different tools.<br>A few of the things that took shape.</p></div></section>${featured.map(showcase).join("")}
 <section class="capability-bridge section" data-section="Capabilities"><p class="eyebrow">Clarity through structure</p>${motif(2)}<h2 class="display reveal">Many tools.<br>One connected<br>experience.</h2><div class="bridge-bottom"><p>From a data model to an interface.<br>From an algorithm to the product around it.</p>${link("@ROOT@capabilities/", "Explore capabilities")}${link("@ROOT@projects/#archive", "The complete archive")}</div></section>`;
 
-const home = `<section class="horizontal-story" style="--panel-count:${8 + featured.length}" aria-label="Portfolio story"><div class="horizontal-viewport"><div class="story-atmosphere"><svg class="story-thread" fill="none" aria-hidden="true"><path class="wire-base" vector-effect="non-scaling-stroke"/><path class="wire-current" vector-effect="non-scaling-stroke"/></svg>${sculpture("One continuous metallic strand transforming through the portfolio").replace('class="sculpture"', 'class="sculpture" data-variant="continuous"')}</div><div class="horizontal-track">${homeSections.replace(/<svg class="wire-motif[\s\S]*?<\/svg>/g, "").replace(/class="(hero-story|introduction section|principle-scene section|work-intro section|project-scene section|capability-bridge section)"/g, 'class="$1 horizontal-panel"')}<!--STORY_FOOTER--></div></div></section>`;
+const home = livingHome(featured);
 
 const subhero = (label, title, desc, extra = "") =>
   `<section class="subhero section" data-section="${label}"><p class="eyebrow">${label}</p>${sculpture()}<h1 class="display">${title}</h1><div class="subhero-bottom"><p>${desc}</p>${extra || link("#story", "Follow the story")}</div></section>`;

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 let studioPromise;
-function loadStudio() {
+export function loadStudio() {
   studioPromise ||= fetch(
     `${import.meta.env.BASE_URL}lighting/studio.cubeuv.bin.gz`,
   ).then(async (response) => {

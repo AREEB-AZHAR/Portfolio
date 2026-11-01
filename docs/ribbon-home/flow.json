@@ -1,0 +1,24 @@
+{
+  "skip": [
+    0,
+    57,
+    439,
+    1024,
+    1216,
+    1343,
+    1397,
+    1427
+  ],
+  "projectNavigation": "passed",
+  "refreshFirstScrollMs": 82,
+  "projectLinks": [
+    "http://127.0.0.1:5185/projects/rustbot/",
+    "http://127.0.0.1:5185/projects/tally/",
+    "http://127.0.0.1:5185/projects/gravipop/",
+    "http://127.0.0.1:5185/projects/degree-verification/",
+    "http://127.0.0.1:5185/projects/cryptotrader/",
+    "http://127.0.0.1:5185/projects/bunetto/"
+  ],
+  "mobile": "320 and 390: all fourteen sections, no horizontal overflow; menu navigation passed",
+  "accessibility": "motion choice, reduced motion, keyboard, menu Escape, toggle restoration and WebGL fallback passed"
+}

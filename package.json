@@ -7,13 +7,13 @@
     "generate": "node scripts/generate.mjs",
     "predev": "npm run generate",
     "dev": "vite",
-    "prebuild": "npm run generate && node scripts/check-content.mjs && node scripts/check-strand.mjs",
+    "prebuild": "npm run generate && node scripts/check-content.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs",
     "build": "vite build",
-    "prebuild:pages": "npm run generate && node scripts/check-content.mjs && node scripts/check-strand.mjs",
+    "prebuild:pages": "npm run generate && node scripts/check-content.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs",
     "build:pages": "vite build --base=/Portfolio/",
     "preview": "vite preview",
     "pretest": "npm run generate",
-    "test": "node scripts/check-content.mjs && node scripts/check-strand.mjs"
+    "test": "node scripts/check-content.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs"
   },
   "keywords": [],
   "author": "",
