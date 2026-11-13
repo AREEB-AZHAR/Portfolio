@@ -4,11 +4,25 @@ A cinematic software engineering portfolio with a living filament, transforming 
 
 **[Visit the portfolio](https://areeb-azhar.github.io/Portfolio/)** · **[GitHub](https://github.com/AREEB-AZHAR)** · **[Contact](mailto:areebazhar3@gmail.com)**
 
-On a new visit, the portfolio opens with a design chooser: visitors can enter the complete cinematic ribbon story, continue in quiet vertical reading mode, or open the focused ribbon motion study. The choice is retained for the browsing session and can be changed from the header. All options lead to the same project content; the study is an additional preview rather than a separate content fork. The chooser is generated in `scripts/generate.mjs`, styled in `style.css`, and hooked to existing motion preferences in `main.js`.
-
-![Portfolio design chooser showing the three visual directions](docs/screenshots/design-chooser-desktop.png)
+The home route is a design-history gallery with **five genuinely different portfolio generations**. Each edition opens its own page: four self-contained snapshots from Git history and the current living-ribbon portfolio. These are not motion presets applied to one design. Each card contains a live miniature of the corresponding page and identifies its source commit. The current portfolio keeps its separate first-visit animation choice.
 
 ![Desktop portfolio — living filament and sculptural ribbon](docs/ribbon-home/scene-0.png)
+
+![Earlier cinematic edition, captured from the original redesign](docs/screenshots/home-desktop.png)
+
+## Portfolio design history
+
+The root page presents five distinct visual generations in reverse chronological order:
+
+| Edition | Source | What opens |
+| --- | --- | --- |
+| Living ribbon | `28fb767` | Current horizontal desktop story, transforming ribbon, project pages, and the existing animation choice at `/portfolio/` |
+| Sculpture in the story | `f81b386` | The first near-black, editorial, sculptural redesign |
+| Ideas, put into practice | `a9d3640` | The warm project-showcase redesign, including its later certificate and project-media refresh |
+| Glass, code & systems | `425829f` | The dark glass-panel engineering portfolio |
+| The first portfolio | `16fbb13` | The original neon-accented AI and software portfolio |
+
+Archived editions retain their original visual implementation and bundled local assets under `public/designs/`. A small return link leads back to the chooser; project-detail links from those older pages use the current canonical project briefings. `npm run archive:designs` rebuilds those snapshots from the pinned Git commits when the repository history is available. Normal install, local development, and production builds use the already-committed snapshots and do not require Git history at build time.
 
 ## The redesign
 
@@ -77,7 +91,8 @@ Local verification covered 320, 390, 768, 1024, 1440, and 1920-pixel widths plus
 - An original procedural metallic AA sculpture and continuous cable share one renderer and precomputed studio reflections. Supporting pages retain their AA identity sculpture.
 - Geometric transformations follow the same eased story position on desktop and the document’s natural section progression on mobile.
 - Six expansive, typography-led project showcases with distinct line illustrations; real project media lives in the briefings.
-- **24 static pages:** Home, About/Approach, Projects, Capabilities, Contact, and **19 canonical project briefings**.
+- **24 generated content pages:** the current `/portfolio/` home, About/Approach, Projects, Capabilities, Contact, and **19 canonical project briefings**.
+- A root design gallery plus four earlier visual generations directly navigable under `/designs/<edition>/`.
 - An opaque full-screen navigation menu with keyboard focus management, Escape dismissal, and scroll restoration.
 - A searchable archive, direct project URLs, browser Back support, and next-project navigation.
 - The latest four-year education/building history and GitHub profile identity, retained on the About page.
@@ -156,6 +171,7 @@ Open the printed preview URL, including `/Portfolio/` for the Pages build. Both 
 ```text
 src/
   content/projects.mjs     Project records, case-study content, capabilities
+  templates/design-gallery.mjs  Five-edition portfolio selector and live previews
   sculpture.js             Procedural Three.js scenes and rendering lifecycle
   horizontal.js            Native vertical-scroll to negative-X story mapping
   templates/living-home.mjs Fourteen-scene editorial homepage template
@@ -172,6 +188,8 @@ src/
   page-transitions.mjs     Early native page-handoff and shared-title setup
 scripts/
   generate.mjs             Shared templates and static HTML generation
+  archive-designs.mjs      Rebuild four historical pages from pinned Git commits
+  check-design-gallery.mjs Static route, archive, and asset validation
   check-content.mjs        Content, route, related-link, and media validation
   check-ribbon-study.mjs   All-scene fixed-topology and continuity checks
   verify-ribbon-home.mjs   Responsive text/art clearance and transition sweep
@@ -184,6 +202,7 @@ scripts/
   verify-scene-composition.mjs  Text/art clearance and responsive scene captures
   bake-studio.mjs          Optional offline studio reflection precomputation
 public/
+  designs/                 Four self-contained historical portfolio snapshots
   projects/                Original screenshots and project artwork
   certificates/            Actual internship PDF and preview
   fonts/                   Self-hosted Manrope files and SIL Open Font License
@@ -195,9 +214,11 @@ style.css                  Shared visual system and responsive layouts
 vite.config.js             Multi-page entries and split 3D bundle
 ```
 
-`scripts/generate.mjs` renders the shared header, navigation, footer, and page templates into real HTML entry points. Vite then produces static files, so project links work when opened directly or refreshed without an SPA rewrite rule.
+`scripts/generate.mjs` renders the root design gallery and the shared header, navigation, footer, and current portfolio pages into real HTML entry points. Vite then produces static files, so gallery choices, project links, direct routes, and refreshes work without an SPA rewrite rule. `vite.config.js` includes both `/` and `/portfolio/` as HTML entry points.
 
-The generated `about/`, `projects/`, `capabilities/`, and `contact/` source folders are ignored by Git. They are recreated by the npm scripts. The root `index.html` is generated too and retained in the repository as the landing-page entry. **Edit the manifest or templates, not generated HTML.**
+The generated `portfolio/`, `about/`, `projects/`, `capabilities/`, and `contact/` source folders are ignored by Git. They are recreated by the npm scripts. The root `index.html` is generated from `src/templates/design-gallery.mjs` and retained as the landing-page entry. Historical pages and their assets are committed under `public/designs/`; the regular build does not need access to old Git objects. **Edit the manifest or templates, not generated HTML.**
+
+To deliberately refresh the archived editions from their recorded commits, run `npm run archive:designs` before `npm run generate`. This requires those pinned commits to exist in the local Git history.
 
 ### Update a project
 
@@ -214,7 +235,7 @@ Six records are marked `featured`; those appear in the homepage story. Capabilit
 - Before animation consent, the page uses the static SVG and does not initialize WebGL. Three.js loads in a separate bundle after an idle interval; rendering pauses offscreen and in background tabs, pixel density is capped, and touch layouts use a lighter scene cadence. Studio reflections are baked from the original Three.js RoomEnvironment once, avoiding synchronous reflection generation in each visitor’s browser.
 - Native document scrolling drives a **right-to-left** desktop track with a short frame-rate-independent presentation ease, layered title/linework depth, and a final full-name footer scene. The document itself is never smoothed or wheel-intercepted. Clicked section shortcuts glide with native smooth scrolling; refresh restoration and keyboard-focus jumps remain immediate. Left advances and Right returns to the previous scene. Supporting pages keep editorial content vertical and join a matching right-to-left footer finale. Below 768px, all sections and footers remain naturally vertical.
 - Early, inline `pageswap`/`pagereveal` listeners enable native multi-page transitions without a render-blocking script request or a client-side router. Project titles and geometry become shared elements. Reloads do not run a handoff, reduced-motion mode skips it, and browser Back restores the original scene.
-- The animation chooser appears once per tab session. Its choice survives refreshes and internal navigation through `sessionStorage`; a new session asks again. The device’s reduced-motion setting recommends the static option, and Escape chooses it. Without JavaScript, the content remains a regular readable page.
+- The root gallery selects a **design generation**; it is separate from the animation chooser shown by the current `/portfolio/` design. Motion choice survives refreshes and internal navigation through `sessionStorage`; a new session asks again. The device’s reduced-motion setting recommends the static option, and Escape chooses it. Without JavaScript, the gallery and content remain usable.
 - Turning animations off restores the vertical document and stops GPU rendering. Turning them on preserves the current scene. The header button always states its status, and its information label appears on hover or keyboard focus.
 - Native modal navigation provides focus containment. Closing restores focus and document scrolling.
 - The contact form validates locally and opens a **mailto draft**. It does not transmit a message or claim that an email was sent; the visitor reviews and sends it in their email application.
@@ -228,7 +249,7 @@ npm test
 
 This regenerates the site and checks unique routes, required content, asset existence, HTTPS source links, related-project references, and the six featured records. The wire check validates fixed offscreen endpoints, actual vertex deformation, reversible poses, finite buffers, and continuity for small scroll steps across three aspect ratios. Both prebuild hooks include it.
 
-The optional browser suite checks all 24 routes and their internal resources, five viewport widths, menu dismissal/focus/scroll restoration, archive filtering, project refresh/Back/Next behavior, certificate access, motion persistence, and WebGL fallback. It also captures screenshots.
+The required gallery check validates the five choices, each historical snapshot, return links, and local resources. The optional browser suite checks the 24 current-content routes and their internal resources, five viewport widths, menu dismissal/focus/scroll restoration, archive filtering, project refresh/Back/Next behavior, certificate access, motion persistence, and WebGL fallback. It also captures screenshots.
 
 To run it with your own Chromium installation:
 
@@ -236,10 +257,10 @@ To run it with your own Chromium installation:
 npm install --no-save --package-lock=false playwright
 npx playwright install chromium
 # Start npm run dev in another terminal, then:
-node scripts/verify-browser.mjs http://localhost:5173/
-node scripts/verify-horizontal.mjs http://localhost:5173/
-node scripts/verify-living-wire.mjs http://localhost:5173/
-node scripts/verify-scene-composition.mjs http://localhost:5173/
+node scripts/verify-browser.mjs http://localhost:5173/portfolio/
+node scripts/verify-horizontal.mjs http://localhost:5173/portfolio/
+node scripts/verify-living-wire.mjs http://localhost:5173/portfolio/
+node scripts/verify-scene-composition.mjs http://localhost:5173/portfolio/
 ```
 
 Use the actual server port if Vite selected a different one. For a Pages preview, supply its complete base URL, for example `http://localhost:4173/Portfolio/`. Screenshots go to ignored `tmp/qa/` (general suite) or `tmp/horizontal-qa/` (horizontal suite). `SCREENSHOT_DIR` changes that location, `BROWSER_CHANNEL=msedge` selects installed Edge, and `PLAYWRIGHT_MODULE` can point to an existing Playwright package. `QA_LIGHT=1` runs the alternate-build layout checks at 390px and 1440px while retaining route and resource checks.

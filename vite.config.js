@@ -9,6 +9,7 @@ export default defineConfig({
     rolldownOptions: {
       input: [
         "index.html",
+        "portfolio/index.html",
         "about/index.html",
         "projects/index.html",
         "capabilities/index.html",

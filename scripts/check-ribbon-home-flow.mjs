@@ -5,7 +5,7 @@ const { chromium } = createRequire(import.meta.url)(
   process.env.PLAYWRIGHT_MODULE || "playwright",
 );
 const browser = await chromium.launch({ headless: true, channel: "msedge" }),
-  url = process.env.HOME_URL || "http://127.0.0.1:5184/",
+  url = process.env.HOME_URL || "http://127.0.0.1:5184/portfolio/",
   out = process.env.HOME_OUTPUT || "tmp/ribbon-home-flow",
   report = {};
 await mkdir(out, { recursive: true });

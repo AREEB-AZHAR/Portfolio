@@ -4,7 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 const { chromium } = createRequire(import.meta.url)(
   process.env.PLAYWRIGHT_MODULE || "playwright",
 );
-const url = process.env.HOME_URL || "http://127.0.0.1:5184/",
+const url = process.env.HOME_URL || "http://127.0.0.1:5184/portfolio/",
   out = process.env.HOME_OUTPUT || "tmp/ribbon-home",
   quick = process.env.HOME_QUICK === "1";
 await mkdir(out, { recursive: true });

@@ -3,7 +3,7 @@ import { createRequire } from "node:module";
 import { mkdir } from "node:fs/promises";
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
-const base = (process.argv[2] || "http://127.0.0.1:5181/Portfolio/").replace(
+const base = (process.argv[2] || "http://127.0.0.1:5181/Portfolio/portfolio/").replace(
   /\/?$/,
   "/",
 );

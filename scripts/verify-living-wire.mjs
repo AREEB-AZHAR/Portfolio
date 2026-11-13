@@ -4,7 +4,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 const require = createRequire(import.meta.url),
   { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const sharp = require(process.env.SHARP_MODULE || "sharp");
-const base = process.argv[2] || "http://127.0.0.1:5181/Portfolio/",
+const base = process.argv[2] || "http://127.0.0.1:5181/Portfolio/portfolio/",
   output = process.env.SCREENSHOT_DIR || "tmp/living-wire-qa";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({

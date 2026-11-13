@@ -16,7 +16,7 @@ try {
       sessionStorage.setItem("portfolio-session-motion", "full"),
     );
     const page = await context.newPage();
-    await page.goto(process.env.HOME_URL || "http://127.0.0.1:5184/");
+    await page.goto(process.env.HOME_URL || "http://127.0.0.1:5184/portfolio/");
     await page.waitForFunction(() => window.__ribbonStory?.ready);
     await page.waitForTimeout(800);
     if (isolated)

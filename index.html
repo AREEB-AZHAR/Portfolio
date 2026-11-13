@@ -1,99 +1,99 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><style>@view-transition{navigation:auto}</style><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><meta name="description" content="Areeb Azhar builds software across Rust, web, mobile, blockchain, and games."><meta property="og:title" content="Software engineering &amp; creative development — Areeb Azhar"><meta property="og:description" content="Areeb Azhar builds software across Rust, web, mobile, blockchain, and games."><meta property="og:type" content="website"><title>Software engineering &amp; creative development — Areeb Azhar</title><script>try{const full=sessionStorage.getItem('portfolio-session-motion')==='full';document.documentElement.classList.add(full?'motion-full':'motion-reduced');if(full&&true&&matchMedia('(min-width:768px)').matches)document.documentElement.classList.add('story-horizontal')}catch{document.documentElement.classList.add('motion-reduced')}</script><link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><script>(function pageTransitions() {
-  let active;
-  const enabled = () =>
-    document.documentElement.classList.contains("motion-full") &&
-    !matchMedia("(prefers-reduced-motion:reduce)").matches;
-  const slugFor = (url) =>
-    new URL(url, location.href).pathname.match(/\/projects\/([^/]+)\/?$/)?.[1];
-  function prepare(slug) {
-    const title = slug
-      ? document.querySelector(`[data-project-title="${CSS.escape(slug)}"]`)
-      : null;
-    const geometry = title
-      ?.closest(".project-scene,.case-hero")
-      ?.querySelector(".wire-motif");
-    if (title) title.style.viewTransitionName = "story-title";
-    if (geometry) geometry.style.viewTransitionName = "story-geometry";
-    return () => {
-      title?.style.removeProperty("view-transition-name");
-      geometry?.style.removeProperty("view-transition-name");
-    };
-  }
-  window.addEventListener("pageswap", (event) => {
-    if (!event.viewTransition) return;
-    event.viewTransition.ready.catch(() => {});
-    if (!enabled()) {
-      event.viewTransition.skipTransition();
-      return;
-    }
-    const slug =
-      slugFor(event.activation?.entry?.url || location.href) ||
-      slugFor(location.href);
-    try {
-      sessionStorage.setItem("portfolio-transition-slug", slug || "");
-    } catch {
-      /* Optional. */
-    }
-    const clean = prepare(slug);
-    event.viewTransition.finished.then(clean, clean);
-  });
-  window.addEventListener("pagereveal", (event) => {
-    if (!event.viewTransition) return;
-    active = event.viewTransition;
-    active.ready.catch(() => {});
-    if (!enabled()) {
-      active.skipTransition();
-      return;
-    }
-    let slug = slugFor(location.href);
-    try {
-      slug ||= sessionStorage.getItem("portfolio-transition-slug");
-    } catch {
-      /* Optional. */
-    }
-    const clean = prepare(slug);
-    document.documentElement.dataset.navigationTransition = "active";
-    const finish = () => {
-      clean();
-      active = null;
-      document.documentElement.dataset.navigationTransition = "settled";
-    };
-    event.viewTransition.finished.then(finish, finish);
-  });
-  // Visitors can interrupt the cinematic handoff immediately. Refresh itself
-  // is not a cross-document View Transition and never gets an entrance gate.
-  for (const type of ["wheel", "touchstart", "keydown"])
-    window.addEventListener(type, () => active?.skipTransition(), {
-      passive: true,
-    });
-  const warmed = new Set();
-  function warm(event) {
-    const anchor = event.target.closest?.("a[href]");
-    if (!anchor || anchor.target || anchor.download || warmed.size >= 4) return;
-    const url = new URL(anchor.href, location.href);
-    if (
-      url.origin !== location.origin ||
-      url.pathname === location.pathname ||
-      !url.pathname.endsWith("/") ||
-      warmed.has(url.href)
-    )
-      return;
-    const link = document.createElement("link");
-    link.rel = "prefetch";
-    link.href = url.href;
-    link.as = "document";
-    document.head.append(link);
-    warmed.add(url.href);
-  }
-  document.addEventListener("pointerover", warm, { passive: true });
-  document.addEventListener("focusin", warm);
-})();</script></head>
-<body data-page="home"><a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="brand" href="./" aria-label="Areeb Azhar, home"><svg viewBox="0 0 64 36" aria-hidden="true"><path d="M3 31 18 4l15 27M10 20h16M30 31 45 4l16 27M37 20h17"/></svg><span>Software engineering<br>Creative development</span></a><div class="header-actions"><a class="header-contact" href="./contact/">Let’s talk <span>↗</span></a><div class="motion-control"><button class="motion-toggle" type="button" aria-pressed="false" aria-describedby="motion-help"><span class="motion-icon" aria-hidden="true">∿</span><span class="motion-label">Animations off</span><span class="motion-info" aria-hidden="true">ⓘ</span></button><span class="motion-help" id="motion-help" role="tooltip">Turn 3D visuals and horizontal storytelling on or off. Scroll normally in either mode.</span></div><button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false">Menu <span class="menu-lines" aria-hidden="true"></span></button></div></header>
-<dialog id="animation-gate" class="animation-gate" aria-labelledby="animation-title" aria-describedby="animation-description"><p class="eyebrow">Areeb Azhar / Your experience</p><h2 id="animation-title">A little motion.<br>Or none at all.</h2><p id="animation-description">Choose how you explore. The same projects and stories are available in both modes. You can change this anytime using “Animations” in the header.</p><div class="animation-options"><button type="button" data-motion="full"><span>Enable animations ↗</span><small>Horizontal storytelling & metallic 3D visuals</small></button><button type="button" data-motion="reduced" autofocus><span>Continue without animation →</span><small>Quiet, natural scrolling. No animated effects.</small></button></div><p class="animation-note">Your choice stays active for this browsing session.</p></dialog>
-<dialog id="site-menu" class="site-menu" aria-label="Main navigation"><div class="menu-top"><a class="brand" href="./" aria-label="Areeb Azhar, home"><svg viewBox="0 0 64 36" aria-hidden="true"><path d="M3 31 18 4l15 27M10 20h16M30 31 45 4l16 27M37 20h17"/></svg></a><button class="menu-close" type="button">Close <span aria-hidden="true">×</span></button></div><p class="eyebrow">A different way through.</p><nav><a href="./about/"><small>01</small><span>Approach</span><span aria-hidden="true">↗</span></a><a href="./projects/"><small>02</small><span>Projects</span><span aria-hidden="true">↗</span></a><a href="./capabilities/"><small>03</small><span>Capabilities</span><span aria-hidden="true">↗</span></a><a href="./contact/"><small>04</small><span>Contact</span><span aria-hidden="true">↗</span></a></nav><div class="menu-bottom"><a href="mailto:areebazhar3@gmail.com">areebazhar3@gmail.com</a><a href="https://github.com/AREEB-AZHAR" target="_blank" rel="noreferrer">GitHub ↗</a><span>Karachi, Pakistan</span></div></dialog>
-<main id="main"><section class="horizontal-story ribbon-story" style="--panel-count:14" aria-label="Portfolio story"><div class="horizontal-viewport"><div class="ribbon-atmosphere" aria-hidden="true"><svg class="ribbon-filament"><path/></svg><div class="ribbon-stage"></div></div><div class="horizontal-track"><section class="horizontal-panel ribbon-panel ribbon-opening" data-section="From idea"><p class="ribbon-caption">01 / Engineering, with intention</p><div class="ribbon-copy"><h1>From idea.<br><span>To system.</span><br>To experience.</h1><p class="ribbon-description">Areeb Azhar / Software engineering student.<br>Building the interface—and what’s behind it.</p></div><div class="ribbon-mobile-space" aria-hidden="true"></div><div class="ribbon-opening-actions"><a class="ribbon-link" href="#introduction">Skip to introduction<span aria-hidden="true">↗</span></a><a class="ribbon-link" href="./projects/">Explore the work<span aria-hidden="true">↗</span></a></div><p class="ribbon-note">Karachi, PK<br>Available for opportunities</p></section><section id="introduction" class="horizontal-panel ribbon-panel ribbon-right" data-section="02 / Beyond the interface"><p class="ribbon-caption">02 / Beyond the interface</p><div class="ribbon-copy"><h2>Logic underneath.<br><span>Purpose in every</span><br>interaction.</h2><p class="ribbon-description">I build across web, mobile, Rust, blockchain, and games. Different technologies. The same intention: make the whole product work, and make it make sense.</p><div class="ribbon-actions"><a class="ribbon-link" href="./about/">A way of working<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></section><section id="understand" class="horizontal-panel ribbon-panel ribbon-lower-left" data-section="03 / Understand the system"><p class="ribbon-caption">03 / Understand the system</p><div class="ribbon-copy"><h2>Understand<br><span>the system.</span></h2><p class="ribbon-description">Start with the problem, its dependencies, and the people it needs to serve. A clear model makes the next decision easier.</p><div class="ribbon-actions"></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></section><section id="clarify" class="horizontal-panel ribbon-panel ribbon-right" data-section="04 / Clarify the interaction"><p class="ribbon-caption">04 / Clarify the interaction</p><div class="ribbon-copy"><h2>Clarify the<br><span>interaction.</span></h2><p class="ribbon-description">Layout, feedback, state, and timing shape how a product is understood. The interface should make the system easier to use.</p><div class="ribbon-actions"></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></section><section id="deliver" class="horizontal-panel ribbon-panel ribbon-upper" data-section="05 / Deliver the whole loop"><p class="ribbon-caption">05 / Deliver the whole loop</p><div class="ribbon-copy"><h2>Deliver the<br><span>whole loop.</span></h2><p class="ribbon-description">Connect the interface, the data, and the logic. Then check that the complete experience holds together.</p><div class="ribbon-actions"></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></section><section id="work" class="horizontal-panel ribbon-panel ribbon-right" data-section="06 / Selected work"><p class="ribbon-caption">06 / Selected work</p><div class="ribbon-copy"><h2>Ideas,<br><span>put into practice.</span></h2><p class="ribbon-description">Different problems. Different tools. A few of the things that took shape.</p><div class="ribbon-actions"><a class="ribbon-link" href="./projects/">All projects<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div><p class="ribbon-note">06 selected projects / 2026</p></section><article class="horizontal-panel ribbon-panel ribbon-project ribbon-left" data-section="RustBot" data-project="rustbot"><p class="ribbon-caption">07 / Rust / Full-stack</p><div class="ribbon-copy"><h2 data-project-title="rustbot"><a href="./projects/rustbot/">RustBot<span>.</span></a></h2><p class="ribbon-tools">Rust / HTTP / JSON / JavaScript / HTML &amp; CSS</p><p class="ribbon-description">A conversation. Connected end to end.</p><div class="ribbon-actions"><a class="ribbon-link" href="./projects/rustbot/">Explore project<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></article><article class="horizontal-panel ribbon-panel ribbon-project ribbon-right" data-section="Tally" data-project="tally"><p class="ribbon-caption">08 / Mobile / Finance</p><div class="ribbon-copy"><h2 data-project-title="tally"><a href="./projects/tally/">Tally<span>.</span></a></h2><p class="ribbon-tools">Flutter / Dart / SQLite / Firebase</p><p class="ribbon-description">Every transaction has a place.</p><div class="ribbon-actions"><a class="ribbon-link" href="./projects/tally/">Explore project<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></article><article class="horizontal-panel ribbon-panel ribbon-project ribbon-lower-left" data-section="GraviPop" data-project="gravipop"><p class="ribbon-caption">09 / Rust / Game development</p><div class="ribbon-copy"><h2 data-project-title="gravipop"><a href="./projects/gravipop/">GraviPop<span>.</span></a></h2><p class="ribbon-tools">Rust / Miniquad / Physics / Android / Web</p><p class="ribbon-description">A little gravity. A chain reaction.</p><div class="ribbon-actions"><a class="ribbon-link" href="./projects/gravipop/">Explore project<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></article><article class="horizontal-panel ribbon-panel ribbon-project ribbon-left" data-section="Degree Verification" data-project="degree-verification"><p class="ribbon-caption">10 / Blockchain / Trust systems</p><div class="ribbon-copy"><h2 data-project-title="degree-verification"><a href="./projects/degree-verification/">Degree Verification<span>.</span></a></h2><p class="ribbon-tools">Hyperledger Fabric / Express / CouchDB / Docker</p><p class="ribbon-description">Credentials with something behind them.</p><div class="ribbon-actions"><a class="ribbon-link" href="./projects/degree-verification/">Explore project<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></article><article class="horizontal-panel ribbon-panel ribbon-project ribbon-right" data-section="CryptoTrader" data-project="cryptotrader"><p class="ribbon-caption">11 / Web / Market data</p><div class="ribbon-copy"><h2 data-project-title="cryptotrader"><a href="./projects/cryptotrader/">CryptoTrader<span>.</span></a></h2><p class="ribbon-tools">React 19 / TanStack Query / Zustand / CoinGecko</p><p class="ribbon-description">Live information. Clearer decisions.</p><div class="ribbon-actions"><a class="ribbon-link" href="./projects/cryptotrader/">Explore project<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></article><article class="horizontal-panel ribbon-panel ribbon-project ribbon-lower-left" data-section="Bunetto" data-project="bunetto"><p class="ribbon-caption">12 / Ecommerce / Food ordering</p><div class="ribbon-copy"><h2 data-project-title="bunetto"><a href="./projects/bunetto/">Bunetto<span>.</span></a></h2><p class="ribbon-tools">HTML / Tailwind CSS / JavaScript / WhatsApp</p><p class="ribbon-description">From the first look to the last click.</p><div class="ribbon-actions"><a class="ribbon-link" href="./projects/bunetto/">Explore project<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></article><section id="skills" class="horizontal-panel ribbon-panel ribbon-right" data-section="13 / Capabilities"><p class="ribbon-caption">13 / Capabilities</p><div class="ribbon-copy"><h2>Many tools.<br><span>One connected</span><br>experience.</h2><p class="ribbon-description">From a data model to an interface. From an algorithm to the product around it.</p><div class="ribbon-actions"><a class="ribbon-link" href="./capabilities/">Explore capabilities<span aria-hidden="true">↗</span></a><a class="ribbon-link" href="./projects/#archive">The complete archive<span aria-hidden="true">↗</span></a></div></div><div class="ribbon-mobile-space" aria-hidden="true"></div></section><footer class="site-footer horizontal-panel ribbon-panel ribbon-footer" data-section="Let’s talk" role="contentinfo"><div class="footer-intro"><h2>Let’s build<br>what comes next.</h2><a class="line-link" href="./contact/">Start a conversation<span aria-hidden="true">↗</span></a></div><div class="ribbon-mobile-space" aria-hidden="true"></div><div class="footer-details"><div><p class="eyebrow">Direct contact</p><a class="footer-email" href="mailto:areebazhar3@gmail.com">areebazhar3@gmail.com</a><p>A role, a product, a useful conversation.</p></div><div><p class="eyebrow">Continue exploring</p><nav><a href="./about/">Approach</a><a href="./projects/">Projects</a><a href="./capabilities/">Capabilities</a><a href="./contact/">Contact</a></nav></div><div><p class="eyebrow">Karachi / Local time</p><time class="local-time">PKT</time></div></div><a class="footer-wordmark" href="./" aria-label="Areeb Azhar home">AREEB AZHAR</a><div class="footer-bottom"><a href="https://github.com/AREEB-AZHAR" target="_blank" rel="noreferrer">GitHub ↗</a><span>© 2026 Areeb Azhar</span><a href="#main">Back to top ↑</a></div></footer></div></div></section></main>
-
-<aside class="progress-rail" aria-label="Reading progress"><span class="progress-label">Introduction</span><span>Areeb Azhar</span><span class="progress-hint">Scroll to explore —</span><span class="progress-value">00 / 100</span><div class="progress-track"><i></i></div></aside>
-<script type="module" src="/main.js"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0c0b">
+  <meta name="description" content="Explore five real visual generations of Areeb Azhar’s portfolio, from the original neon engineering site to the living-ribbon redesign.">
+  <title>Portfolio editions — Areeb Azhar</title>
+  <link rel="icon" href="./mark.svg" type="image/svg+xml">
+  <style>
+    @font-face{font-family:Manrope;src:url('./fonts/manrope-light.ttf') format('truetype');font-weight:300;font-display:swap}
+    @font-face{font-family:Manrope;src:url('./fonts/manrope-regular.ttf') format('truetype');font-weight:400;font-display:swap}
+    :root{color-scheme:dark;--bg:#0b0c0b;--panel:#121310;--ink:#e8e5dd;--muted:#aaa99f;--quiet:#77786f;--rule:#34352f;--accent:#c6aa72;font-family:Manrope,Arial,sans-serif;background:var(--bg);color:var(--ink);font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+    *{box-sizing:border-box}html{min-width:320px;background:var(--bg)}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 80% 0%,#23241d 0,transparent 38rem),var(--bg)}a{color:inherit;text-decoration:none}.gallery{width:min(1360px,calc(100% - 80px));margin:auto}.masthead{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--rule);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.mast-brand{display:flex;align-items:center;gap:15px}.mast-mark{font-size:24px;letter-spacing:-.12em;color:var(--ink)}.mast-brand small{font-size:10px;line-height:1.6;letter-spacing:.1em}.mast-index{color:var(--quiet)}.intro{display:grid;grid-template-columns:1fr minmax(260px,430px);gap:32px;align-items:end;padding:90px 0 52px}.kicker,.edition-meta,.edition-image-label,.gallery-foot{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}.kicker{color:var(--accent)}h1{margin:18px 0 0;font-size:clamp(52px,8vw,112px);line-height:.9;letter-spacing:-.075em;font-weight:300}h1 span{color:#85857b}.intro-copy{margin:0 0 4px;max-width:390px;color:var(--muted);font-size:14px;line-height:1.8}.intro-copy strong{display:block;margin-top:15px;color:var(--ink);font-size:11px;font-weight:400;letter-spacing:.04em}.editions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 24px;padding-bottom:86px}.edition{min-width:0}.edition-current{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.42fr) minmax(300px,.8fr);gap:30px;align-items:end}.edition-image{position:relative;display:block;aspect-ratio:1.65;background:#171813;overflow:hidden;border:1px solid #383931;transition:border-color .3s,transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .3s}.edition-image iframe{position:absolute;left:0;top:0;width:240%;height:240%;border:0;pointer-events:none;transform:scale(.4166667);transform-origin:top left}.edition-image-link{position:absolute;inset:0;z-index:2}.edition-image::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,#08090788);pointer-events:none}.edition-image-label{position:absolute;left:16px;top:16px;z-index:3;padding:8px 10px;background:#0b0c0be0;border:1px solid #59594d;color:var(--ink);font-size:9px}.edition-image-arrow{position:absolute;z-index:3;right:16px;bottom:14px;font-size:23px;transition:transform .25s}.edition-image:hover,.edition-image:focus-within{border-color:#b5a77f;transform:translateY(-3px);box-shadow:0 16px 45px #0008}.edition-image:hover iframe,.edition-image:focus-within iframe{filter:saturate(1.08)}.edition-image:hover .edition-image-arrow{transform:translate(3px,-3px)}.edition-copy{padding:15px 2px 0}.edition-current .edition-copy{padding:0 0 3px}.edition-meta{display:flex;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--rule);font-size:9px}.edition-meta span:first-child{color:var(--accent)}.edition h2{margin:16px 0 8px;font-size:clamp(24px,3vw,38px);font-weight:300;letter-spacing:-.055em}.edition p{min-height:48px;margin:0;color:var(--muted);font-size:12px;line-height:1.7}.edition-current h2{font-size:clamp(38px,5.3vw,68px);line-height:.98}.edition-current p{max-width:440px;font-size:14px}.edition-action{display:flex;align-items:center;justify-content:space-between;min-height:50px;margin-top:21px;padding:0 13px;border:1px solid #5b5b50;background:#171813;color:var(--ink);font-size:11px;letter-spacing:.035em;transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}.edition-action span:last-child{font-size:17px}.edition-action:hover,.edition-action:focus-visible{background:#28271f;border-color:var(--accent);box-shadow:0 7px 22px #0007;transform:translateY(-2px)}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}.gallery-foot{display:flex;justify-content:space-between;gap:20px;padding:20px 0 26px;border-top:1px solid var(--rule);font-size:9px;line-height:1.7;color:var(--quiet)}.gallery-foot strong{color:var(--muted);font-weight:400}.gallery-foot span:last-child{text-align:right}
+    @media(max-width:760px){.gallery{width:calc(100% - 36px)}.masthead{height:68px}.mast-brand{gap:11px}.mast-index{font-size:9px}.intro{grid-template-columns:1fr;gap:23px;padding:64px 0 34px}h1{font-size:clamp(54px,13vw,90px)}.intro-copy{max-width:560px;font-size:13px}.editions{grid-template-columns:1fr;gap:34px;padding-bottom:56px}.edition-current{grid-column:auto;grid-template-columns:1fr;gap:16px}.edition-current .edition-copy{padding:0 2px}.edition-image{aspect-ratio:1.45}.edition-current .edition-image{aspect-ratio:1.45}.edition-meta{font-size:8px}.edition h2{font-size:29px}.edition-current h2{font-size:42px}.edition p{min-height:0}.gallery-foot{flex-direction:column}.gallery-foot span:last-child{text-align:left}}
+    @media(max-width:390px){.gallery{width:calc(100% - 28px)}.masthead{font-size:9px}.mast-index{max-width:118px;text-align:right;line-height:1.5}h1{font-size:54px}.edition-meta{align-items:flex-start}.edition-meta span:last-child{text-align:right}.edition-action{min-height:48px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+  </style>
+</head>
+<body>
+  <div class="gallery">
+    <header class="masthead"><a class="mast-brand" href="./" aria-label="Areeb Azhar portfolio editions"><span class="mast-mark">AA</span><small>AREEB AZHAR<br>SOFTWARE ENGINEERING</small></a><span class="mast-index">A portfolio, in five editions</span></header>
+    <main>
+      <section class="intro" aria-labelledby="gallery-title"><div><p class="kicker">A visual history / 2026</p><h1 id="gallery-title">Five designs.<br><span>One journey.</span></h1></div><p class="intro-copy">This portfolio has taken a few different shapes as I learned what I wanted it to say. These are the actual designs from that journey—not motion presets. Choose one to open it.<strong>Each edition is a separate, working page.</strong></p></section>
+      <section class="editions" aria-label="Portfolio design editions"><article class="edition edition-current">
+      <div class="edition-image">
+        <iframe src="./portfolio/?preview=1" title="Current portfolio with a warm metallic filament crossing a dark editorial layout" aria-hidden="true" tabindex="-1" loading="eager" width="1440" height="900"></iframe>
+        <a class="edition-image-link" href="./portfolio/" aria-label="Enter the current design: A living ribbon"></a>
+        <span class="edition-image-label">LATEST</span>
+        <span class="edition-image-arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="edition-copy">
+        <div class="edition-meta"><span>05 / 05 · 28fb767</span><span>CURRENT DESIGN / NOVEMBER 2026</span></div>
+        <h2>A living ribbon</h2>
+        <p>The latest cinematic portfolio: one continuous filament and sculptural forms carry the story from idea to work.</p>
+        <a class="edition-action" href="./portfolio/"><span>Enter the current design</span><span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+<article class="edition">
+      <div class="edition-image">
+        <iframe src="./designs/cinematic-sculpture/" title="Earlier cinematic portfolio with a metallic monogram and spacious dark layout" aria-hidden="true" tabindex="-1" loading="lazy" width="1440" height="900"></iframe>
+        <a class="edition-image-link" href="./designs/cinematic-sculpture/" aria-label="Open this design: Sculpture in the story"></a>
+        <span class="edition-image-label">EDITION 04</span>
+        <span class="edition-image-arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="edition-copy">
+        <div class="edition-meta"><span>04 / 05 · f81b386</span><span>CINEMATIC EDITION / OCTOBER 2026</span></div>
+        <h2>Sculpture in the story</h2>
+        <p>A spacious, top-to-bottom portfolio built around a metallic AA sculpture, project scenes, and quiet editorial typography.</p>
+        <a class="edition-action" href="./designs/cinematic-sculpture/"><span>Open this design</span><span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+<article class="edition">
+      <div class="edition-image">
+        <iframe src="./designs/project-showcase/" title="Warm ivory portfolio with a large editorial headline and project showcase" aria-hidden="true" tabindex="-1" loading="lazy" width="1440" height="900"></iframe>
+        <a class="edition-image-link" href="./designs/project-showcase/" aria-label="Open this design: Ideas, put into practice"></a>
+        <span class="edition-image-label">EDITION 03</span>
+        <span class="edition-image-arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="edition-copy">
+        <div class="edition-meta"><span>03 / 05 · a9d3640</span><span>PROJECT SHOWCASE / JULY–OCTOBER 2026</span></div>
+        <h2>Ideas, put into practice</h2>
+        <p>The warm, light project showcase: an animated editorial introduction, featured work, capabilities, and a searchable archive.</p>
+        <a class="edition-action" href="./designs/project-showcase/"><span>Open this design</span><span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+<article class="edition">
+      <div class="edition-image">
+        <iframe src="./designs/glass-systems/" title="Dark glass-panel portfolio with code windows and neon accents" aria-hidden="true" tabindex="-1" loading="lazy" width="1440" height="900"></iframe>
+        <a class="edition-image-link" href="./designs/glass-systems/" aria-label="Open this design: Glass, code & systems"></a>
+        <span class="edition-image-label">EDITION 02</span>
+        <span class="edition-image-arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="edition-copy">
+        <div class="edition-meta"><span>02 / 05 · 425829f</span><span>VERSION 2.0 / APRIL 2026</span></div>
+        <h2>Glass, code & systems</h2>
+        <p>A dark glass-panel interface with floating code windows, ambient neural linework, and a compact engineering dashboard feel.</p>
+        <a class="edition-action" href="./designs/glass-systems/"><span>Open this design</span><span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+<article class="edition">
+      <div class="edition-image">
+        <iframe src="./designs/original-neon/" title="Original dark portfolio with neon mint accents, a custom cursor, and technical motifs" aria-hidden="true" tabindex="-1" loading="lazy" width="1440" height="900"></iframe>
+        <a class="edition-image-link" href="./designs/original-neon/" aria-label="Open this design: The first portfolio"></a>
+        <span class="edition-image-label">EDITION 01</span>
+        <span class="edition-image-arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="edition-copy">
+        <div class="edition-meta"><span>01 / 05 · 16fbb13</span><span>ORIGINAL EDITION / MARCH 2026</span></div>
+        <h2>The first portfolio</h2>
+        <p>The original neon-accented AI and software portfolio: a custom cursor, technical canvas, and early project stories.</p>
+        <a class="edition-action" href="./designs/original-neon/"><span>Open this design</span><span aria-hidden="true">↗</span></a>
+      </div>
+    </article></section>
+    </main>
+    <footer class="gallery-foot"><span><strong>AREEB AZHAR</strong> / SOFTWARE ENGINEERING & CREATIVE DEVELOPMENT</span><span>Historical designs are preserved from the project’s Git history.<br>Choose a version above to continue exploring.</span></footer>
+  </div>
+</body>
+</html>

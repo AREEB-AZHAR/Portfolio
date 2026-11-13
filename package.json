@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "generate": "node scripts/generate.mjs",
+    "archive:designs": "node scripts/archive-designs.mjs",
+    "check:design-gallery": "node scripts/check-design-gallery.mjs",
     "predev": "npm run generate",
     "dev": "vite",
-    "prebuild": "npm run generate && node scripts/check-content.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs",
+    "prebuild": "npm run generate && node scripts/check-content.mjs && node scripts/check-design-gallery.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs",
     "build": "vite build",
-    "prebuild:pages": "npm run generate && node scripts/check-content.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs",
+    "prebuild:pages": "npm run generate && node scripts/check-content.mjs && node scripts/check-design-gallery.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs",
     "build:pages": "vite build --base=/Portfolio/",
     "preview": "vite preview",
     "pretest": "npm run generate",
-    "test": "node scripts/check-content.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs"
+    "test": "node scripts/check-content.mjs && node scripts/check-design-gallery.mjs && node scripts/check-strand.mjs && node scripts/check-ribbon-study.mjs"
   },
   "keywords": [],
   "author": "",

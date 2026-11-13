@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import { projects } from "../src/content/projects.mjs";
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
-const base = (process.argv[2] || "http://127.0.0.1:5175/").replace(/\/?$/, "/");
+const base = (process.argv[2] || "http://127.0.0.1:5175/portfolio/").replace(/\/?$/, "/");
 const output = process.env.SCREENSHOT_DIR || "tmp/qa";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({

@@ -129,7 +129,7 @@ gate
   .forEach((button) =>
     button.addEventListener("click", () => chooseMotion(button.dataset.motion)),
   );
-gate.querySelector('.study-link').addEventListener('click', () => {
+gate.querySelector('.study-link')?.addEventListener('click', () => {
   try {
     sessionStorage.setItem('portfolio-session-motion', 'full');
     localStorage.setItem('portfolio-motion', 'full');
@@ -248,7 +248,8 @@ window.addEventListener(
 );
 window.addEventListener("resize", schedule, { passive: true });
 setMotion(reduced ? "reduced" : "full", false);
-if (!sessionChoice) {
+const embeddedPreview = new URLSearchParams(location.search).get("preview") === "1";
+if (!sessionChoice && !embeddedPreview) {
   document.body.classList.add("choosing-motion");
   gate.showModal();
 }

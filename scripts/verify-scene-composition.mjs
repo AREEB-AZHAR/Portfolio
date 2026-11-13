@@ -3,7 +3,7 @@ import { createRequire } from "node:module";
 import { mkdir, writeFile } from "node:fs/promises";
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
-const base = process.argv[2] || "http://127.0.0.1:5183/";
+const base = process.argv[2] || "http://127.0.0.1:5183/portfolio/";
 const output = process.env.SCREENSHOT_DIR || "tmp/scene-composition-qa";
 const sizes = process.env.SCENE_SIZES
   ? JSON.parse(process.env.SCENE_SIZES)
