@@ -115,7 +115,10 @@ try {
   const reduced = await browser.newContext({ reducedMotion: "reduce" }),
     r = await reduced.newPage();
   await r.goto(url);
-  await r.locator('[data-motion="reduced"]').click();
+  if (await r.locator("#animation-gate").evaluate((e) => e.open)) {
+    await r.locator('[data-motion="reduced"]').scrollIntoViewIfNeeded();
+    await r.locator('[data-motion="reduced"]').click();
+  }
   assert(
     !(await r
       .locator("html")
