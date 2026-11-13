@@ -4,6 +4,10 @@ A cinematic software engineering portfolio with a living filament, transforming 
 
 **[Visit the portfolio](https://areeb-azhar.github.io/Portfolio/)** · **[GitHub](https://github.com/AREEB-AZHAR)** · **[Contact](mailto:areebazhar3@gmail.com)**
 
+On a new visit, the portfolio opens with a design chooser: visitors can enter the complete cinematic ribbon story, continue in quiet vertical reading mode, or open the focused ribbon motion study. The choice is retained for the browsing session and can be changed from the header. All options lead to the same project content; the study is an additional preview rather than a separate content fork. The chooser is generated in `scripts/generate.mjs`, styled in `style.css`, and hooked to existing motion preferences in `main.js`.
+
+![Portfolio design chooser showing the three visual directions](docs/screenshots/design-chooser-desktop.png)
+
 ![Desktop portfolio — living filament and sculptural ribbon](docs/ribbon-home/scene-0.png)
 
 ## The redesign

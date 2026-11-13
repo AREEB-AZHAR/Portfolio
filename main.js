@@ -129,13 +129,21 @@ gate
   .forEach((button) =>
     button.addEventListener("click", () => chooseMotion(button.dataset.motion)),
   );
+gate.querySelector('.study-link').addEventListener('click', () => {
+  try {
+    sessionStorage.setItem('portfolio-session-motion', 'full');
+    localStorage.setItem('portfolio-motion', 'full');
+  } catch {
+    /* The study remains available when storage is disabled. */
+  }
+});
 gate.addEventListener("cancel", (event) => {
   event.preventDefault();
   chooseMotion("reduced");
 });
 if (media.matches)
-  gate.querySelector('[data-motion="reduced"] small').textContent =
-    "Recommended by your device’s reduced-motion setting.";
+  gate.querySelector("#animation-description").textContent =
+    "Your device prefers reduced motion. Quiet reading is recommended; the same projects and stories are available in every design.";
 media.addEventListener("change", (event) => {
   if (event.matches) chooseMotion("reduced");
 });
