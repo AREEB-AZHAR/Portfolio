@@ -15,6 +15,7 @@ dist-ssr
 /capabilities/
 /contact/
 /portfolio/
+/editions/
 tmp/
 *.local
 

@@ -5,37 +5,61 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path) => readFile(resolve(root, path), "utf8");
-const gallery = await read("index.html");
+const rootGallery3d = await read("index.html");
+const gallery2d = await read("editions/index.html");
 const currentHome = await read("portfolio/index.html");
 const manifest = await read("src/templates/design-gallery.mjs");
+const gallery3dTemplate = await read("src/templates/gallery-3d.mjs");
 const archiveBuilder = await read("scripts/archive-designs.mjs");
 const entries = [
-  ["living-ribbon", "portfolio/index.html", "./portfolio/"],
+  ["living-ribbon", "portfolio/index.html", "./portfolio/", "../portfolio/"],
   [
     "cinematic-sculpture",
     "public/designs/cinematic-sculpture/index.html",
     "./designs/cinematic-sculpture/",
+    "../designs/cinematic-sculpture/",
   ],
   [
     "project-showcase",
     "public/designs/project-showcase/index.html",
     "./designs/project-showcase/",
+    "../designs/project-showcase/",
   ],
   [
     "glass-systems",
     "public/designs/glass-systems/index.html",
     "./designs/glass-systems/",
+    "../designs/glass-systems/",
   ],
   [
     "original-neon",
     "public/designs/original-neon/index.html",
     "./designs/original-neon/",
+    "../designs/original-neon/",
   ],
 ];
 
-assert.equal((gallery.match(/class="edition(?: edition-current)?"/g) || []).length, 5);
-assert.equal((gallery.match(/class="edition-action"/g) || []).length, 5);
-assert.match(gallery, /These are the actual designs from that journey—not motion presets/);
+// Validate 3D Archive Gallery root landing page
+assert.match(rootGallery3d, /id="canvas-container"/);
+assert.match(rootGallery3d, /requestPointerLock/);
+assert.match(rootGallery3d, /pointerlockchange/);
+assert.match(rootGallery3d, /ev\.movementX/);
+assert.match(rootGallery3d, /href="\.\/editions\/"/);
+assert.match(rootGallery3d, /const monumentTex = createMonumentTexture\(\)/);
+assert.match(rootGallery3d, /oldScreenTex\.dispose\(\)/);
+assert.match(rootGallery3d, /const forwardVec = new THREE\.Vector3\(\)/);
+assert.match(rootGallery3d, /visibilitychange/);
+assert.match(gallery3dTemplate, /export const gallery3d/);
+
+// Validate inline JS syntax of generated 3D gallery
+const inlineScript = rootGallery3d.match(/<script>\s*([\s\S]*?)<\/script>/);
+assert(inlineScript, "3D gallery root is missing its inline script");
+new Function(inlineScript[1]);
+
+// Validate preserved 2D five-edition gallery at /editions/
+assert.equal((gallery2d.match(/class="edition(?: edition-current)?"/g) || []).length, 5);
+assert.equal((gallery2d.match(/class="edition-action"/g) || []).length, 5);
+assert.match(gallery2d, /These are the actual designs from that journey—not motion presets/);
 assert.match(currentHome, /id="animation-gate"/);
 assert.match(await read("main.js"), /embeddedPreview/);
 assert.match(archiveBuilder, /16fbb13/);
@@ -43,11 +67,15 @@ assert.match(archiveBuilder, /425829f/);
 assert.match(archiveBuilder, /a9d3640/);
 assert.match(archiveBuilder, /f81b386/);
 
-for (const [slug, file, href] of entries) {
+for (const [slug, file, href3d, href2d] of entries) {
   await access(resolve(root, file));
   assert(manifest.includes(slug), `Gallery metadata is missing ${slug}`);
-  assert(gallery.includes(`href="${href}"`), `Gallery has no action for ${slug}`);
-  assert(gallery.includes(`src="${slug === "living-ribbon" ? "./portfolio/?preview=1" : href}"`), `Gallery preview missing for ${slug}`);
+  assert(rootGallery3d.includes(href3d), `3D gallery has no link for ${slug} (${href3d})`);
+  assert(gallery2d.includes(`href="${href2d}"`), `2D gallery has no action for ${slug}`);
+  assert(
+    gallery2d.includes(`src="${slug === "living-ribbon" ? "../portfolio/?preview=1" : href2d}"`),
+    `2D gallery preview missing for ${slug}`,
+  );
   if (slug === "living-ribbon") continue;
   const page = await read(file);
   const base = resolve(root, `public/designs/${slug}`);
@@ -88,4 +116,4 @@ const snapshotBytes = await Promise.all(
   entries.slice(1).map(async ([, file]) => (await stat(resolve(root, file))).size),
 );
 assert(snapshotBytes.every((bytes) => bytes > 5000), "Expected real historical HTML snapshots");
-console.log("Design gallery checks passed: five distinct choices, four history-backed pages, previews, back-links, and local assets.");
+console.log("Design gallery checks passed: 3D Pointer Lock landing, 2D five-edition index, four history-backed pages, previews, back-links, and local assets.");

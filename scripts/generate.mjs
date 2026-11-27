@@ -3,6 +3,7 @@ import { projects, capabilities } from "../src/content/projects.mjs";
 import { pageTransitions } from "../src/page-transitions.mjs";
 import { livingHome } from "../src/templates/living-home.mjs";
 import { designGallery } from "../src/templates/design-gallery.mjs";
+import { gallery3d } from "../src/templates/gallery-3d.mjs";
 
 const esc = (value) =>
   String(value ?? "").replace(
@@ -234,7 +235,9 @@ for (const [file, title, description, content, page] of pages) {
     shell({ title, description, content, file, page }),
   );
 }
-await writeFile(new URL("../index.html", import.meta.url), designGallery);
+await mkdir(new URL("../editions/", import.meta.url), { recursive: true });
+await writeFile(new URL("../editions/index.html", import.meta.url), designGallery);
+await writeFile(new URL("../index.html", import.meta.url), gallery3d);
 console.log(
-  `Generated the five-edition design gallery and ${pages.length} static portfolio pages from ${projects.length} canonical projects.`,
+  `Generated the 3D portfolio archive gallery, 2D five-edition index, and ${pages.length} static portfolio pages from ${projects.length} canonical projects.`,
 );

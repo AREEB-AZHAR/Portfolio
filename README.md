@@ -1,26 +1,34 @@
-# Areeb Azhar — Engineering & Creative Development
+# Areeb Azhar — 3D Portfolio Archive Gallery & Creative Development
 
-A cinematic software engineering portfolio with a living filament, transforming metallic ribbon, native-scroll horizontal storytelling, and real project briefings. Built with semantic HTML, CSS, JavaScript, Vite, and Three.js.
+An interactive **3D Portfolio Archive Gallery** (Three.js architectural museum walkthrough with **Pointer Lock mouse-bound camera controls**) fronting five genuinely different historical portfolio generations, the current **Living Ribbon** flagship portfolio, and 19 canonical engineering project briefings. Built with semantic HTML, CSS, JavaScript, Vite, and Three.js.
 
-**[Visit the portfolio](https://areeb-azhar.github.io/Portfolio/)** · **[GitHub](https://github.com/AREEB-AZHAR)** · **[Contact](mailto:areebazhar3@gmail.com)**
+**[Visit the live portfolio (GitHub Pages)](https://areeb-azhar.github.io/Portfolio/)** · **[Vercel Deployment](https://portfolio-nu-one-roywdtcqw8.vercel.app/)** · **[GitHub](https://github.com/AREEB-AZHAR)** · **[Contact](mailto:areebazhar3@gmail.com)**
 
-The home route is a design-history gallery with **five genuinely different portfolio generations**. Each edition opens its own page: four self-contained snapshots from Git history and the current living-ribbon portfolio. These are not motion presets applied to one design. Each card contains a live miniature of the corresponding page and identifies its source commit. The current portfolio keeps its separate first-visit animation choice.
+The root route (`/`) opens into a **playable 3D architectural gallery** with **Pointer Lock FPS mouse-look** on desktop (raw mouse movement rotates the 3D camera 360° with center-reticle aiming, `Esc` unlocks the cursor for HUD controls, and clicking the scene re-locks) plus touch-drag look and an on-screen D-Pad for mobile visitors. Six illuminated monoliths connect directly to all **five real portfolio generations** from Git history and the canonical project index, while the original **2D Five-Editions Chooser** with live miniature iframes remains preserved at **`/editions/`** (also serving as a graceful fallback if WebGL is unavailable).
+
+> 📷 **3D Gallery Screenshots**: Capture screenshots of the new 3D root gallery (1. **Title Splash over the 3D Hall**, 2. **Pointer-Locked First-Person Walkthrough with Center Reticle & Minimap**, and 3. **Interactive Portfolio Inspector Modal**) under `docs/screenshots/` to display them alongside the captures below.
 
 ![Desktop portfolio — living filament and sculptural ribbon](docs/ribbon-home/scene-0.png)
 
 ![Earlier cinematic edition, captured from the original redesign](docs/screenshots/home-desktop.png)
 
-## Portfolio design history
+## 3D Archive Gallery & portfolio design history
 
-The root page presents five distinct visual generations in reverse chronological order:
+The root page (`index.html`, generated from `src/templates/gallery-3d.mjs`) presents six interactive 3D monoliths connecting all five visual generations plus the canonical 19-project index, while `/editions/` (`src/templates/design-gallery.mjs`) retains the 2D card grid with live iframes:
 
-| Edition | Source | What opens |
-| --- | --- | --- |
-| Living ribbon | `28fb767` | Current horizontal desktop story, transforming ribbon, project pages, and the existing animation choice at `/portfolio/` |
-| Sculpture in the story | `f81b386` | The first near-black, editorial, sculptural redesign |
-| Ideas, put into practice | `a9d3640` | The warm project-showcase redesign, including its later certificate and project-media refresh |
-| Glass, code & systems | `425829f` | The dark glass-panel engineering portfolio |
-| The first portfolio | `16fbb13` | The original neon-accented AI and software portfolio |
+| Monolith / Edition | Source | Route | What opens |
+| --- | --- | --- | --- |
+| `ED. 06` A Living Ribbon | `28fb767` | `./portfolio/` | Current horizontal 14-scene story, transforming ribbon, project pages, and animation choice |
+| `ED. 05` Sculpture in the Story | `f81b386` | `./designs/cinematic-sculpture/` | The first near-black, editorial, sculptural redesign |
+| `ED. 04` Project Archive Lab | Canonical | `./projects/` | Searchable index of all 19 engineering projects and technical briefings |
+| `ED. 03` Ideas, Put Into Practice | `a9d3640` | `./designs/project-showcase/` | The warm project-showcase redesign, including certificate and project-media refresh |
+| `ED. 02` Glass, Code & Systems | `425829f` | `./designs/glass-systems/` | The dark glass-panel engineering portfolio |
+| `ED. 01` The First Portfolio | `16fbb13` | `./designs/original-neon/` | The original neon-accented AI and software portfolio |
+
+### 3D Gallery Controls & Performance
+- **Desktop FPS Mouse-Look (Pointer Lock)**: Clicking **Enter Gallery** binds the mouse cursor directly to camera yaw/pitch (`movementX`/`movementY` clamped at `±120px` against browser wake spikes). Aim the center crosshair reticle at any monolith and click (or press `E`) to open the Inspector Modal; press `Esc` at any time to release the cursor for Top HUD controls or the Edition Dock, and click the 3D scene again to re-lock.
+- **Mobile & Touch**: Touch-drag camera look (`touch-action: none`), on-screen D-Pad movement, horizontal scrollable edition dock, and clickable project cards inside the inspector modal.
+- **GPU & Runtime Governance**: Preserves Three.js `r128` museum lighting parity, reuses a single monument `CanvasTexture`, disposes old textures on live exhibit customization, hoists per-frame `THREE.Vector3` scratch objects outside `animate()`, and pauses rendering on background tabs via `visibilitychange`.
 
 Archived editions retain their original visual implementation and bundled local assets under `public/designs/`. A small return link leads back to the chooser; project-detail links from those older pages use the current canonical project briefings. `npm run archive:designs` rebuilds those snapshots from the pinned Git commits when the repository history is available. Normal install, local development, and production builds use the already-committed snapshots and do not require Git history at build time.
 
@@ -171,7 +179,8 @@ Open the printed preview URL, including `/Portfolio/` for the Pages build. Both 
 ```text
 src/
   content/projects.mjs     Project records, case-study content, capabilities
-  templates/design-gallery.mjs  Five-edition portfolio selector and live previews
+  templates/gallery-3d.mjs Interactive Three.js 3D archive gallery landing with Pointer Lock mouse-look
+  templates/design-gallery.mjs  Preserved 2D five-edition portfolio selector at /editions/
   sculpture.js             Procedural Three.js scenes and rendering lifecycle
   horizontal.js            Native vertical-scroll to negative-X story mapping
   templates/living-home.mjs Fourteen-scene editorial homepage template
@@ -214,9 +223,9 @@ style.css                  Shared visual system and responsive layouts
 vite.config.js             Multi-page entries and split 3D bundle
 ```
 
-`scripts/generate.mjs` renders the root design gallery and the shared header, navigation, footer, and current portfolio pages into real HTML entry points. Vite then produces static files, so gallery choices, project links, direct routes, and refreshes work without an SPA rewrite rule. `vite.config.js` includes both `/` and `/portfolio/` as HTML entry points.
+`scripts/generate.mjs` renders the 3D archive gallery root (`/`), the preserved 2D five-edition selector (`/editions/`), and the shared header, navigation, footer, and current portfolio pages into real HTML entry points. Vite then produces static files, so gallery choices, project links, direct routes, and refreshes work without an SPA rewrite rule. `vite.config.js` includes `/`, `/editions/`, and `/portfolio/` as HTML entry points.
 
-The generated `portfolio/`, `about/`, `projects/`, `capabilities/`, and `contact/` source folders are ignored by Git. They are recreated by the npm scripts. The root `index.html` is generated from `src/templates/design-gallery.mjs` and retained as the landing-page entry. Historical pages and their assets are committed under `public/designs/`; the regular build does not need access to old Git objects. **Edit the manifest or templates, not generated HTML.**
+The generated `editions/`, `portfolio/`, `about/`, `projects/`, `capabilities/`, and `contact/` source folders are ignored by Git. They are recreated by the npm scripts. The root `index.html` is generated from `src/templates/gallery-3d.mjs` and retained as the landing-page entry. Historical pages and their assets are committed under `public/designs/`; the regular build does not need access to old Git objects. **Edit the manifest or templates, not generated HTML.**
 
 To deliberately refresh the archived editions from their recorded commits, run `npm run archive:designs` before `npm run generate`. This requires those pinned commits to exist in the local Git history.
 
