@@ -43,11 +43,16 @@ const entries = [
 assert.match(rootGallery3d, /id="canvas-container"/);
 assert.match(rootGallery3d, /id="css3d-container"/);
 assert.match(rootGallery3d, /THREE\.NoBlending/);
-assert.match(rootGallery3d, /createMarbleTextures/);
+assert.match(rootGallery3d, /createBookmatchedMarbleSet/);
+assert.match(rootGallery3d, /MirroredRepeatWrapping/);
+assert.match(rootGallery3d, /\.\/textures\/rose-agate-gold\.jpg/);
+assert.match(rootGallery3d, /\.\/textures\/rose-gold-silk\.jpg/);
 assert.match(rootGallery3d, /createDichroicMaterial/);
 assert.match(rootGallery3d, /createVolumetricRayMaterial/);
 assert.doesNotMatch(rootGallery3d, /btn-toggle-palette/);
 assert.match(rootGallery3d, /const isLocalHost =/);
+await access(resolve(root, "public/textures/rose-agate-gold.jpg"));
+await access(resolve(root, "public/textures/rose-gold-silk.jpg"));
 assert.match(rootGallery3d, /\.\/portfolio\/\?preview=1/);
 assert.match(rootGallery3d, /\.\/projects\/chronos\//);
 assert.match(rootGallery3d, /requestPointerLock/);

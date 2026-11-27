@@ -1,18 +1,18 @@
-# Areeb Azhar — 3D Prismatic Fluid-Marble Portfolio Gallery & Creative Development
+# Areeb Azhar — 3D Rose-Gold Marble Portfolio Archive Gallery & Creative Development
 
-An interactive **Bold Multicolor Prismatic Fluid-Marble 3D Portfolio Archive Gallery** (Three.js architectural museum walkthrough with **Pointer Lock mouse-bound camera controls**, **custom GLSL dichroic iridescent sculptures**, **chromatic volumetric skylight beams**, and **live embedded website wall canvases**) fronting five genuinely different historical portfolio generations, the matching **Bold Prismatic 2D Editions Index** (`/editions/`), the current **Living Ribbon** flagship portfolio, and 19 canonical engineering project briefings (including **CHRONOS — The Story of Everything**). Built with semantic HTML, CSS, JavaScript, Vite, and Three.js.
+An interactive **Rose-Quartz Agate & 24K Gold Foil Marble 3D Portfolio Archive Gallery** (Three.js architectural pavilion with **bookmatched `MirroredRepeatWrapping` rose-quartz marble walls, ceiling, and matching sculpted rose-gold silk floor**, **Pointer Lock mouse-bound camera controls**, **custom GLSL rose-gold mother-of-pearl iridescent sculptures**, and **live embedded website wall canvases**) fronting five genuinely different historical portfolio generations, the matching **Rose-Gold & Champagne 2D Editions Index** (`/editions/`), the current **Living Ribbon** flagship portfolio, and 19 canonical engineering project briefings (including **CHRONOS — The Story of Everything**). Built with semantic HTML, CSS, JavaScript, Vite, and Three.js.
 
 **[Visit the live portfolio (GitHub Pages)](https://areeb-azhar.github.io/Portfolio/)** · **[Vercel Deployment](https://portfolio-nu-one-roywdtcqw8.vercel.app/)** · **[GitHub](https://github.com/AREEB-AZHAR)** · **[Contact](mailto:areebazhar3@gmail.com)**
 
-The root route (`/`) opens into a **playable bold multicolor fluid-acrylic marble 3D exhibition hall** with **Pointer Lock FPS mouse-look** on desktop (raw mouse movement rotates the 3D camera 360° with neon center-reticle aiming, `Esc` unlocks the cursor for HUD controls, and clicking the scene re-locks) plus touch-drag look and an on-screen D-Pad for mobile visitors. Six illuminated monoliths stream **live, working websites directly inside the saturated fluid-marble walls** via a synchronized hybrid `CSS3D` + alpha-cutout `WebGL` pipeline (`THREE.NoBlending`) with genuine 3D occlusion behind marble benches, neon-inlaid bay pillars, and rotating GLSL dichroic iridescent sculptures. Clicking any monolith opens the **Live Interactive Inspector Modal** to scroll and interact with the real website plus jump straight into featured project briefings. Gallery customization controls are strictly **localhost-only** and stripped from public deployments.
+The root route (`/`) opens into a **playable bookmatched rose-quartz agate & rose-gold silk 3D exhibition hall** with **Pointer Lock FPS mouse-look** on desktop (raw mouse movement rotates the 3D camera 360° with center-reticle aiming, `Esc` unlocks the cursor for HUD controls, and clicking the scene re-locks) plus touch-drag look and an on-screen D-Pad for mobile visitors. Six illuminated monoliths stream **live, working websites directly inside the rose-quartz marble walls** via a synchronized hybrid `CSS3D` + alpha-cutout `WebGL` pipeline (`THREE.NoBlending`) with genuine 3D occlusion behind rose-gold silk marble benches, 24K gold pillar inlays, and rotating GLSL rose-gold iridescent sculptures. Clicking any monolith opens the **Live Interactive Inspector Modal** to scroll and interact with the real website plus jump straight into featured project briefings. Gallery customization controls are strictly **localhost-only** and stripped from public deployments.
 
-![Bold multicolor prismatic fluid-marble 3D gallery hall with dichroic sculptures and live websites](docs/screenshots/gallery-prism-hall.png)
+![Rose-Quartz & 24K Gold Agate Marble 3D Gallery with matching sculpted rose-gold silk floor and live websites](docs/screenshots/gallery-rosegold-hall.png)
 
-![Close-up of live website embedded seamlessly in bold fluid-acrylic marble wall](docs/screenshots/gallery-prism-monolith-closeup.png)
+![Close-up of live website embedded seamlessly in bookmatched rose-quartz & 24K gold marble wall](docs/screenshots/gallery-rosegold-monolith-closeup.png)
 
-![Prismatic Inspector Modal displaying the live interactive website and canonical case-study chips](docs/screenshots/gallery-prism-inspector.png)
+![Rose-Gold Inspector Modal displaying the live interactive website and canonical case-study chips](docs/screenshots/gallery-rosegold-inspector.png)
 
-![Bold multicolor 2D Five-Editions Index at /editions/](docs/screenshots/editions-prism-2d.png)
+![Matching Rose-Quartz & 24K Champagne Gold 2D Editions Index at /editions/](docs/screenshots/editions-rosegold-2d.png)
 
 ![CHRONOS — The Story of Everything canonical project briefing](docs/screenshots/chronos-briefing.png)
 
@@ -20,7 +20,7 @@ The root route (`/`) opens into a **playable bold multicolor fluid-acrylic marbl
 
 ## 3D Archive Gallery & portfolio design history
 
-The root page (`index.html`, generated from `src/templates/gallery-3d.mjs`) presents six live interactive 3D website monoliths inside a bold multicolor fluid-acrylic marble pavilion connecting all five visual generations plus the canonical 19-project index, while `/editions/` (`src/templates/design-gallery.mjs`) offers the matching bold multicolor 2D card grid with live iframes:
+The root page (`index.html`, generated from `src/templates/gallery-3d.mjs`) presents six live interactive 3D website monoliths inside a bookmatched rose-quartz agate & rose-gold silk marble pavilion connecting all five visual generations plus the canonical 19-project index, while `/editions/` (`src/templates/design-gallery.mjs`) offers the matching rose-gold 2D card grid with live iframes:
 
 | Monolith / Edition | Source | Route | What opens |
 | --- | --- | --- | --- |
@@ -32,9 +32,9 @@ The root page (`index.html`, generated from `src/templates/gallery-3d.mjs`) pres
 | `ED. 01` The First Portfolio | `16fbb13` | `./designs/original-neon/` | The original neon-accented AI and software portfolio |
 
 ### 3D Gallery Highlights, Controls & Security
-- **Bold Full-Color Fluid-Acrylic Marble Pavilion**: Procedural `1024×1024` deep indigo-plum marble paint pours swirled with high-voltage laser cyan, neon magenta, ultraviolet, emerald mint, coral tangerine, and liquid gold ribbons (`map` + `emissiveMap` + `bumpMap`), framed by neon-inlaid bay pillars, rainbow floor guide rails, and colorful terrazzo chips.
-- **Custom GLSL Dichroic Sculptures & Volumetric Beams**: Native Three.js `r128` Fresnel thin-film iridescence `ShaderMaterial` on the rotating center sculptures and Monument Wall frame, paired with animated chromatic volumetric skylight cones and per-vertex multicolor floating prism particles.
-- **Live Website Wall Canvases (Hybrid CSS3D + WebGL Cutouts)**: Each 3D monolith displays the real working website (`1280×800`) projected directly into 3D space behind an alpha-cutout WebGL plane (`THREE.NoBlending`, `fog: false`) so benches, pillars, and dichroic sculptures naturally occlude the live pages. Includes a **Live Walls / Art Mode** HUD toggle and automatic nearest-2 mobile iframe throttling.
+- **Bookmatched Rose-Quartz Agate & Rose-Gold Silk Pavilion**: Power-of-two `1024×1024` bookmatched `THREE.MirroredRepeatWrapping` marble slabs (`public/textures/rose-agate-gold.jpg` on walls & ceiling + `public/textures/rose-gold-silk.jpg` on the polished matching floor, benches & pedestals), with runtime-extracted tactile `bumpMap` relief and 24K gold-foil `emissiveMap` shimmer.
+- **Custom GLSL Rose-Gold & Mother-of-Pearl Sculptures**: Native Three.js `r128` Fresnel iridescence shader on all three rotating center sculptures and the Monument Wall frame, illuminated by warm champagne & rose-blush volumetric skylight cones and 300 floating gold-leaf & rose-pearl glitter dust motes.
+- **Live Website Wall Canvases (Hybrid CSS3D + WebGL Cutouts)**: Each 3D monolith displays the real working website (`1280×800`) projected directly into 3D space behind an alpha-cutout WebGL plane (`THREE.NoBlending`, `fog: false`) so benches, pillars, and sculptures naturally occlude the live pages. Includes a **Live Walls / Art Mode** HUD toggle and automatic nearest-2 mobile iframe throttling.
 - **Localhost-Only Customizer**: Gallery exhibit customization (`Customize` button, edit form, and `localStorage` persistence) is strictly gated to `localhost`, `127.0.0.1`, `[::1]`, and `file:` origins — public deployments on Vercel and GitHub Pages strip all editing UI and always serve canonical published data.
 - **Desktop FPS Mouse-Look (Pointer Lock)**: Clicking **Enter Gallery** binds the mouse cursor directly to camera yaw/pitch (`movementX`/`movementY` clamped at `±120px` against browser wake spikes). Aim the center crosshair reticle at any monolith and click (or press `E`) to open the Live Interactive Inspector Modal; press `Esc` at any time to release the cursor for Top HUD controls or the Edition Dock, and click the 3D scene again to re-lock.
 - **Mobile & Touch**: Touch-drag camera look (`touch-action: none`), on-screen D-Pad movement, horizontal scrollable edition dock, and live interactive previews + quick-jump case-study pills inside the inspector modal.
