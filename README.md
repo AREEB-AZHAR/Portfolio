@@ -1,26 +1,26 @@
-# Areeb Azhar — 3D Marble Portfolio Archive Gallery & Creative Development
+# Areeb Azhar — 3D Prismatic Fluid-Marble Portfolio Gallery & Creative Development
 
-An interactive **White Calacatta Marble 3D Portfolio Archive Gallery** (Three.js architectural museum walkthrough with **Pointer Lock mouse-bound camera controls** and **live embedded website wall canvases**) fronting five genuinely different historical portfolio generations, the current **Living Ribbon** flagship portfolio, and 19 canonical engineering project briefings (including **CHRONOS — The Story of Everything**). Built with semantic HTML, CSS, JavaScript, Vite, and Three.js.
+An interactive **Bold Multicolor Prismatic Fluid-Marble 3D Portfolio Archive Gallery** (Three.js architectural museum walkthrough with **Pointer Lock mouse-bound camera controls**, **custom GLSL dichroic iridescent sculptures**, **chromatic volumetric skylight beams**, and **live embedded website wall canvases**) fronting five genuinely different historical portfolio generations, the matching **Bold Prismatic 2D Editions Index** (`/editions/`), the current **Living Ribbon** flagship portfolio, and 19 canonical engineering project briefings (including **CHRONOS — The Story of Everything**). Built with semantic HTML, CSS, JavaScript, Vite, and Three.js.
 
 **[Visit the live portfolio (GitHub Pages)](https://areeb-azhar.github.io/Portfolio/)** · **[Vercel Deployment](https://portfolio-nu-one-roywdtcqw8.vercel.app/)** · **[GitHub](https://github.com/AREEB-AZHAR)** · **[Contact](mailto:areebazhar3@gmail.com)**
 
-The root route (`/`) opens into a **playable white-marble 3D architectural gallery** with **Pointer Lock FPS mouse-look** on desktop (raw mouse movement rotates the 3D camera 360° with center-reticle aiming, `Esc` unlocks the cursor for HUD controls, and clicking the scene re-locks) plus touch-drag look and an on-screen D-Pad for mobile visitors. Six illuminated monoliths render **live, working websites directly inside the 3D marble walls** via a synchronized hybrid `CSS3D` + alpha-cutout `WebGL` pipeline (`THREE.NoBlending`) with genuine 3D occlusion behind marble benches, brass inlays, and rotating golden sculptures. Clicking any monolith opens the **Live Interactive Inspector Modal** to scroll and interact with the real website plus jump straight into featured project briefings. Gallery customization controls are strictly **localhost-only** and stripped from public deployments.
+The root route (`/`) opens into a **playable bold multicolor fluid-acrylic marble 3D exhibition hall** with **Pointer Lock FPS mouse-look** on desktop (raw mouse movement rotates the 3D camera 360° with neon center-reticle aiming, `Esc` unlocks the cursor for HUD controls, and clicking the scene re-locks) plus touch-drag look and an on-screen D-Pad for mobile visitors. Six illuminated monoliths stream **live, working websites directly inside the saturated fluid-marble walls** via a synchronized hybrid `CSS3D` + alpha-cutout `WebGL` pipeline (`THREE.NoBlending`) with genuine 3D occlusion behind marble benches, neon-inlaid bay pillars, and rotating GLSL dichroic iridescent sculptures. Clicking any monolith opens the **Live Interactive Inspector Modal** to scroll and interact with the real website plus jump straight into featured project briefings. Gallery customization controls are strictly **localhost-only** and stripped from public deployments.
 
-![White Calacatta marble 3D gallery walkthrough with live website wall canvases](docs/screenshots/gallery-marble-hall.png)
+![Bold multicolor prismatic fluid-marble 3D gallery hall with dichroic sculptures and live websites](docs/screenshots/gallery-prism-hall.png)
 
-![Live 3D monolith close-up embedded inside the white marble pavilion](docs/screenshots/gallery-marble-monolith-closeup.png)
+![Close-up of live website embedded seamlessly in bold fluid-acrylic marble wall](docs/screenshots/gallery-prism-monolith-closeup.png)
 
-![Inspector modal displaying the live interactive website and canonical case-study chips](docs/screenshots/gallery-live-inspector.png)
+![Prismatic Inspector Modal displaying the live interactive website and canonical case-study chips](docs/screenshots/gallery-prism-inspector.png)
+
+![Bold multicolor 2D Five-Editions Index at /editions/](docs/screenshots/editions-prism-2d.png)
 
 ![CHRONOS — The Story of Everything canonical project briefing](docs/screenshots/chronos-briefing.png)
 
 ![Desktop portfolio — living filament and sculptural ribbon](docs/ribbon-home/scene-0.png)
 
-![Earlier cinematic edition, captured from the original redesign](docs/screenshots/home-desktop.png)
-
 ## 3D Archive Gallery & portfolio design history
 
-The root page (`index.html`, generated from `src/templates/gallery-3d.mjs`) presents six live interactive 3D website monoliths inside a luminous white-marble pavilion connecting all five visual generations plus the canonical 19-project index, while `/editions/` (`src/templates/design-gallery.mjs`) retains the 2D card grid with live iframes:
+The root page (`index.html`, generated from `src/templates/gallery-3d.mjs`) presents six live interactive 3D website monoliths inside a bold multicolor fluid-acrylic marble pavilion connecting all five visual generations plus the canonical 19-project index, while `/editions/` (`src/templates/design-gallery.mjs`) offers the matching bold multicolor 2D card grid with live iframes:
 
 | Monolith / Edition | Source | Route | What opens |
 | --- | --- | --- | --- |
@@ -32,8 +32,9 @@ The root page (`index.html`, generated from `src/templates/gallery-3d.mjs`) pres
 | `ED. 01` The First Portfolio | `16fbb13` | `./designs/original-neon/` | The original neon-accented AI and software portfolio |
 
 ### 3D Gallery Highlights, Controls & Security
-- **Live Website Wall Canvases (Hybrid CSS3D + WebGL Cutouts)**: Each 3D monolith displays the real working website (`1280×800`) projected directly into 3D space behind an alpha-cutout WebGL plane (`THREE.NoBlending`, `fog: false`) so benches, pillars, and golden sculptures naturally occlude the live pages. Includes a **Live Walls / Art Mode** HUD toggle and automatic nearest-2 mobile iframe throttling.
-- **White Calacatta & Carrara Marble Pavilion**: Procedural `1024×1024` white marble diffuse and bump paint textures across all walls, ceiling, and marble benches, paired with brushed-brass vertical pillar inlays, crown/baseboard trim, and balanced luminous museum lighting.
+- **Bold Full-Color Fluid-Acrylic Marble Pavilion**: Procedural `1024×1024` deep indigo-plum marble paint pours swirled with high-voltage laser cyan, neon magenta, ultraviolet, emerald mint, coral tangerine, and liquid gold ribbons (`map` + `emissiveMap` + `bumpMap`), framed by neon-inlaid bay pillars, rainbow floor guide rails, and colorful terrazzo chips.
+- **Custom GLSL Dichroic Sculptures & Volumetric Beams**: Native Three.js `r128` Fresnel thin-film iridescence `ShaderMaterial` on the rotating center sculptures and Monument Wall frame, paired with animated chromatic volumetric skylight cones and per-vertex multicolor floating prism particles.
+- **Live Website Wall Canvases (Hybrid CSS3D + WebGL Cutouts)**: Each 3D monolith displays the real working website (`1280×800`) projected directly into 3D space behind an alpha-cutout WebGL plane (`THREE.NoBlending`, `fog: false`) so benches, pillars, and dichroic sculptures naturally occlude the live pages. Includes a **Live Walls / Art Mode** HUD toggle and automatic nearest-2 mobile iframe throttling.
 - **Localhost-Only Customizer**: Gallery exhibit customization (`Customize` button, edit form, and `localStorage` persistence) is strictly gated to `localhost`, `127.0.0.1`, `[::1]`, and `file:` origins — public deployments on Vercel and GitHub Pages strip all editing UI and always serve canonical published data.
 - **Desktop FPS Mouse-Look (Pointer Lock)**: Clicking **Enter Gallery** binds the mouse cursor directly to camera yaw/pitch (`movementX`/`movementY` clamped at `±120px` against browser wake spikes). Aim the center crosshair reticle at any monolith and click (or press `E`) to open the Live Interactive Inspector Modal; press `Esc` at any time to release the cursor for Top HUD controls or the Edition Dock, and click the 3D scene again to re-lock.
 - **Mobile & Touch**: Touch-drag camera look (`touch-action: none`), on-screen D-Pad movement, horizontal scrollable edition dock, and live interactive previews + quick-jump case-study pills inside the inspector modal.

@@ -3,9 +3,9 @@ export const gallery3d = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Areeb Azhar — 3D Portfolio Archive Gallery</title>
-  <meta name="description" content="Walk through five real visual generations and canonical engineering projects inside Areeb Azhar's interactive white-marble 3D architectural portfolio archive gallery." />
-  <meta name="theme-color" content="#efece5" />
+  <title>Areeb Azhar — 3D Prismatic Portfolio Archive Gallery</title>
+  <meta name="description" content="Walk through five real visual generations and canonical engineering projects inside Areeb Azhar's interactive prismatic multicolor fluid-marble 3D architectural portfolio archive gallery." />
+  <meta name="theme-color" content="#141122" />
   <link rel="icon" href="./mark.svg" type="image/svg+xml" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -21,7 +21,7 @@ export const gallery3d = `<!DOCTYPE html>
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #0d0f15;
+      background: #0d0c18;
       color: #f3f1ec;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       user-select: none;
@@ -87,59 +87,97 @@ export const gallery3d = `<!DOCTYPE html>
     #canvas-container.hover-exhibit { cursor: pointer; }
     #canvas-container.locked-look { cursor: none; }
 
-    /* Refined museum vignette & subtle architectural grain (tuned for bright white marble) */
+    /* Bold prismatic museum vignette & fine grain */
     .cinema-vignette {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 5;
-      background: radial-gradient(circle at 50% 48%, transparent 56%, rgba(16, 18, 24, 0.28) 100%);
+      background: radial-gradient(circle at 50% 48%, transparent 52%, rgba(9, 5, 22, 0.56) 100%);
     }
     .cinema-grain {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 6;
-      opacity: 0.022;
-      background-image: radial-gradient(rgba(30,30,35,0.45) 1px, transparent 0);
+      opacity: 0.028;
+      background-image: radial-gradient(rgba(255,255,255,0.55) 1px, transparent 0);
       background-size: 3px 3px;
     }
 
-    /* Cinema letterbox bars */
+    /* Cinema letterbox bars with bold neon prism hairline */
     .letterbox-bar {
       position: fixed;
       left: 0;
       right: 0;
       height: 0;
-      background: #07080c;
+      background: #06040e;
       z-index: 15;
       pointer-events: none;
       transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .letterbox-top { top: 0; }
-    .letterbox-bottom { bottom: 0; }
+    .letterbox-top {
+      top: 0;
+      border-bottom: 1.5px solid rgba(255, 46, 147, 0.55);
+    }
+    .letterbox-bottom {
+      bottom: 0;
+      border-top: 1.5px solid rgba(0, 229, 255, 0.55);
+    }
     body.cinema-bars .letterbox-bar { height: 34px; }
     @media (max-width: 640px) {
       body.cinema-bars .letterbox-bar { height: 20px; }
     }
 
-    /* High-contrast obsidian frosted glass HUD (crisp over luminous white marble) */
+    /* High-contrast midnight glass HUD with vivid iridescent rim */
     .glass-panel {
-      background: rgba(12, 14, 20, 0.80);
+      background: rgba(11, 8, 24, 0.84);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 12px 32px rgba(10, 12, 18, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 38px rgba(6, 3, 18, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.14);
     }
     .glass-pill {
-      background: rgba(14, 16, 24, 0.78);
+      background: rgba(13, 9, 28, 0.82);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 24px rgba(10, 12, 18, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 26px rgba(6, 3, 18, 0.42);
     }
 
-    /* Crosshair reticle (dark outer ring + warm gold core for legibility on white marble) */
+    /* Bold prismatic gradient accents & CTA */
+    .prism-gradient-text {
+      background: linear-gradient(95deg, #00f5ff 0%, #c084fc 30%, #ff2e93 64%, #ffd166 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .prism-cta {
+      background: linear-gradient(100deg, #00f5ff 0%, #8b5cf6 34%, #ff2e93 68%, #ffd166 100%);
+      color: #090514;
+      box-shadow: 0 0 42px rgba(255, 46, 147, 0.52), 0 8px 28px rgba(0, 245, 255, 0.34);
+    }
+    .prism-cta:hover {
+      filter: brightness(1.09);
+      transform: translateY(-1px);
+    }
+    .prism-border-glow {
+      position: relative;
+    }
+    .prism-border-glow::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: linear-gradient(120deg, rgba(0,245,255,0.85), rgba(168,85,247,0.85), rgba(255,46,147,0.85), rgba(255,209,102,0.85));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Bright neon crosshair reticle (crisp over bold saturated multicolor walls) */
     #reticle {
       position: fixed;
       top: 50%;
@@ -148,21 +186,21 @@ export const gallery3d = `<!DOCTYPE html>
       width: 11px;
       height: 11px;
       border-radius: 9999px;
-      border: 1.75px solid rgba(20, 22, 30, 0.72);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.65);
+      border: 1.75px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 10px rgba(0, 245, 255, 0.55);
       pointer-events: none;
       z-index: 12;
       transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
     }
     body.pointer-locked #reticle {
-      border-color: rgba(180, 134, 52, 0.95);
-      box-shadow: 0 0 0 1.5px rgba(12, 14, 20, 0.55);
+      border-color: #00f5ff;
+      box-shadow: 0 0 12px rgba(255, 46, 147, 0.72);
     }
     #reticle.active {
       transform: translate(-50%, -50%) scale(1.9);
-      border-color: #d4a348;
-      background-color: rgba(240, 201, 125, 0.28);
-      box-shadow: 0 0 14px rgba(212, 163, 72, 0.55);
+      border-color: #ffd166;
+      background-color: rgba(255, 46, 147, 0.34);
+      box-shadow: 0 0 18px rgba(0, 245, 255, 0.85), 0 0 10px rgba(255, 46, 147, 0.75);
     }
 
     /* Scrollbar inside preview modal */
@@ -171,7 +209,7 @@ export const gallery3d = `<!DOCTYPE html>
     }
     .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
     .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
-    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 9999px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.20); border-radius: 9999px; }
 
     /* Clickable preview / case-study chips inside modal (desktop + mobile touch friendly) */
     .preview-card-link {
@@ -184,7 +222,7 @@ export const gallery3d = `<!DOCTYPE html>
     }
     .preview-card-link:hover {
       transform: translateY(-1px);
-      filter: brightness(1.1);
+      filter: brightness(1.12);
     }
     .preview-card-link:active {
       transform: scale(0.98);
@@ -246,12 +284,19 @@ export const gallery3d = `<!DOCTYPE html>
     }
     #inspector-card {
       will-change: transform;
-      background: rgba(11, 13, 20, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(12, 11, 22, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
     #inspector-modal.modal-closed #inspector-card {
       transform: translateY(20px) scale(0.97);
+    }
+
+    /* Dynamic rainbow accent stripe across modal top */
+    #modal-accent-bar {
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, #34d399 0%, #38bdf8 25%, #a855f7 52%, #ec4899 76%, #facc15 100%);
     }
 
     /* Touch D-pad buttons */
@@ -260,9 +305,9 @@ export const gallery3d = `<!DOCTYPE html>
       -webkit-tap-highlight-color: transparent;
     }
     .dpad-btn:active, .dpad-btn.pressed {
-      background: rgba(240, 201, 125, 0.28);
-      border-color: rgba(240, 201, 125, 0.7);
-      color: #f0c97d;
+      background: rgba(232, 121, 249, 0.28);
+      border-color: rgba(56, 189, 248, 0.75);
+      color: #67e8f9;
     }
 
     @keyframes pulseSoft {
@@ -278,8 +323,8 @@ export const gallery3d = `<!DOCTYPE html>
     <div id="css3d-camera"></div>
   </div>
 
-  <!-- 3D WebGL Marble Architecture Canvas -->
-  <div id="canvas-container" aria-label="Interactive 3D White Marble Portfolio Gallery"></div>
+  <!-- 3D WebGL Prismatic Marble Architecture Canvas -->
+  <div id="canvas-container" aria-label="Interactive 3D Prismatic Fluid-Marble Portfolio Gallery"></div>
 
   <!-- Cinematic overlays -->
   <div class="cinema-vignette"></div>
@@ -291,61 +336,61 @@ export const gallery3d = `<!DOCTYPE html>
   <div id="reticle" class="hidden"></div>
 
   <!-- =========================================================
-       SPLASH OVERLAY (Cinematic Opening over Live White-Marble 3D Scene)
+       SPLASH OVERLAY (Cinematic Opening over Live Prismatic 3D Scene)
        ========================================================= -->
-  <div id="splash-overlay" class="fixed inset-0 z-40 flex flex-col items-center justify-center px-6 text-center bg-gradient-to-b from-slate-950/70 via-slate-950/45 to-slate-950/80 overflow-y-auto custom-scroll">
+  <div id="splash-overlay" class="fixed inset-0 z-40 flex flex-col items-center justify-center px-6 text-center bg-gradient-to-b from-[#0b0818]/72 via-[#120d26]/42 to-[#090814]/82 overflow-y-auto custom-scroll">
     <div class="max-w-2xl mx-auto flex flex-col items-center py-8">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill text-[11px] font-mono-tech tracking-[0.22em] uppercase text-amber-200/95 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse-soft"></span>
-        Live 3D Marble Pavilion · Five Designs + Archive
+      <div class="prism-border-glow inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[11px] font-mono-tech tracking-[0.22em] uppercase text-white mb-6">
+        <span class="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-amber-300 animate-pulse-soft"></span>
+        <span>Prismatic Fluid-Marble Pavilion · Live Web Canvases</span>
       </div>
 
-      <h1 class="font-serif-display text-5xl sm:text-7xl font-medium tracking-tight text-white leading-[0.96] drop-shadow-[0_6px_30px_rgba(0,0,0,0.65)]">
+      <h1 class="font-serif-display text-5xl sm:text-7xl font-medium tracking-tight text-white leading-[0.96] drop-shadow-[0_8px_36px_rgba(0,0,0,0.68)]">
         Areeb Azhar
       </h1>
-      <p class="mt-3 text-xs sm:text-sm font-mono-tech tracking-[0.28em] uppercase text-amber-200/90 drop-shadow">
+      <p class="mt-3 text-xs sm:text-sm font-mono-tech tracking-[0.30em] uppercase font-semibold prism-gradient-text drop-shadow">
         The Portfolio Archive
       </p>
 
       <p class="mt-5 max-w-lg text-sm sm:text-base text-slate-100/90 leading-relaxed font-light drop-shadow">
-        Walk through a white Calacatta marble pavilion where every monolith displays a live working edition of the portfolio. Move your mouse to look freely, or click any canvas to explore it interactively.
+        Step inside a luminous multicolor fluid-marble pavilion bathed in dichroic light, where every wall monolith streams a live working portfolio edition. Move your mouse to look freely, or click any canvas to explore interactively.
       </p>
 
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3.5">
-        <button id="btn-enter-gallery" class="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-amber-200 text-slate-950 font-semibold text-sm tracking-wide hover:bg-amber-100 transition-all shadow-[0_0_35px_rgba(240,201,125,0.42)]">
+        <button id="btn-enter-gallery" class="prism-cta group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-sm tracking-wide transition-all">
           <span>Enter Gallery</span>
           <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-0.5"></i>
         </button>
 
-        <button id="btn-start-tour" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full glass-panel text-slate-100 hover:text-amber-200 hover:border-amber-200/40 font-medium text-sm tracking-wide transition-all">
-          <i data-lucide="film" class="w-4 h-4 text-amber-200"></i>
+        <button id="btn-start-tour" class="prism-border-glow inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full glass-panel text-slate-100 hover:text-cyan-200 font-medium text-sm tracking-wide transition-all">
+          <i data-lucide="film" class="w-4 h-4 text-fuchsia-300"></i>
           <span>Cinematic Auto-Tour</span>
         </button>
       </div>
 
-      <div class="mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-        <a href="./portfolio/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill text-xs font-mono-tech tracking-wider uppercase text-amber-200 hover:text-amber-100 transition-colors">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+      <div class="mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-3.5">
+        <a href="./portfolio/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill border-amber-300/35 text-xs font-mono-tech tracking-wider uppercase text-amber-200 hover:text-amber-100 hover:border-amber-300/70 transition-colors">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
           <span>Latest Portfolio</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
-        <a href="./projects/chronos/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill text-xs font-mono-tech tracking-wider uppercase text-sky-200 hover:text-sky-100 transition-colors">
-          <i data-lucide="orbit" class="w-3.5 h-3.5"></i>
+        <a href="./projects/chronos/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill border-cyan-300/35 text-xs font-mono-tech tracking-wider uppercase text-cyan-200 hover:text-cyan-100 hover:border-cyan-300/70 transition-colors">
+          <i data-lucide="orbit" class="w-3.5 h-3.5 text-cyan-300"></i>
           <span>CHRONOS 3D</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
-        <a href="./editions/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill text-xs font-mono-tech tracking-wider uppercase text-slate-200 hover:text-amber-200 transition-colors">
-          <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+        <a href="./editions/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill border-fuchsia-300/35 text-xs font-mono-tech tracking-wider uppercase text-fuchsia-200 hover:text-fuchsia-100 hover:border-fuchsia-300/70 transition-colors">
+          <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-fuchsia-300"></i>
           <span>2D Editions</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
 
       <div class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-mono-tech text-slate-200/85">
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">WASD / D-Pad</kbd> Walk</span>
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">Mouse / Drag</kbd> Look Around</span>
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">Click / E</kbd> Inspect Edition</span>
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">Esc</kbd> Free Cursor</span>
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/50 border border-cyan-300/30 text-white">WASD / D-Pad</kbd> Walk</span>
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/50 border border-fuchsia-300/30 text-white">Mouse / Drag</kbd> Look Around</span>
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/50 border border-amber-300/30 text-white">Click / E</kbd> Inspect Edition</span>
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/50 border border-emerald-300/30 text-white">Esc</kbd> Free Cursor</span>
       </div>
     </div>
   </div>
@@ -355,34 +400,34 @@ export const gallery3d = `<!DOCTYPE html>
        ========================================================= -->
   <header id="hud-top" class="fixed top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 z-20 flex items-center justify-between gap-2 pointer-events-none opacity-0 transition-opacity duration-500">
     <!-- Brand & Scene Info -->
-    <div class="pointer-events-auto flex items-center gap-2.5 sm:gap-3 px-3 sm:px-3.5 py-2 rounded-full glass-pill shrink-0">
+    <div class="prism-border-glow pointer-events-auto flex items-center gap-2.5 sm:gap-3 px-3 sm:px-3.5 py-2 rounded-full glass-pill shrink-0">
       <button id="btn-back-splash" class="flex items-center gap-2 text-left group" title="Return to Title Screen">
-        <span class="w-2 h-2 rounded-full bg-amber-300 group-hover:scale-125 transition-transform"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-cyan-400 via-fuchsia-400 to-amber-300 group-hover:scale-125 transition-transform"></span>
         <span class="font-serif-display text-base sm:text-lg leading-none text-white tracking-wide">Areeb Azhar</span>
-        <span class="hidden sm:inline text-[10px] font-mono-tech uppercase tracking-[0.2em] text-slate-300 border-l border-white/15 pl-2.5">Marble Hall</span>
+        <span id="hud-hall-badge" class="hidden sm:inline text-[10px] font-mono-tech uppercase tracking-[0.2em] prism-gradient-text font-semibold border-l border-white/15 pl-2.5">Prism Hall</span>
       </button>
     </div>
 
     <!-- Action Controls -->
-    <div class="pointer-events-auto flex items-center gap-1 sm:gap-2">
-      <button id="btn-mouse-lock" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-amber-200 hover:border-amber-200/40 transition-colors" title="Bind mouse cursor to 3D camera (Esc to unlock)">
-        <i data-lucide="crosshair" class="w-3.5 h-3.5"></i>
-        <span class="hidden md:inline" id="label-mouse-lock">Lock Mouse</span>
+    <div class="pointer-events-auto flex items-center gap-1 sm:gap-1.5">
+      <button id="btn-mouse-lock" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-cyan-200 hover:border-cyan-300/50 transition-colors" title="Bind mouse cursor to 3D camera (Esc to unlock)">
+        <i data-lucide="crosshair" class="w-3.5 h-3.5 text-cyan-300"></i>
+        <span class="hidden lg:inline" id="label-mouse-lock">Lock Mouse</span>
       </button>
 
-      <button id="btn-toggle-live" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-emerald-300 border-emerald-300/40 hover:border-emerald-300/70 transition-colors" title="Toggle live embedded websites on 3D gallery walls">
+      <button id="btn-toggle-live" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-emerald-300 border-emerald-300/45 hover:border-emerald-300/75 transition-colors" title="Toggle live embedded websites on 3D gallery walls">
         <i data-lucide="monitor-play" class="w-3.5 h-3.5"></i>
         <span class="hidden lg:inline" id="label-live">Live Walls</span>
       </button>
 
-      <a href="./editions/" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-amber-200 hover:border-amber-200/40 transition-colors" title="Switch to 2D Five-Editions Index">
-        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+      <a href="./editions/" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-amber-200 hover:border-amber-200/45 transition-colors" title="Switch to 2D Five-Editions Index">
+        <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-amber-300"></i>
         <span class="hidden sm:inline">2D Editions</span>
       </a>
 
-      <button id="btn-toggle-tour" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-amber-200 hover:border-amber-200/40 transition-colors" title="Toggle Cinematic Auto-Tour">
+      <button id="btn-toggle-tour" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-cyan-200 hover:border-cyan-300/45 transition-colors" title="Toggle Cinematic Auto-Tour">
         <span id="icon-tour" class="inline-flex"><span id="icon-tour-play" class="inline-flex"><i data-lucide="play" class="w-3.5 h-3.5"></i></span><span id="icon-tour-pause" class="hidden"><i data-lucide="pause" class="w-3.5 h-3.5"></i></span></span>
-        <span class="hidden md:inline" id="label-tour">Auto-Tour</span>
+        <span class="hidden xl:inline" id="label-tour">Auto-Tour</span>
       </button>
 
       <button id="btn-toggle-cinema" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-amber-200 border-amber-200/35 hover:border-amber-200/60 transition-colors" title="Toggle Cinema Letterbox">
@@ -395,7 +440,7 @@ export const gallery3d = `<!DOCTYPE html>
         <span class="hidden xl:inline" id="label-audio">Sound Off</span>
       </button>
 
-      <button id="btn-toggle-help" class="inline-flex items-center justify-center w-9 h-9 rounded-full glass-pill text-slate-200 hover:text-amber-200 transition-colors" title="Controls & Info" aria-label="Controls & Info">
+      <button id="btn-toggle-help" class="inline-flex items-center justify-center w-9 h-9 rounded-full glass-pill text-slate-200 hover:text-fuchsia-200 transition-colors" title="Controls & Info" aria-label="Controls & Info">
         <i data-lucide="compass" class="w-4 h-4"></i>
       </button>
     </div>
@@ -405,10 +450,10 @@ export const gallery3d = `<!DOCTYPE html>
        PROXIMITY / HOVER EXHIBIT PROMPT
        ========================================================= -->
   <div id="exhibit-prompt" class="fixed left-1/2 -translate-x-1/2 bottom-28 sm:bottom-24 z-20 pointer-events-auto opacity-0 translate-y-2 transition-all duration-300 hidden max-w-[92vw]">
-    <button id="btn-prompt-inspect" class="flex items-center gap-2.5 sm:gap-3 px-4 py-2.5 rounded-full glass-panel border-amber-200/40 shadow-[0_12px_40px_rgba(0,0,0,0.45)] hover:bg-amber-200/15 transition-all">
-      <span id="prompt-badge" class="px-2 py-0.5 rounded-full bg-amber-200/20 text-amber-200 font-mono-tech text-[10px] uppercase tracking-wider shrink-0">01</span>
+    <button id="btn-prompt-inspect" class="prism-border-glow flex items-center gap-2.5 sm:gap-3 px-4 py-2.5 rounded-full glass-panel shadow-[0_12px_40px_rgba(14,10,36,0.55)] hover:bg-white/10 transition-all">
+      <span id="prompt-badge" class="px-2 py-0.5 rounded-full bg-fuchsia-400/20 text-fuchsia-200 font-mono-tech text-[10px] uppercase tracking-wider shrink-0">01</span>
       <span id="prompt-title" class="text-xs sm:text-sm font-medium text-white truncate">The First Portfolio (Mar 2026)</span>
-      <span class="inline-flex items-center gap-1 text-[10px] font-mono-tech text-amber-200/90 border-l border-white/15 pl-2.5 shrink-0">
+      <span class="inline-flex items-center gap-1 text-[10px] font-mono-tech text-cyan-200 border-l border-white/15 pl-2.5 shrink-0">
         <kbd class="hidden sm:inline px-1.5 py-0.5 rounded bg-white/10 text-white">Click / E</kbd> Inspect Live
       </span>
     </button>
@@ -438,47 +483,48 @@ export const gallery3d = `<!DOCTYPE html>
 
     <!-- Center: Edition Quick-Jump Dock -->
     <div class="pointer-events-auto min-w-0 max-w-full overflow-x-auto custom-scroll">
-      <div id="edition-dock" class="flex items-center gap-1 sm:gap-1.5 p-1.5 rounded-full glass-panel w-max">
+      <div id="edition-dock" class="prism-border-glow flex items-center gap-1 sm:gap-1.5 p-1.5 rounded-full glass-panel w-max">
         <!-- Populated dynamically -->
       </div>
     </div>
 
     <!-- Right: Live Top-Down Gallery Radar -->
-    <div class="pointer-events-auto hidden sm:flex flex-col items-center p-2 rounded-2xl glass-panel shrink-0" title="Gallery Floorplan Radar">
+    <div class="prism-border-glow pointer-events-auto hidden sm:flex flex-col items-center p-2 rounded-2xl glass-panel shrink-0" title="Gallery Floorplan Radar">
       <canvas id="minimap-canvas" width="96" height="120" class="rounded-lg"></canvas>
-      <span id="radar-coords" class="mt-1 text-[9px] font-mono-tech text-slate-300 tracking-wider">HALL · ENTRANCE</span>
+      <span id="radar-coords" class="mt-1 text-[9px] font-mono-tech text-cyan-200/90 tracking-wider">HALL · ENTRANCE</span>
     </div>
   </nav>
 
   <!-- =========================================================
        CONTROLS HELP POPOVER
        ========================================================= -->
-  <div id="help-popover" class="fixed top-16 right-4 z-30 w-72 max-w-[calc(100vw-2rem)] p-4 rounded-2xl glass-panel shadow-2xl hidden">
+  <div id="help-popover" class="prism-border-glow fixed top-16 right-4 z-30 w-72 max-w-[calc(100vw-2rem)] p-4 rounded-2xl glass-panel shadow-2xl hidden">
     <div class="flex items-center justify-between mb-3">
-      <h3 class="text-xs font-mono-tech uppercase tracking-[0.18em] text-amber-200">Gallery Controls</h3>
+      <h3 class="text-xs font-mono-tech uppercase tracking-[0.18em] prism-gradient-text font-semibold">Gallery Controls</h3>
       <button id="btn-close-help" class="text-slate-400 hover:text-white p-1" aria-label="Close help"><i data-lucide="x" class="w-4 h-4"></i></button>
     </div>
     <ul class="space-y-2 text-xs text-slate-200">
-      <li class="flex justify-between"><span>Walk / Strafe</span><span class="font-mono-tech text-white">W A S D / D-Pad</span></li>
-      <li class="flex justify-between"><span>Free Mouse Look</span><span class="font-mono-tech text-white">Click Scene</span></li>
-      <li class="flex justify-between"><span>Release Cursor</span><span class="font-mono-tech text-white">Esc</span></li>
-      <li class="flex justify-between"><span>Inspect Live Site</span><span class="font-mono-tech text-white">Click / E</span></li>
+      <li class="flex justify-between"><span>Walk / Strafe</span><span class="font-mono-tech text-cyan-200">W A S D / D-Pad</span></li>
+      <li class="flex justify-between"><span>Free Mouse Look</span><span class="font-mono-tech text-fuchsia-200">Click Scene</span></li>
+      <li class="flex justify-between"><span>Release Cursor</span><span class="font-mono-tech text-amber-200">Esc</span></li>
+      <li class="flex justify-between"><span>Inspect Live Site</span><span class="font-mono-tech text-emerald-200">Click / E</span></li>
       <li class="flex justify-between"><span>Jump to Edition</span><span class="font-mono-tech text-white">Keys 1 – 6</span></li>
     </ul>
     <p class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-relaxed">
-      Every monolith streams the real website design directly on the marble wall. Click any exhibit to scroll and interact with it live, or press <strong class="text-amber-200 font-medium">Esc</strong> to free your cursor.
+      Every monolith streams the real working website directly onto the bold fluid-marble walls. Click any canvas to scroll and interact live, or press <strong class="text-cyan-200 font-medium">Esc</strong> to free your cursor.
     </p>
   </div>
 
   <!-- =========================================================
        PORTFOLIO INSPECTOR & LIVE INTERACTIVE WEBSITE MODAL
        ========================================================= -->
-  <div id="inspector-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-black/75 backdrop-blur-sm modal-closed" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div id="inspector-card" class="relative w-full max-w-6xl max-h-[93vh] rounded-2xl sm:rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden">
+  <div id="inspector-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-[#070512]/78 backdrop-blur-sm modal-closed" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="inspector-card" class="relative w-full max-w-6xl max-h-[93vh] rounded-2xl sm:rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.88)] flex flex-col overflow-hidden">
+      <div id="modal-accent-bar"></div>
       <!-- Top Bar -->
       <div class="flex items-center justify-between gap-2 sm:gap-3 px-4 sm:px-5 py-3 sm:py-3.5 border-b border-white/10 bg-black/35">
         <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
-          <span id="modal-edition-num" class="px-2.5 py-1 rounded-full text-[11px] font-mono-tech uppercase tracking-widest bg-amber-200/15 text-amber-200 border border-amber-200/30 shrink-0">ED. 01</span>
+          <span id="modal-edition-num" class="px-2.5 py-1 rounded-full text-[11px] font-mono-tech uppercase tracking-widest bg-fuchsia-400/15 text-fuchsia-200 border border-fuchsia-300/35 shrink-0">ED. 01</span>
           <div class="min-w-0">
             <h2 id="modal-title" class="text-sm sm:text-lg font-semibold text-white truncate">The First Portfolio</h2>
             <p id="modal-subtitle" class="text-[11px] sm:text-xs text-slate-400 truncate">March 2026 · Original Neon Edition</p>
@@ -492,12 +538,12 @@ export const gallery3d = `<!DOCTYPE html>
           <button id="btn-modal-next" class="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-200 transition-colors" title="Next Portfolio Edition" aria-label="Next Portfolio Edition">
             <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
-          <!-- Localhost-only Customizer Trigger (strictly hidden on all public deployments) -->
-          <button id="btn-modal-edit-toggle" class="hidden ml-0.5 sm:ml-1 items-center justify-center gap-1.5 h-9 sm:h-8 px-2.5 sm:px-3 rounded-full bg-amber-200/10 hover:bg-amber-200/20 border border-amber-200/30 text-xs text-amber-200 transition-colors" aria-label="Customize Exhibit (Localhost Only)" title="Localhost Curation Mode">
+          <!-- Localhost-only Customizer Trigger (strictly removed on all public deployments) -->
+          <button id="btn-modal-edit-toggle" class="hidden ml-0.5 sm:ml-1 items-center justify-center gap-1.5 h-9 sm:h-8 px-2.5 sm:px-3 rounded-full bg-fuchsia-400/15 hover:bg-fuchsia-400/25 border border-fuchsia-300/35 text-xs text-fuchsia-200 transition-colors" aria-label="Customize Exhibit (Localhost Only)" title="Localhost Curation Mode">
             <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
             <span class="hidden sm:inline">Customize</span>
           </button>
-          <button id="btn-modal-close" class="ml-0.5 sm:ml-1 w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-rose-500/30 border border-white/15 flex items-center justify-center text-white transition-colors" title="Back to Gallery (Esc)" aria-label="Close modal">
+          <button id="btn-modal-close" class="ml-0.5 sm:ml-1 w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-rose-500/35 border border-white/15 flex items-center justify-center text-white transition-colors" title="Back to Gallery (Esc)" aria-label="Close modal">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
@@ -507,22 +553,21 @@ export const gallery3d = `<!DOCTYPE html>
       <div class="flex-1 overflow-y-auto custom-scroll grid grid-cols-1 lg:grid-cols-12">
         <!-- Left: Live Interactive Embedded Website Viewport -->
         <div class="lg:col-span-8 p-3.5 sm:p-5 bg-black/45 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col">
-          <!-- Browser Chrome -->
           <div class="rounded-2xl overflow-hidden border border-white/15 shadow-2xl flex flex-col flex-1 min-h-[360px] sm:min-h-[440px]">
-            <div class="flex items-center justify-between gap-2 px-3.5 py-2 bg-[#12151f] border-b border-white/10">
+            <div class="flex items-center justify-between gap-2 px-3.5 py-2 bg-[#121122] border-b border-white/10">
               <div class="flex items-center gap-1.5 shrink-0">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-400/80"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-300/80"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-400/90"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-300/90"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/90"></span>
               </div>
-              <div id="mock-url-bar" class="px-3 py-0.5 rounded-md bg-black/45 text-[11px] font-mono-tech text-slate-300 truncate max-w-[52%]">
+              <div id="mock-url-bar" class="px-3 py-0.5 rounded-md bg-black/45 text-[11px] font-mono-tech text-cyan-200/90 truncate max-w-[52%]">
                 areebazhar.dev/designs/original-neon/
               </div>
               <div class="flex items-center gap-1.5 shrink-0">
                 <button id="btn-frame-scale" type="button" class="px-2 py-0.5 rounded bg-white/5 hover:bg-white/15 border border-white/10 text-[10px] font-mono-tech text-slate-300 uppercase transition-colors" title="Toggle Desktop Fit vs Responsive 1:1">
                   Fit
                 </button>
-                <button id="btn-frame-reload" type="button" class="w-6 h-6 rounded bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-amber-200 transition-colors" title="Reload Live Preview" aria-label="Reload Live Preview">
+                <button id="btn-frame-reload" type="button" class="w-6 h-6 rounded bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-cyan-200 transition-colors" title="Reload Live Preview" aria-label="Reload Live Preview">
                   <i data-lucide="rotate-cw" class="w-3 h-3"></i>
                 </button>
                 <span class="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono-tech text-emerald-300 uppercase">
@@ -532,17 +577,13 @@ export const gallery3d = `<!DOCTYPE html>
             </div>
 
             <!-- Dynamic Live Website Iframe Container -->
-            <div id="live-preview-stage" class="flex-1 min-h-[340px] sm:min-h-[410px]">
-              <!-- Live interactive iframe rendered per edition -->
-            </div>
+            <div id="live-preview-stage" class="flex-1 min-h-[340px] sm:min-h-[410px]"></div>
           </div>
 
           <!-- Quick-Jump Canonical Case Study Chips -->
           <div class="mt-3 flex flex-wrap items-center justify-between gap-2">
             <span class="text-[10px] font-mono-tech uppercase tracking-[0.18em] text-slate-400">Featured Briefings</span>
-            <div id="modal-case-chips" class="flex flex-wrap items-center gap-1.5">
-              <!-- Populated per edition -->
-            </div>
+            <div id="modal-case-chips" class="flex flex-wrap items-center gap-1.5"></div>
           </div>
         </div>
 
@@ -551,7 +592,7 @@ export const gallery3d = `<!DOCTYPE html>
           <!-- View Mode -->
           <div id="modal-info-view" class="space-y-5">
             <div>
-              <span class="text-[10px] font-mono-tech uppercase tracking-[0.2em] text-amber-200/80">Curatorial Note</span>
+              <span class="text-[10px] font-mono-tech uppercase tracking-[0.2em] prism-gradient-text font-semibold">Curatorial Note</span>
               <p id="modal-description" class="mt-2 text-sm text-slate-200/90 leading-relaxed"></p>
             </div>
 
@@ -574,17 +615,17 @@ export const gallery3d = `<!DOCTYPE html>
           <!-- Edit Mode (Localhost-Only Customizer — strictly inaccessible publicly) -->
           <form id="modal-edit-form" class="space-y-3.5 hidden" aria-hidden="true">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono-tech uppercase tracking-[0.2em] text-amber-200">Customize Exhibit · Localhost</span>
-              <button type="button" id="btn-reset-exhibit" class="text-[11px] text-slate-400 hover:text-amber-200 underline">Reset Default</button>
+              <span class="text-[10px] font-mono-tech uppercase tracking-[0.2em] text-fuchsia-300">Customize Exhibit · Localhost</span>
+              <button type="button" id="btn-reset-exhibit" class="text-[11px] text-slate-400 hover:text-cyan-200 underline">Reset Default</button>
             </div>
             <div>
               <label class="block text-[11px] text-slate-400 mb-1" for="edit-title">Edition Title</label>
-              <input id="edit-title" type="text" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-sm text-white focus:outline-none focus:border-amber-200/60" />
+              <input id="edit-title" type="text" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-sm text-white focus:outline-none focus:border-cyan-300/60" />
             </div>
             <div class="grid grid-cols-2 gap-2.5">
               <div>
                 <label class="block text-[11px] text-slate-400 mb-1" for="edit-year">Era / Year</label>
-                <input id="edit-year" type="text" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-sm text-white focus:outline-none focus:border-amber-200/60" />
+                <input id="edit-year" type="text" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-sm text-white focus:outline-none focus:border-cyan-300/60" />
               </div>
               <div>
                 <label class="block text-[11px] text-slate-400 mb-1" for="edit-accent">Accent Hex</label>
@@ -593,20 +634,20 @@ export const gallery3d = `<!DOCTYPE html>
             </div>
             <div>
               <label class="block text-[11px] text-slate-400 mb-1" for="edit-url">Live Portfolio URL or Path</label>
-              <input id="edit-url" type="text" placeholder="./portfolio/ or https://..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-xs font-mono-tech text-white focus:outline-none focus:border-amber-200/60" />
+              <input id="edit-url" type="text" placeholder="./portfolio/ or https://..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-xs font-mono-tech text-white focus:outline-none focus:border-cyan-300/60" />
             </div>
             <div>
               <label class="block text-[11px] text-slate-400 mb-1" for="edit-desc">Curatorial Note</label>
-              <textarea id="edit-desc" rows="3" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-xs text-white focus:outline-none focus:border-amber-200/60"></textarea>
+              <textarea id="edit-desc" rows="3" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/15 text-xs text-white focus:outline-none focus:border-cyan-300/60"></textarea>
             </div>
-            <button type="submit" class="w-full py-2.5 rounded-xl bg-amber-200 text-slate-950 font-semibold text-xs uppercase tracking-wider hover:bg-amber-100 transition-colors">
+            <button type="submit" class="prism-cta w-full py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider transition-all">
               Save &amp; Update 3D Monolith
             </button>
           </form>
 
           <!-- Footer CTAs -->
           <div class="pt-4 border-t border-white/10 flex flex-col gap-2">
-            <a id="btn-launch-live" href="./portfolio/" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-200 text-slate-950 font-semibold text-sm hover:bg-amber-100 transition-colors">
+            <a id="btn-launch-live" href="./portfolio/" class="prism-cta w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all">
               <span id="label-launch-live">Open Live Edition</span>
               <i data-lucide="external-link" class="w-4 h-4"></i>
             </a>
@@ -621,7 +662,7 @@ export const gallery3d = `<!DOCTYPE html>
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" role="status" aria-live="polite" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full glass-panel border-amber-200/40 text-xs font-medium text-amber-100 opacity-0 pointer-events-none transition-all duration-300 max-w-[90vw] text-center"></div>
+  <div id="toast" role="status" aria-live="polite" class="prism-border-glow fixed top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full glass-panel text-xs font-medium text-white opacity-0 pointer-events-none transition-all duration-300 max-w-[90vw] text-center"></div>
 
   <script>
     (function () {
@@ -703,7 +744,7 @@ export const gallery3d = `<!DOCTYPE html>
           subtitle: 'Warm Editorial Project Showcase · a9d3640',
           aesthetic: 'Warm archival ivory paper, vermilion & ink rules, structured editorial grid.',
           description: 'The warm, light project showcase preserved from commit a9d3640: an animated editorial introduction, featured work, capabilities, certificate view, and searchable project archive.',
-          accent: '#ef4444',
+          accent: '#fb7185',
           bgHex: '#f5f2eb',
           url: './designs/project-showcase/',
           previewUrl: './designs/project-showcase/',
@@ -749,9 +790,9 @@ export const gallery3d = `<!DOCTYPE html>
           year: 'Oct 2026',
           title: 'Sculpture in the Story',
           subtitle: 'Cinematic Metallic Monogram Edition · f81b386',
-          aesthetic: 'Near-black obsidian canvas, champagne serif typography, metallic AA sculpture.',
+          aesthetic: 'Near-black obsidian canvas, ultraviolet & orchid shimmer, metallic AA sculpture.',
           description: 'The first near-black editorial sculptural redesign preserved from commit f81b386: a spacious top-to-bottom portfolio built around a metallic AA sculpture and quiet editorial typography.',
-          accent: '#e2c285',
+          accent: '#c084fc',
           bgHex: '#09090b',
           url: './designs/cinematic-sculpture/',
           previewUrl: './designs/cinematic-sculpture/',
@@ -772,7 +813,7 @@ export const gallery3d = `<!DOCTYPE html>
           year: 'Nov 2026',
           title: 'A Living Ribbon',
           subtitle: 'Current Flagship · 14-Scene Filament · 28fb767',
-          aesthetic: 'Warm architectural gold, obsidian reflections, transforming beveled Three.js ribbon.',
+          aesthetic: 'Warm solar amber & gold, obsidian reflections, transforming beveled Three.js ribbon.',
           description: 'The latest flagship cinematic portfolio: one continuous living filament and transforming sculptural ribbon carry all 14 scenes from the opening AA signature through 6 featured projects (including CHRONOS) and contact.',
           accent: '#f59e0b',
           bgHex: '#0c0a09',
@@ -839,6 +880,7 @@ export const gallery3d = `<!DOCTYPE html>
       // ============================================================
       const state = {
         mode: 'splash', // 'splash' | 'explore' | 'modal'
+        palette: 'prism', // 'prism' | 'classic'
         autoTour: false,
         tourTime: 0,
         cinemaBars: true,
@@ -851,7 +893,6 @@ export const gallery3d = `<!DOCTYPE html>
         editMode: false,
         isTabHidden: false,
         isPointerLocked: false,
-        // Camera walkthrough state
         pos: new THREE.Vector3(0, 1.75, 23.5),
         vel: new THREE.Vector3(),
         yaw: 0,
@@ -947,7 +988,7 @@ export const gallery3d = `<!DOCTYPE html>
       }
 
       // ============================================================
-      // 4. PROCEDURAL WHITE CALACATTA / CARRARA MARBLE & GALLERY TEXTURES
+      // 4. PROCEDURAL BOLD FULL-COLOR FLUID-ACRYLIC MARBLE TEXTURES
       // ============================================================
       function createMarbleTextures(options = {}) {
         const size = 1024;
@@ -966,39 +1007,56 @@ export const gallery3d = `<!DOCTYPE html>
         bumpCanvas.height = size;
         const bCtx = bumpCanvas.getContext('2d');
 
-        // Deterministic PRNG for repeatable organic veining
         let s = seed >>> 0;
         function rand() {
           s = (s * 1664525 + 1013904223) >>> 0;
           return s / 4294967296;
         }
 
-        // 1. Luminous alabaster white Venetian marble paint base
+        // 1. Rich saturated deep cosmic-indigo / royal plum / deep teal fluid base
         const baseGrad = ctx.createLinearGradient(0, 0, size, size);
-        baseGrad.addColorStop(0, isCeiling ? '#f6f5f1' : '#f4f2ed');
-        baseGrad.addColorStop(0.5, isCeiling ? '#efede8' : '#edeae3');
-        baseGrad.addColorStop(1, isCeiling ? '#f5f3ee' : '#f2f0ea');
+        if (isCeiling) {
+          baseGrad.addColorStop(0.0, '#170c33');
+          baseGrad.addColorStop(0.35, '#1e1044');
+          baseGrad.addColorStop(0.7, '#111b3e');
+          baseGrad.addColorStop(1.0, '#230d38');
+        } else {
+          baseGrad.addColorStop(0.0, '#130b2e');
+          baseGrad.addColorStop(0.28, '#1e1048');
+          baseGrad.addColorStop(0.56, '#0d2240');
+          baseGrad.addColorStop(0.82, '#2d0c3a');
+          baseGrad.addColorStop(1.0, '#130b2e');
+        }
         ctx.fillStyle = baseGrad;
         ctx.fillRect(0, 0, size, size);
 
-        bCtx.fillStyle = '#c8c8c8';
+        bCtx.fillStyle = '#808080';
         bCtx.fillRect(0, 0, size, size);
 
-        // 2. Soft feathered mineral clouding (painted marble wash depth)
-        for (let i = 0; i < 42; i++) {
+        // 2. Bold saturated fluid-acrylic color pools (electric neon & jewel pigments)
+        const boldPools = [
+          'rgba(0, 229, 255, 0.58)',    // Laser Cyan
+          'rgba(255, 46, 147, 0.56)',   // Hot Neon Magenta
+          'rgba(139, 92, 246, 0.58)',   // Electric Ultraviolet
+          'rgba(255, 107, 53, 0.52)',   // Volcanic Coral Tangerine
+          'rgba(0, 245, 160, 0.50)',    // Acid Emerald Mint
+          'rgba(255, 195, 0, 0.48)',    // Molten Solar Gold
+          'rgba(59, 130, 246, 0.56)'    // Electric Cobalt
+        ];
+        for (let i = 0; i < 64; i++) {
           const cx = rand() * size;
           const cy = rand() * size;
-          const rad = 110 + rand() * 240;
-          const warm = rand() > 0.55;
-          const g = ctx.createRadialGradient(cx, cy, rad * 0.08, cx, cy, rad);
-          g.addColorStop(0, warm ? 'rgba(222, 214, 198, 0.22)' : 'rgba(202, 208, 218, 0.20)');
-          g.addColorStop(1, 'rgba(244, 242, 237, 0)');
+          const rad = 140 + rand() * 260;
+          const col = boldPools[i % boldPools.length];
+          const g = ctx.createRadialGradient(cx, cy, rad * 0.05, cx, cy, rad);
+          g.addColorStop(0, col);
+          g.addColorStop(0.55, col.replace(/[\\d.]+\\)$/, '0.22)'));
+          g.addColorStop(1, 'rgba(19, 11, 46, 0)');
           ctx.fillStyle = g;
           ctx.fillRect(0, 0, size, size);
         }
 
-        // Helper: draw organic branching marble vein with wraparound offsets for seamless tiling
-        function drawVeinPath(targetCtx, pts, width, strokeColor, blurPx) {
+        function drawVeinPath(targetCtx, pts, width, strokeColor, blurPx, offsetX = 0, offsetY = 0) {
           const offsets = [0, -size, size];
           targetCtx.save();
           targetCtx.lineCap = 'round';
@@ -1011,8 +1069,8 @@ export const gallery3d = `<!DOCTYPE html>
           }
           for (let ox = 0; ox < offsets.length; ox++) {
             for (let oy = 0; oy < offsets.length; oy++) {
-              const dx = offsets[ox];
-              const dy = offsets[oy];
+              const dx = offsets[ox] + offsetX;
+              const dy = offsets[oy] + offsetY;
               targetCtx.beginPath();
               targetCtx.moveTo(pts[0][0] + dx, pts[0][1] + dy);
               for (let k = 1; k < pts.length; k++) {
@@ -1024,80 +1082,75 @@ export const gallery3d = `<!DOCTYPE html>
           targetCtx.restore();
         }
 
-        // 3. Broad Carrara mineral veins + delicate Calacatta champagne-gold rivers
-        const veinCount = isCeiling ? 11 : 16;
-        for (let v = 0; v < veinCount; v++) {
-          const isGold = !isCeiling && v % 4 === 1;
+        // 3. Dramatic sweeping multi-ribbon fluid acrylic paint swirls + molten gold & pearl veins
+        const boldRibbonGroups = [
+          ['rgba(0, 245, 255, 0.92)', 'rgba(0, 245, 160, 0.85)', 'rgba(59, 130, 246, 0.85)', 'rgba(255, 214, 102, 0.92)'],
+          ['rgba(255, 46, 147, 0.92)', 'rgba(168, 85, 247, 0.88)', 'rgba(255, 107, 53, 0.86)', 'rgba(255, 232, 160, 0.90)'],
+          ['rgba(124, 58, 237, 0.90)', 'rgba(0, 229, 255, 0.88)', 'rgba(244, 63, 94, 0.88)', 'rgba(255, 255, 255, 0.82)'],
+          ['rgba(255, 183, 3, 0.90)', 'rgba(255, 46, 147, 0.88)', 'rgba(0, 245, 160, 0.84)', 'rgba(139, 92, 246, 0.88)']
+        ];
+
+        const streamCount = isCeiling ? 9 : 13;
+        for (let v = 0; v < streamCount; v++) {
+          const group = boldRibbonGroups[v % boldRibbonGroups.length];
           const pts = [];
           let x = rand() * size;
           let y = rand() * size;
-          const steps = 26 + Math.floor(rand() * 18);
-          let angle = -0.58 + (rand() - 0.5) * 0.55; // diagonal marble flow
-
+          const steps = 30 + Math.floor(rand() * 16);
+          let angle = -0.55 + (rand() - 0.5) * 0.52;
           for (let k = 0; k < steps; k++) {
             pts.push([x, y]);
-            angle += (rand() - 0.5) * 0.42;
-            const stepLen = 22 + rand() * 34;
+            angle += Math.sin(k * 0.34 + v * 1.3) * 0.22 + (rand() - 0.5) * 0.24;
+            const stepLen = 22 + rand() * 28;
             x += Math.cos(angle) * stepLen;
             y += Math.sin(angle) * stepLen;
           }
 
-          // Soft hazy under-glaze
-          drawVeinPath(
-            ctx,
-            pts,
-            (isCeiling ? 8 : 13) + rand() * 12,
-            isGold ? 'rgba(205, 182, 134, 0.14)' : 'rgba(166, 174, 188, 0.16)',
-            14
-          );
+          // Luminous wide glowing paint pour wash
+          drawVeinPath(ctx, pts, (isCeiling ? 36 : 48) + rand() * 20, group[0].replace(/[\\d.]+\\)$/, '0.32)'), 26, 0, 0);
 
-          // Primary mineral vein
-          drawVeinPath(
-            ctx,
-            pts,
-            (isCeiling ? 1.8 : 2.4) + rand() * 2.6,
-            isGold ? 'rgba(188, 152, 86, 0.36)' : 'rgba(122, 130, 146, 0.38)',
-            3
-          );
+          // Bundled bold parallel fluid-acrylic ribbons
+          group.forEach((ribbonColor, rIdx) => {
+            const shift = (rIdx - 1.5) * (isCeiling ? 11 : 14);
+            const w = (rIdx === 3 ? 3.2 : (isCeiling ? 6.5 : 9.5)) + rand() * 4.0;
+            drawVeinPath(ctx, pts, w, ribbonColor, rIdx === 3 ? 6 : 12, shift, shift * 0.6);
+          });
 
-          // Bump impression along vein
-          drawVeinPath(bCtx, pts, 3.0, 'rgba(90, 90, 90, 0.35)', 2);
+          // High-contrast obsidian resin trough + glossy white specular edge + bump relief
+          drawVeinPath(ctx, pts, 3.0, 'rgba(10, 6, 26, 0.65)', 2, -6, 6);
+          drawVeinPath(ctx, pts, 1.4, 'rgba(255, 255, 255, 0.78)', 3, 5, -4);
+          drawVeinPath(bCtx, pts, 6.0, 'rgba(235, 235, 235, 0.55)', 3);
 
-          // Feathery branching hairline tributaries
-          const branchCount = 2 + Math.floor(rand() * 3);
-          for (let b = 0; b < branchCount; b++) {
+          // Swirling color tributaries
+          for (let b = 0; b < 3; b++) {
             const startIdx = Math.floor(pts.length * (0.2 + rand() * 0.6));
             const bPts = [pts[startIdx].slice()];
             let bx = bPts[0][0];
             let by = bPts[0][1];
-            let bAng = angle + (rand() > 0.5 ? 0.52 : -0.52) + (rand() - 0.5) * 0.35;
+            let bAng = angle + (rand() > 0.5 ? 0.56 : -0.56) + (rand() - 0.5) * 0.35;
             for (let m = 0; m < 10; m++) {
-              bAng += (rand() - 0.5) * 0.48;
-              bx += Math.cos(bAng) * (14 + rand() * 20);
-              by += Math.sin(bAng) * (14 + rand() * 20);
+              bAng += (rand() - 0.5) * 0.45;
+              bx += Math.cos(bAng) * (15 + rand() * 20);
+              by += Math.sin(bAng) * (15 + rand() * 20);
               bPts.push([bx, by]);
             }
-            drawVeinPath(
-              ctx,
-              bPts,
-              0.8 + rand() * 1.1,
-              isGold ? 'rgba(196, 168, 114, 0.24)' : 'rgba(145, 153, 166, 0.24)',
-              1
-            );
+            drawVeinPath(ctx, bPts, 2.4 + rand() * 2.2, group[b % group.length], 5);
           }
         }
 
-        // 4. Fine luminous white crystalline highlights (painted Venetian sheen)
-        for (let i = 0; i < 180; i++) {
-          const sx = rand() * size;
-          const sy = rand() * size;
-          const sw = 12 + rand() * 48;
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
-          ctx.fillRect(sx, sy, sw, 1.5);
+        // 4. Glossy resin sparkle cells (signature fluid-acrylic marbling cells)
+        for (let i = 0; i < 140; i++) {
+          const cx = rand() * size;
+          const cy = rand() * size;
+          const r = 2 + rand() * 8;
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.fillStyle = i % 3 === 0 ? 'rgba(255, 230, 128, 0.48)' : i % 3 === 1 ? 'rgba(0, 245, 255, 0.44)' : 'rgba(255, 46, 147, 0.42)';
+          ctx.fill();
         }
 
-        // 5. Subtle architectural marble slab seams (2x2 stone panel joints)
-        ctx.strokeStyle = 'rgba(176, 172, 164, 0.24)';
+        // 5. Crisp architectural metallic panel borders
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
         ctx.lineWidth = 2;
         ctx.strokeRect(1, 1, size - 2, size - 2);
         ctx.beginPath();
@@ -1105,7 +1158,7 @@ export const gallery3d = `<!DOCTYPE html>
         ctx.moveTo(0, size / 2); ctx.lineTo(size, size / 2);
         ctx.stroke();
 
-        bCtx.strokeStyle = '#686868';
+        bCtx.strokeStyle = '#383838';
         bCtx.lineWidth = 3;
         bCtx.strokeRect(1, 1, size - 2, size - 2);
         bCtx.beginPath();
@@ -1128,7 +1181,115 @@ export const gallery3d = `<!DOCTYPE html>
         return { map, bump };
       }
 
-      // Procedural fallback artwork texture (shown while live iframe boots or when Live Walls toggled off)
+      // Custom GLSL Thin-Film Dichroic Iridescence Material (Three.js r128 compatible)
+      function createDichroicMaterial(phaseOffset = 0) {
+        return new THREE.ShaderMaterial({
+          uniforms: {
+            uTime: { value: 0 },
+            uPhase: { value: phaseOffset }
+          },
+          vertexShader: [
+            'varying vec3 vWorldNormal;',
+            'varying vec3 vWorldPos;',
+            'void main() {',
+            '  vec4 wp = modelMatrix * vec4(position, 1.0);',
+            '  vWorldPos = wp.xyz;',
+            '  vWorldNormal = normalize(mat3(modelMatrix) * normal);',
+            '  gl_Position = projectionMatrix * viewMatrix * wp;',
+            '}'
+          ].join('\\n'),
+          fragmentShader: [
+            'uniform float uTime;',
+            'uniform float uPhase;',
+            'varying vec3 vWorldNormal;',
+            'varying vec3 vWorldPos;',
+            'vec3 prismPalette(float t) {',
+            '  vec3 a = vec3(0.56, 0.54, 0.64);',
+            '  vec3 b = vec3(0.44, 0.43, 0.38);',
+            '  vec3 c = vec3(1.0, 1.0, 1.0);',
+            '  vec3 d = vec3(0.00, 0.33, 0.67);',
+            '  return a + b * cos(6.28318 * (c * t + d));',
+            '}',
+            'void main() {',
+            '  vec3 N = normalize(vWorldNormal);',
+            '  vec3 V = normalize(cameraPosition - vWorldPos);',
+            '  float ndotv = clamp(abs(dot(N, V)), 0.0, 1.0);',
+            '  float fresnel = pow(1.0 - ndotv, 2.0);',
+            '  vec3 L1 = normalize(vec3(0.45, 1.0, 0.55));',
+            '  vec3 L2 = normalize(vec3(-0.6, 0.45, -0.4));',
+            '  float diff = 0.58 + 0.42 * max(dot(N, L1), 0.0) + 0.24 * max(dot(N, L2), 0.0);',
+            '  vec3 H = normalize(L1 + V);',
+            '  float spec = pow(max(dot(N, H), 0.0), 38.0);',
+            '  float shift = fresnel * 1.1 + N.y * 0.25 + N.x * 0.22 + uTime * 0.11 + uPhase;',
+            '  vec3 irid = prismPalette(shift);',
+            '  vec3 col = irid * diff + vec3(1.0, 0.98, 1.0) * (spec * 0.82 + fresnel * 0.32);',
+            '  gl_FragColor = vec4(col, 1.0);',
+            '}'
+          ].join('\\n')
+        });
+      }
+
+      // Custom GLSL Bold Chromatic Volumetric Skylight Beam Shader
+      function createVolumetricRayMaterial(hexA, hexB) {
+        return new THREE.ShaderMaterial({
+          uniforms: {
+            uColorA: { value: new THREE.Color(hexA) },
+            uColorB: { value: new THREE.Color(hexB) },
+            uOpacity: { value: 0.20 }
+          },
+          vertexShader: [
+            'varying vec2 vUv;',
+            'varying vec3 vNormalView;',
+            'varying vec3 vViewDir;',
+            'void main() {',
+            '  vUv = uv;',
+            '  vec4 mvPos = modelViewMatrix * vec4(position, 1.0);',
+            '  vNormalView = normalize(normalMatrix * normal);',
+            '  vViewDir = normalize(-mvPos.xyz);',
+            '  gl_Position = projectionMatrix * mvPos;',
+            '}'
+          ].join('\\n'),
+          fragmentShader: [
+            'uniform vec3 uColorA;',
+            'uniform vec3 uColorB;',
+            'uniform float uOpacity;',
+            'varying vec2 vUv;',
+            'varying vec3 vNormalView;',
+            'varying vec3 vViewDir;',
+            'void main() {',
+            '  float vertFade = smoothstep(0.0, 0.58, vUv.y) * smoothstep(1.0, 0.80, vUv.y);',
+            '  float edgeFade = pow(abs(dot(normalize(vNormalView), normalize(vViewDir))), 1.3);',
+            '  vec3 col = mix(uColorB, uColorA, vUv.y);',
+            '  gl_FragColor = vec4(col, vertFade * edgeFade * uOpacity);',
+            '}'
+          ].join('\\n'),
+          transparent: true,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          blending: THREE.AdditiveBlending
+        });
+      }
+
+      // Prismatic rainbow strip texture for floor guide rails
+      function createPrismStripTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 512;
+        const ctx = canvas.getContext('2d');
+        const g = ctx.createLinearGradient(0, 0, 0, 512);
+        g.addColorStop(0.0, '#f59e0b');
+        g.addColorStop(0.22, '#ec4899');
+        g.addColorStop(0.48, '#a855f7');
+        g.addColorStop(0.75, '#38bdf8');
+        g.addColorStop(1.0, '#34d399');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, 32, 512);
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.needsUpdate = true;
+        return tex;
+      }
+
+      // Procedural fallback artwork texture (shown while live iframe boots or when Art Mode active)
       function createPortfolioTexture(ed) {
         const canvas = document.createElement('canvas');
         canvas.width = 1024;
@@ -1183,7 +1344,7 @@ export const gallery3d = `<!DOCTYPE html>
           grad.addColorStop(1, '#060608');
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, 1024, 640);
-          ctx.strokeStyle = 'rgba(226, 194, 133, 0.35)';
+          ctx.strokeStyle = 'rgba(192, 132, 252, 0.45)';
           ctx.lineWidth = 1.5;
           ctx.strokeRect(42, 42, 940, 556);
         } else {
@@ -1277,10 +1438,15 @@ export const gallery3d = `<!DOCTYPE html>
         canvas.height = 256;
         const ctx = canvas.getContext('2d');
 
-        ctx.fillStyle = '#12151e';
+        ctx.fillStyle = '#100e1c';
         ctx.fillRect(0, 0, 512, 256);
-        ctx.strokeStyle = 'rgba(218, 178, 102, 0.72)';
-        ctx.lineWidth = 5;
+
+        const borderGrad = ctx.createLinearGradient(0, 0, 512, 256);
+        borderGrad.addColorStop(0, ed.accent);
+        borderGrad.addColorStop(0.5, '#e879f9');
+        borderGrad.addColorStop(1, '#38bdf8');
+        ctx.strokeStyle = borderGrad;
+        ctx.lineWidth = 6;
         ctx.strokeRect(8, 8, 496, 240);
 
         ctx.fillStyle = ed.accent;
@@ -1295,7 +1461,7 @@ export const gallery3d = `<!DOCTYPE html>
         ctx.font = '400 17px Inter, sans-serif';
         ctx.fillText(ed.subtitle, 34, 174, 444);
 
-        ctx.fillStyle = '#f0c97d';
+        ctx.fillStyle = '#67e8f9';
         ctx.font = '500 17px "JetBrains Mono", monospace';
         ctx.fillText('[ CLICK OR PRESS E TO INSPECT ]', 34, 222, 444);
 
@@ -1304,30 +1470,41 @@ export const gallery3d = `<!DOCTYPE html>
         return tex;
       }
 
-      function createFloorTexture() {
+      function createFloorTexture(isPrism = true) {
         const canvas = document.createElement('canvas');
         canvas.width = 512;
         canvas.height = 512;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#12151e';
+        ctx.fillStyle = isPrism ? '#111022' : '#12151e';
         ctx.fillRect(0, 0, 512, 512);
 
-        // Subtle polished dark terrazzo flecks with warm ivory & gold stone chips
-        for (let i = 0; i < 650; i++) {
+        const chipPalette = [
+          'rgba(56, 189, 248, 0.55)',
+          'rgba(236, 72, 153, 0.50)',
+          'rgba(168, 85, 247, 0.50)',
+          'rgba(52, 211, 153, 0.50)',
+          'rgba(250, 204, 21, 0.55)',
+          'rgba(251, 113, 133, 0.50)'
+        ];
+
+        for (let i = 0; i < 720; i++) {
           const x = Math.random() * 512;
           const y = Math.random() * 512;
-          const bright = Math.random() > 0.92;
-          if (bright) {
+          const bright = Math.random() > 0.84;
+          if (bright && isPrism) {
+            ctx.fillStyle = chipPalette[i % chipPalette.length];
+            ctx.fillRect(x, y, 3, 3);
+          } else if (bright) {
             ctx.fillStyle = 'rgba(235, 226, 206, 0.28)';
             ctx.fillRect(x, y, 2.5, 2.5);
           } else {
-            const v = 22 + Math.floor(Math.random() * 24);
-            ctx.fillStyle = \`rgb(\${v},\${v + 2},\${v + 7})\`;
+            const v = 20 + Math.floor(Math.random() * 24);
+            ctx.fillStyle = \`rgb(\${v},\${v + 1},\${v + 10})\`;
             ctx.fillRect(x, y, 2, 2);
           }
         }
 
-        ctx.strokeStyle = 'rgba(240, 201, 125, 0.08)';
+        ctx.strokeStyle = isPrism ? 'rgba(192, 132, 252, 0.14)' : 'rgba(240, 201, 125, 0.08)';
         ctx.lineWidth = 2;
         ctx.strokeRect(0, 0, 256, 256);
         ctx.strokeRect(256, 0, 256, 256);
@@ -1346,35 +1523,54 @@ export const gallery3d = `<!DOCTYPE html>
         canvas.width = 1024;
         canvas.height = 512;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#0d1017';
+        ctx.fillStyle = '#0c0a18';
         ctx.fillRect(0, 0, 1024, 512);
 
-        const grad = ctx.createRadialGradient(512, 256, 20, 512, 256, 460);
-        grad.addColorStop(0, 'rgba(240, 201, 125, 0.22)');
-        grad.addColorStop(1, 'rgba(13, 16, 23, 0)');
-        ctx.fillStyle = grad;
+        const aura1 = ctx.createRadialGradient(280, 180, 20, 280, 180, 420);
+        aura1.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
+        aura1.addColorStop(1, 'rgba(12, 10, 24, 0)');
+        ctx.fillStyle = aura1;
         ctx.fillRect(0, 0, 1024, 512);
 
-        ctx.strokeStyle = 'rgba(218, 178, 102, 0.55)';
-        ctx.lineWidth = 3;
+        const aura2 = ctx.createRadialGradient(740, 320, 20, 740, 320, 420);
+        aura2.addColorStop(0, 'rgba(236, 72, 153, 0.28)');
+        aura2.addColorStop(1, 'rgba(12, 10, 24, 0)');
+        ctx.fillStyle = aura2;
+        ctx.fillRect(0, 0, 1024, 512);
+
+        const borderGrad = ctx.createLinearGradient(32, 32, 992, 480);
+        borderGrad.addColorStop(0, '#34d399');
+        borderGrad.addColorStop(0.28, '#38bdf8');
+        borderGrad.addColorStop(0.55, '#c084fc');
+        borderGrad.addColorStop(0.8, '#ec4899');
+        borderGrad.addColorStop(1, '#facc15');
+        ctx.strokeStyle = borderGrad;
+        ctx.lineWidth = 4;
         ctx.strokeRect(32, 32, 960, 448);
 
         ctx.textAlign = 'center';
-        ctx.fillStyle = '#f0c97d';
+        ctx.fillStyle = '#67e8f9';
         ctx.font = '500 22px "JetBrains Mono", monospace';
-        ctx.fillText('PERMANENT COLLECTION · KARACHI', 512, 155);
+        ctx.fillText('PERMANENT PRISM COLLECTION · KARACHI', 512, 152);
 
         ctx.fillStyle = '#ffffff';
         ctx.font = '500 84px Georgia, serif';
-        ctx.fillText('AREEB AZHAR', 512, 260);
+        ctx.fillText('AREEB AZHAR', 512, 258);
 
-        ctx.fillStyle = '#cbd5e1';
+        ctx.fillStyle = '#e2e8f0';
         ctx.font = '400 22px Inter, sans-serif';
-        ctx.fillText('SOFTWARE ENGINEERING · 3D INTERACTIVE SYSTEMS · CHRONOS', 512, 328);
+        ctx.fillText('SOFTWARE ENGINEERING · 3D INTERACTIVE SYSTEMS · CHRONOS', 512, 326);
 
-        ctx.fillStyle = 'rgba(240, 201, 125, 0.85)';
+        const barGrad = ctx.createLinearGradient(310, 0, 714, 0);
+        barGrad.addColorStop(0, '#38bdf8');
+        barGrad.addColorStop(0.5, '#e879f9');
+        barGrad.addColorStop(1, '#facc15');
+        ctx.fillStyle = barGrad;
+        ctx.fillRect(362, 352, 300, 3);
+
+        ctx.fillStyle = '#f9a8d4';
         ctx.font = '400 18px "JetBrains Mono", monospace';
-        ctx.fillText('github.com/AREEB-AZHAR', 512, 396);
+        ctx.fillText('github.com/AREEB-AZHAR', 512, 404);
 
         const tex = new THREE.CanvasTexture(canvas);
         tex.needsUpdate = true;
@@ -1382,16 +1578,16 @@ export const gallery3d = `<!DOCTYPE html>
       }
 
       // ============================================================
-      // 5. THREE.JS LUMINOUS WHITE MARBLE PAVILION SETUP
-      //    (Alpha-transparent WebGL layered cleanly over CSS3D websites)
+      // 5. THREE.JS PRISMATIC FLUID-MARBLE PAVILION SETUP
+      //    (Alpha-transparent WebGL layered over CSS3D live websites)
       // ============================================================
       const container = document.getElementById('canvas-container');
       const css3dContainer = document.getElementById('css3d-container');
       const css3dCameraEl = document.getElementById('css3d-camera');
 
       const scene = new THREE.Scene();
-      scene.background = null; // Enclosed marble room; alpha clear allows CSS3D cutouts to shine through
-      scene.fog = new THREE.FogExp2(0xefece5, 0.0085);
+      scene.background = null;
+      scene.fog = new THREE.FogExp2(0x130a28, 0.012);
 
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 120);
       camera.rotation.order = 'YXZ';
@@ -1403,7 +1599,7 @@ export const gallery3d = `<!DOCTYPE html>
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.0;
+        renderer.toneMappingExposure = 1.12;
         container.appendChild(renderer.domElement);
       } catch (err) {
         container.innerHTML = \`
@@ -1418,65 +1614,79 @@ export const gallery3d = `<!DOCTYPE html>
         return;
       }
 
-      // Luminous White Marble Museum Lighting (balanced so veining reads crisply without blowout)
-      const hemiLight = new THREE.HemisphereLight(0xffffff, 0xe0d8cb, 0.96);
+      // Bold Saturated Prismatic Museum Lighting
+      const hemiLight = new THREE.HemisphereLight(0xd8e8ff, 0x381252, 1.05);
       scene.add(hemiLight);
 
-      const dirLight = new THREE.DirectionalLight(0xfffaf0, 0.48);
+      const dirLight = new THREE.DirectionalLight(0xfff5fb, 0.55);
       dirLight.position.set(4, 14, 10);
       scene.add(dirLight);
 
-      const corridorLightZs = [20, 10, 0, -10, -20];
-      corridorLightZs.forEach((z, i) => {
-        const pl = new THREE.PointLight(i % 2 === 0 ? 0xfff4e0 : 0xf6f8ff, 0.56, 24, 1.6);
-        pl.position.set(0, 7.6, z);
+      const corridorLightConfigs = [
+        { z: 20, prismHex: 0x00f5a0 },
+        { z: 10, prismHex: 0x00e5ff },
+        { z: 0,  prismHex: 0xff2e93 },
+        { z: -10, prismHex: 0xa855f7 },
+        { z: -20, prismHex: 0xffb703 }
+      ];
+      corridorLightConfigs.forEach(cfg => {
+        const pl = new THREE.PointLight(cfg.prismHex, 1.25, 26, 1.5);
+        pl.position.set(0, 7.6, cfg.z);
         scene.add(pl);
       });
 
-      // Procedural White Calacatta & Carrara Marble Materials (aspect-matched UV scaling)
-      const sideMarble = createMarbleTextures({ repeatX: 7, repeatY: 1.25, seed: 42, isCeiling: false });
-      const endMarble = createMarbleTextures({ repeatX: 2.3, repeatY: 1.25, seed: 91, isCeiling: false });
-      const ceilingMarble = createMarbleTextures({ repeatX: 2.3, repeatY: 7.2, seed: 137, isCeiling: true });
+      // Procedural Bold Full-Color Fluid-Acrylic Marble Materials (self-luminous resin glow)
+      const prismSideMarble = createMarbleTextures({ repeatX: 6.5, repeatY: 1.2, seed: 42, isCeiling: false });
+      const prismEndMarble = createMarbleTextures({ repeatX: 2.2, repeatY: 1.2, seed: 91, isCeiling: false });
+      const prismCeilingMarble = createMarbleTextures({ repeatX: 2.2, repeatY: 6.8, seed: 137, isCeiling: true });
+      const prismFloorTex = createFloorTexture(true);
 
       const wallSideMat = new THREE.MeshStandardMaterial({
         color: 0xffffff,
-        map: sideMarble.map,
-        bumpMap: sideMarble.bump,
-        bumpScale: 0.015,
-        roughness: 0.26,
-        metalness: 0.05
+        map: prismSideMarble.map,
+        emissiveMap: prismSideMarble.map,
+        emissive: new THREE.Color(0xffffff),
+        emissiveIntensity: 0.34,
+        bumpMap: prismSideMarble.bump,
+        bumpScale: 0.020,
+        roughness: 0.22,
+        metalness: 0.14
       });
       const wallEndMat = new THREE.MeshStandardMaterial({
         color: 0xffffff,
-        map: endMarble.map,
-        bumpMap: endMarble.bump,
-        bumpScale: 0.015,
-        roughness: 0.26,
-        metalness: 0.05
+        map: prismEndMarble.map,
+        emissiveMap: prismEndMarble.map,
+        emissive: new THREE.Color(0xffffff),
+        emissiveIntensity: 0.34,
+        bumpMap: prismEndMarble.bump,
+        bumpScale: 0.020,
+        roughness: 0.22,
+        metalness: 0.14
       });
       const ceilingMat = new THREE.MeshStandardMaterial({
         color: 0xffffff,
-        map: ceilingMarble.map,
-        bumpMap: ceilingMarble.bump,
-        bumpScale: 0.011,
-        roughness: 0.34,
-        metalness: 0.04
+        map: prismCeilingMarble.map,
+        emissiveMap: prismCeilingMarble.map,
+        emissive: new THREE.Color(0xffffff),
+        emissiveIntensity: 0.30,
+        bumpMap: prismCeilingMarble.bump,
+        bumpScale: 0.014,
+        roughness: 0.26,
+        metalness: 0.12
       });
       const ribMat = new THREE.MeshStandardMaterial({
-        color: 0xebe7df,
-        bumpMap: endMarble.bump,
-        bumpScale: 0.008,
-        roughness: 0.42,
-        metalness: 0.06
+        color: 0x160f2b,
+        roughness: 0.32,
+        metalness: 0.45
       });
       const brassMat = new THREE.MeshStandardMaterial({
-        color: 0xe2bc72,
-        roughness: 0.28,
-        metalness: 0.64,
-        emissive: new THREE.Color(0x3a280a),
-        emissiveIntensity: 0.22
+        color: 0xf0c259,
+        roughness: 0.24,
+        metalness: 0.72,
+        emissive: new THREE.Color(0x4a3108),
+        emissiveIntensity: 0.28
       });
-      const floorMat = new THREE.MeshStandardMaterial({ map: createFloorTexture(), roughness: 0.20, metalness: 0.45 });
+      const floorMat = new THREE.MeshStandardMaterial({ map: prismFloorTex, roughness: 0.16, metalness: 0.52 });
 
       const floor = new THREE.Mesh(new THREE.PlaneGeometry(18, 58), floorMat);
       floor.rotation.x = -Math.PI / 2;
@@ -1506,22 +1716,25 @@ export const gallery3d = `<!DOCTYPE html>
       entranceWall.position.set(0, 4.5, 28);
       scene.add(entranceWall);
 
-      // Subtle architectural brushed-brass crown molding & baseboards along white marble walls
+      // Glowing neon crown molding & baseboards along the bold fluid-marble walls
+      const trimMat = new THREE.MeshBasicMaterial({ color: 0x00f5ff });
+      const crownTrimMat = new THREE.MeshBasicMaterial({ color: 0xff2e93 });
       [-8.95, 8.95].forEach(x => {
-        const baseTrim = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.14, 56), brassMat);
-        baseTrim.position.set(x, 0.07, 0);
+        const baseTrim = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.12, 56), trimMat);
+        baseTrim.position.set(x, 0.06, 0);
         scene.add(baseTrim);
 
-        const crownTrim = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.09, 56), brassMat);
+        const crownTrim = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.09, 56), crownTrimMat);
         crownTrim.position.set(x, 8.92, 0);
         scene.add(crownTrim);
       });
 
-      // Single reused CanvasTexture for Obsidian & Brass Monument Wall Plaque
+      // Single reused CanvasTexture for Prismatic Obsidian Monument Wall Plaque
       const monumentTex = createMonumentTexture();
+      const monumentFrameMat = createDichroicMaterial(0.45);
       const monumentFrame = new THREE.Mesh(
-        new THREE.BoxGeometry(9.95, 5.15, 0.18),
-        brassMat
+        new THREE.BoxGeometry(10.0, 5.2, 0.18),
+        monumentFrameMat
       );
       monumentFrame.position.set(0, 4.1, -27.84);
       scene.add(monumentFrame);
@@ -1530,43 +1743,63 @@ export const gallery3d = `<!DOCTYPE html>
         map: monumentTex,
         emissiveMap: monumentTex,
         emissive: new THREE.Color(0xffffff),
-        emissiveIntensity: 0.55,
-        roughness: 0.35
+        emissiveIntensity: 0.58,
+        roughness: 0.32
       });
       const monumentMesh = new THREE.Mesh(new THREE.PlaneGeometry(9.6, 4.8), monumentMat);
       monumentMesh.position.set(0, 4.1, -27.72);
       scene.add(monumentMesh);
 
-      const stripMat = new THREE.MeshBasicMaterial({ color: 0xe6c17a, transparent: true, opacity: 0.62 });
+      // Prismatic rainbow guide rails along the polished terrazzo floor
+      const prismStripTex = createPrismStripTexture();
+      const stripMat = new THREE.MeshBasicMaterial({ map: prismStripTex, transparent: true, opacity: 0.85 });
       [-2.8, 2.8].forEach(x => {
-        const strip = new THREE.Mesh(new THREE.PlaneGeometry(0.055, 50), stripMat);
+        const strip = new THREE.Mesh(new THREE.PlaneGeometry(0.065, 50), stripMat);
         strip.rotation.x = -Math.PI / 2;
-        strip.position.set(x, 0.015, -1);
+        strip.position.set(x, 0.016, -1);
         scene.add(strip);
       });
 
-      // Alabaster marble structural bay pillars & beams framing each monolith wing with zero overlap
-      const bayPillarZs = [26, 19, 5, -9, -23];
-      bayPillarZs.forEach((z) => {
+      // Bold neon-edged architectural bay pillars & vivid chromatic skylights framing each monolith wing
+      const bayPillarConfigs = [
+        { z: 26,  prismHex: 0x00f5a0 },
+        { z: 19,  prismHex: 0x00e5ff },
+        { z: 5,   prismHex: 0xff2e93 },
+        { z: -9,  prismHex: 0xa855f7 },
+        { z: -23, prismHex: 0xffb703 }
+      ];
+      bayPillarConfigs.forEach((cfg) => {
+        const inlayMat = new THREE.MeshBasicMaterial({ color: cfg.prismHex });
+
         [-8.6, 8.6].forEach(x => {
           const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.8, 9, 0.9), ribMat);
-          pillar.position.set(x, 4.5, z);
+          pillar.position.set(x, 4.5, cfg.z);
           scene.add(pillar);
 
-          const brassInlay = new THREE.Mesh(new THREE.BoxGeometry(0.045, 8.8, 0.06), brassMat);
-          brassInlay.position.set(x > 0 ? x - 0.41 : x + 0.41, 4.5, z);
-          scene.add(brassInlay);
+          const inlay = new THREE.Mesh(new THREE.BoxGeometry(0.07, 8.85, 0.09), inlayMat);
+          inlay.position.set(x > 0 ? x - 0.41 : x + 0.41, 4.5, cfg.z);
+          scene.add(inlay);
         });
         const beam = new THREE.Mesh(new THREE.BoxGeometry(18, 0.65, 0.88), ribMat);
-        beam.position.set(0, 8.68, z);
+        beam.position.set(0, 8.68, cfg.z);
         scene.add(beam);
+
+        const beamStripe = new THREE.Mesh(new THREE.BoxGeometry(17.2, 0.06, 0.08), inlayMat);
+        beamStripe.position.set(0, 8.34, cfg.z);
+        scene.add(beamStripe);
       });
 
-      [22.5, 12, -2, -16].forEach((z) => {
-        const skyMat = new THREE.MeshBasicMaterial({ color: 0xfff6e5, transparent: true, opacity: 0.72 });
-        const skyStrip = new THREE.Mesh(new THREE.PlaneGeometry(5.8, 0.30), skyMat);
+      const skylightConfigs = [
+        { z: 22.5, prismHex: 0x00f5a0 },
+        { z: 12,   prismHex: 0x00e5ff },
+        { z: -2,   prismHex: 0xff2e93 },
+        { z: -16,  prismHex: 0xc084fc }
+      ];
+      skylightConfigs.forEach((cfg) => {
+        const skyMat = new THREE.MeshBasicMaterial({ color: cfg.prismHex, transparent: true, opacity: 0.92 });
+        const skyStrip = new THREE.Mesh(new THREE.PlaneGeometry(6.2, 0.36), skyMat);
         skyStrip.rotation.x = Math.PI / 2;
-        skyStrip.position.set(0, 8.95, z);
+        skyStrip.position.set(0, 8.95, cfg.z);
         scene.add(skyStrip);
       });
 
@@ -1601,7 +1834,7 @@ export const gallery3d = `<!DOCTYPE html>
         }
       }
 
-      // White-marble bench tops on satin brass museum legs
+      // Multicolor fluid-marble bench tops on metallic museum legs
       const benchGroup = new THREE.Group();
       const benchTop = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.14, 4.2), wallEndMat);
       benchTop.position.set(0, 0.52, 5);
@@ -1619,48 +1852,41 @@ export const gallery3d = `<!DOCTYPE html>
       scene.add(bench2);
       solidObstacles.push({ type: 'bench', minX: -0.75, maxX: 0.75, minZ: -11.15, maxZ: -6.85 });
 
-      const rayGeo = new THREE.CylinderGeometry(1.4, 3.8, 8.8, 16, 1, true);
-      const rayMat = new THREE.MeshBasicMaterial({
-        color: 0xfff0cc,
-        transparent: true,
-        opacity: 0.036,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending
-      });
-
-      const pedestalBaseMat = new THREE.MeshStandardMaterial({ color: 0x161922, roughness: 0.35, metalness: 0.55 });
+      // Chromatic Volumetric Skylight Cones & Dichroic Iridescent Center Sculptures
+      const rayGeo = new THREE.CylinderGeometry(1.35, 3.85, 8.8, 24, 1, true);
+      const pedestalBaseMat = new THREE.MeshStandardMaterial({ color: 0x161428, roughness: 0.32, metalness: 0.55 });
       const pedestalColMat = new THREE.MeshStandardMaterial({
-        color: 0xf4f1ea,
-        map: endMarble.map,
-        bumpMap: endMarble.bump,
-        bumpScale: 0.01,
-        roughness: 0.25,
-        metalness: 0.06
-      });
-      const sculptureGoldMat = new THREE.MeshStandardMaterial({
-        color: 0xf2cd7e,
-        roughness: 0.24,
-        metalness: 0.66,
-        emissive: new THREE.Color(0x6b4c14),
-        emissiveIntensity: 0.42
+        color: 0xffffff,
+        map: prismEndMarble.map,
+        emissiveMap: prismEndMarble.map,
+        emissive: new THREE.Color(0xffffff),
+        emissiveIntensity: 0.34,
+        bumpMap: prismEndMarble.bump,
+        bumpScale: 0.016,
+        roughness: 0.22,
+        metalness: 0.14
       });
       const sculptureWireMat = new THREE.MeshBasicMaterial({
-        color: 0xd4a348,
+        color: 0x00f5ff,
         wireframe: true,
         transparent: true,
-        opacity: 0.45
+        opacity: 0.56
       });
 
+      const dichroicMats = [];
+      const volumetricRayMats = [];
       const pedestalSculptures = [];
+
       const pedestalConfigs = [
-        { z: 12, kind: 'icosahedron', accent: 0xd4a348 },
-        { z: -2, kind: 'torusKnot', accent: 0x38bdf8 },
-        { z: -16, kind: 'octahedron', accent: 0xf59e0b }
+        { z: 12,  kind: 'icosahedron', accent: 0x00e5ff, rayA: 0x00f5ff, rayB: 0x00f5a0, phase: 0.0 },
+        { z: -2,  kind: 'torusKnot',   accent: 0xff2e93, rayA: 0xff2e93, rayB: 0xffb703, phase: 0.34 },
+        { z: -16, kind: 'octahedron',  accent: 0xa855f7, rayA: 0xa855f7, rayB: 0x00e5ff, phase: 0.67 }
       ];
 
       pedestalConfigs.forEach((cfg, idx) => {
-        const ray = new THREE.Mesh(rayGeo, rayMat);
+        const volMat = createVolumetricRayMaterial(cfg.rayA, cfg.rayB);
+        volumetricRayMats.push(volMat);
+        const ray = new THREE.Mesh(rayGeo, volMat);
         ray.position.set(0, 4.5, cfg.z);
         scene.add(ray);
 
@@ -1680,8 +1906,8 @@ export const gallery3d = `<!DOCTYPE html>
         pedGroup.add(brassCap);
 
         const glowRing = new THREE.Mesh(
-          new THREE.RingGeometry(0.32, 0.42, 32),
-          new THREE.MeshBasicMaterial({ color: cfg.accent, side: THREE.DoubleSide, transparent: true, opacity: 0.62 })
+          new THREE.RingGeometry(0.32, 0.45, 32),
+          new THREE.MeshBasicMaterial({ color: cfg.accent, side: THREE.DoubleSide, transparent: true, opacity: 0.92 })
         );
         glowRing.rotation.x = -Math.PI / 2;
         glowRing.position.y = 1.295;
@@ -1690,20 +1916,23 @@ export const gallery3d = `<!DOCTYPE html>
         const artPivot = new THREE.Group();
         artPivot.position.y = 2.08;
 
+        const dMat = createDichroicMaterial(cfg.phase);
+        dichroicMats.push(dMat);
+
         if (cfg.kind === 'icosahedron') {
-          const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.46, 0), sculptureGoldMat);
-          const ring = new THREE.Mesh(new THREE.TorusGeometry(0.68, 0.022, 12, 48), brassMat);
+          const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.48, 0), dMat);
+          const ring = new THREE.Mesh(new THREE.TorusGeometry(0.70, 0.028, 14, 52), dMat);
           ring.rotation.x = Math.PI / 3;
           artPivot.add(core);
           artPivot.add(ring);
         } else if (cfg.kind === 'torusKnot') {
-          const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(0.34, 0.11, 72, 12), sculptureGoldMat);
-          const halo = new THREE.Mesh(new THREE.IcosahedronGeometry(0.66, 1), sculptureWireMat);
+          const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(0.36, 0.115, 84, 16), dMat);
+          const halo = new THREE.Mesh(new THREE.IcosahedronGeometry(0.68, 1), sculptureWireMat);
           artPivot.add(knot);
           artPivot.add(halo);
         } else {
-          const inner = new THREE.Mesh(new THREE.OctahedronGeometry(0.42, 0), sculptureGoldMat);
-          const outer = new THREE.Mesh(new THREE.DodecahedronGeometry(0.64, 0), sculptureWireMat);
+          const inner = new THREE.Mesh(new THREE.OctahedronGeometry(0.45, 0), dMat);
+          const outer = new THREE.Mesh(new THREE.DodecahedronGeometry(0.66, 0), sculptureWireMat);
           artPivot.add(inner);
           artPivot.add(outer);
         }
@@ -1715,20 +1944,36 @@ export const gallery3d = `<!DOCTYPE html>
         solidObstacles.push({ type: 'pedestal', minX: -0.78, maxX: 0.78, minZ: cfg.z - 0.78, maxZ: cfg.z + 0.78 });
       });
 
-      const particleCount = 260;
+      // Multicolor floating prism dust particles (per-vertex high-voltage jewel tones)
+      const particleCount = 320;
       const pGeo = new THREE.BufferGeometry();
       const pPos = new Float32Array(particleCount * 3);
+      const pColors = new Float32Array(particleCount * 3);
+      const particleSpectrum = [
+        new THREE.Color(0x00f5ff),
+        new THREE.Color(0xff2e93),
+        new THREE.Color(0xa855f7),
+        new THREE.Color(0x00f5a0),
+        new THREE.Color(0xffd166),
+        new THREE.Color(0xff6b35)
+      ];
       for (let i = 0; i < particleCount; i++) {
         pPos[i * 3] = (Math.random() - 0.5) * 16;
         pPos[i * 3 + 1] = 0.4 + Math.random() * 8.0;
         pPos[i * 3 + 2] = (Math.random() - 0.5) * 52;
+        const c = particleSpectrum[i % particleSpectrum.length];
+        pColors[i * 3] = c.r;
+        pColors[i * 3 + 1] = c.g;
+        pColors[i * 3 + 2] = c.b;
       }
       pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      pGeo.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
       const pMat = new THREE.PointsMaterial({
-        color: 0xd9ae5f,
-        size: 0.055,
+        size: 0.082,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.45,
+        opacity: 0.78,
+        blending: THREE.AdditiveBlending,
         depthWrite: false
       });
       const dustParticles = new THREE.Points(pGeo, pMat);
@@ -1745,7 +1990,6 @@ export const gallery3d = `<!DOCTYPE html>
       const CSS_SCALE_Y = SCREEN_WORLD_H / CSS_IFRAME_H;
 
       // Occlusion cutout material punches a depth-tested transparent window through WebGL
-      // so benches, pedestals, pillars & sculptures naturally occlude live CSS3D websites!
       const cutoutMat = new THREE.MeshBasicMaterial({
         color: 0x000000,
         opacity: 0,
@@ -1822,14 +2066,14 @@ export const gallery3d = `<!DOCTYPE html>
 
           const plinth = new THREE.Mesh(
             new THREE.BoxGeometry(5.6, 0.42, 0.85),
-            new THREE.MeshStandardMaterial({ color: 0x151822, roughness: 0.35, metalness: 0.55 })
+            new THREE.MeshStandardMaterial({ color: 0x131124, roughness: 0.32, metalness: 0.55 })
           );
           plinth.position.set(0, 0.21, 0.25);
           group.add(plinth);
 
           const frameMesh = new THREE.Mesh(
             new THREE.BoxGeometry(5.26, 3.38, 0.18),
-            new THREE.MeshStandardMaterial({ color: 0x141720, roughness: 0.3, metalness: 0.78 })
+            new THREE.MeshStandardMaterial({ color: 0x131222, roughness: 0.28, metalness: 0.78 })
           );
           frameMesh.position.set(0, 2.75, 0.08);
           group.add(frameMesh);
@@ -1837,9 +2081,9 @@ export const gallery3d = `<!DOCTYPE html>
           const rimMat = new THREE.MeshBasicMaterial({
             color: new THREE.Color(ed.accent),
             transparent: true,
-            opacity: 0.42
+            opacity: 0.65
           });
-          const rimMesh = new THREE.Mesh(new THREE.BoxGeometry(5.36, 3.48, 0.06), rimMat);
+          const rimMesh = new THREE.Mesh(new THREE.BoxGeometry(5.38, 3.50, 0.06), rimMat);
           rimMesh.position.set(0, 2.75, 0.02);
           group.add(rimMesh);
 
@@ -1865,8 +2109,8 @@ export const gallery3d = `<!DOCTYPE html>
               map: plaqueTex,
               emissiveMap: plaqueTex,
               emissive: new THREE.Color(0xffffff),
-              emissiveIntensity: 0.45,
-              roughness: 0.4
+              emissiveIntensity: 0.48,
+              roughness: 0.38
             })
           );
           plaqueMesh.position.set(3.25, 1.65, 0.12);
@@ -1874,25 +2118,24 @@ export const gallery3d = `<!DOCTYPE html>
           group.add(plaqueMesh);
           clickableMeshes.push(plaqueMesh);
 
-          const accentLight = new THREE.PointLight(new THREE.Color(ed.accent), 0.55, 9, 1.8);
+          const accentLight = new THREE.PointLight(new THREE.Color(ed.accent), 0.72, 10, 1.75);
           accentLight.position.set(0, 5.2, 2.2);
           group.add(accentLight);
 
           const poolMat = new THREE.MeshBasicMaterial({
             color: new THREE.Color(ed.accent),
             transparent: true,
-            opacity: 0.12,
+            opacity: 0.18,
             blending: THREE.AdditiveBlending,
             depthWrite: false
           });
-          const pool = new THREE.Mesh(new THREE.PlaneGeometry(5.4, 2.8), poolMat);
+          const pool = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 2.9), poolMat);
           pool.rotation.x = -Math.PI / 2;
           pool.position.set(0, 0.02, 1.8);
           group.add(pool);
 
           scene.add(group);
 
-          // Precompute exact static CSS3D world matrix aligned to screenMesh
           group.updateMatrixWorld(true);
           screenMesh.updateWorldMatrix(true, false);
           const scaledMatrix = screenMesh.matrixWorld.clone().multiply(
@@ -1929,7 +2172,6 @@ export const gallery3d = `<!DOCTYPE html>
             normalX: isLeft ? 1 : -1
           };
 
-          // Mount live website iframes upfront on desktop (mobile dynamically mounts nearest 2)
           if (!isCoarsePointer) {
             mountWallIframe(exhibitObj);
           }
@@ -1955,7 +2197,6 @@ export const gallery3d = `<!DOCTYPE html>
         const suspendForModal = state.mode === 'modal';
         const camInv = camera.matrixWorldInverse;
 
-        // On coarse-pointer mobile, keep only the nearest 2 exhibits actively mounted to save GPU/WebGL contexts
         let allowedMobileIds = null;
         if (isCoarsePointer && state.liveWalls && !suspendForModal) {
           const ranked = exhibitObjects
@@ -1975,7 +2216,6 @@ export const gallery3d = `<!DOCTYPE html>
             }
           }
 
-          // Check camera-space Z of center and both horizontal edges so CSS3D never crosses z_cam >= 0
           const centerCamZ = scratchCamSpace.copy(obj.worldCenter).applyMatrix4(camInv).z;
           const edgeAZ = scratchPos.copy(obj.edgeA).applyMatrix4(camInv).z;
           const edgeBZ = scratchPos.copy(obj.edgeB).applyMatrix4(camInv).z;
@@ -2033,10 +2273,10 @@ export const gallery3d = `<!DOCTYPE html>
         if (!btn || !label) return;
         if (state.isPointerLocked) {
           label.textContent = 'Mouse Bound (Esc)';
-          btn.classList.add('border-amber-200/50', 'text-amber-200');
+          btn.classList.add('border-cyan-300/60', 'text-cyan-200');
         } else {
           label.textContent = 'Lock Mouse';
-          btn.classList.remove('border-amber-200/50', 'text-amber-200');
+          btn.classList.remove('border-cyan-300/60', 'text-cyan-200');
         }
       }
 
@@ -2045,11 +2285,11 @@ export const gallery3d = `<!DOCTYPE html>
         const label = document.getElementById('label-live');
         if (!btn) return;
         if (state.liveWalls) {
-          btn.classList.add('text-emerald-300', 'border-emerald-300/40');
+          btn.classList.add('text-emerald-300', 'border-emerald-300/45');
           btn.classList.remove('text-slate-300');
           if (label) label.textContent = 'Live Walls';
         } else {
-          btn.classList.remove('text-emerald-300', 'border-emerald-300/40');
+          btn.classList.remove('text-emerald-300', 'border-emerald-300/45');
           btn.classList.add('text-slate-300');
           if (label) label.textContent = 'Art Mode';
         }
@@ -2085,7 +2325,6 @@ export const gallery3d = `<!DOCTYPE html>
         updateMouseLockUI();
       });
 
-      // Raw FPS mouse-look whenever pointer is locked
       window.addEventListener('mousemove', (ev) => {
         if (state.mode !== 'explore' || !state.isPointerLocked) return;
         const dx = Math.max(-120, Math.min(120, ev.movementX || 0));
@@ -2182,7 +2421,7 @@ export const gallery3d = `<!DOCTYPE html>
 
         const loader = document.createElement('div');
         loader.className = 'absolute inset-0 z-10 flex flex-col items-center justify-center gap-2.5 bg-[#0a0c12] text-slate-300 transition-opacity duration-300 pointer-events-none';
-        loader.innerHTML = '<div class="w-6 h-6 rounded-full border-2 border-amber-200/30 border-t-amber-200 animate-spin"></div><span class="text-[11px] font-mono-tech uppercase tracking-[0.2em] text-amber-200/80">Loading Live Edition…</span>';
+        loader.innerHTML = '<div class="w-6 h-6 rounded-full border-2 border-fuchsia-400/30 border-t-cyan-300 animate-spin"></div><span class="text-[11px] font-mono-tech uppercase tracking-[0.2em] text-cyan-200/85">Loading Live Edition…</span>';
 
         const iframe = document.createElement('iframe');
         iframe.className = 'live-modal-frame opacity-0';
@@ -2199,14 +2438,19 @@ export const gallery3d = `<!DOCTYPE html>
         stage.appendChild(wrap);
         requestAnimationFrame(updateModalIframeScale);
 
-        // Render clickable featured canonical case study chips underneath the live site
+        const chipColors = [
+          'border-cyan-400/35 hover:border-cyan-300/75 hover:bg-cyan-400/15 text-cyan-100',
+          'border-fuchsia-400/35 hover:border-fuchsia-300/75 hover:bg-fuchsia-400/15 text-fuchsia-100',
+          'border-emerald-400/35 hover:border-emerald-300/75 hover:bg-emerald-400/15 text-emerald-100',
+          'border-amber-400/35 hover:border-amber-300/75 hover:bg-amber-400/15 text-amber-100'
+        ];
         const chipsEl = document.getElementById('modal-case-chips');
         if (chipsEl) {
           const links = ed.featuredLinks || [];
-          chipsEl.innerHTML = links.map(item => \`
-            <a href="\${item.href}" class="preview-card-link items-center gap-1 px-2.5 py-1 rounded-full bg-white/5 hover:bg-amber-200/15 border border-white/10 hover:border-amber-200/40 text-[11px] font-mono-tech text-slate-200 hover:text-amber-100">
+          chipsEl.innerHTML = links.map((item, idx) => \`
+            <a href="\${item.href}" class="preview-card-link items-center gap-1 px-2.5 py-1 rounded-full bg-white/5 border \${chipColors[idx % chipColors.length]} text-[11px] font-mono-tech">
               <span>\${item.label}</span>
-              <span class="text-amber-200">↗</span>
+              <span class="opacity-80">↗</span>
             </a>
           \`).join('');
         }
@@ -2296,14 +2540,19 @@ export const gallery3d = `<!DOCTYPE html>
       }
 
       function syncModalContent(ed) {
-        document.getElementById('modal-edition-num').textContent = \`ED. \${ed.num}\`;
+        const badgeEl = document.getElementById('modal-edition-num');
+        badgeEl.textContent = \`ED. \${ed.num}\`;
+        badgeEl.style.color = ed.accent;
+        badgeEl.style.borderColor = ed.accent + '66';
+        badgeEl.style.backgroundColor = ed.accent + '1c';
+
         document.getElementById('modal-title').textContent = ed.title;
         document.getElementById('modal-subtitle').textContent = \`\${ed.year} · \${ed.subtitle}\`;
         document.getElementById('modal-description').textContent = ed.description;
         document.getElementById('modal-aesthetic').textContent = ed.aesthetic;
 
         const stackEl = document.getElementById('modal-stack');
-        stackEl.innerHTML = ed.stack.map(s => \`<span class="px-2.5 py-1 rounded-full text-[11px] bg-white/5 border border-white/10 text-slate-200">\${s}</span>\`).join('');
+        stackEl.innerHTML = ed.stack.map(s => \`<span class="px-2.5 py-1 rounded-full text-[11px] bg-white/5 border border-white/15 text-slate-200">\${s}</span>\`).join('');
 
         const hlEl = document.getElementById('modal-highlights');
         hlEl.innerHTML = ed.highlights.map(h => \`<li class="flex items-start gap-2"><span class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style="background:\${ed.accent};"></span><span>\${h}</span></li>\`).join('');
@@ -2342,7 +2591,7 @@ export const gallery3d = `<!DOCTYPE html>
         if (state.mode !== 'modal') return;
         modalEl.classList.add('modal-closed');
         const stage = document.getElementById('live-preview-stage');
-        if (stage) stage.innerHTML = ''; // Release modal iframe resources when returning to 3D hall
+        if (stage) stage.innerHTML = '';
         state.mode = 'explore';
         state.activeModalId = null;
         state.editMode = false;
@@ -2376,13 +2625,13 @@ export const gallery3d = `<!DOCTYPE html>
           iconPause.classList.remove('hidden');
           iconPause.classList.add('inline-flex');
           label.textContent = 'Touring';
-          btn.classList.add('border-amber-200/50', 'text-amber-200');
+          btn.classList.add('border-cyan-300/55', 'text-cyan-200');
         } else {
           iconPause.classList.add('hidden');
           iconPause.classList.remove('inline-flex');
           iconPlay.classList.remove('hidden');
           label.textContent = 'Auto-Tour';
-          btn.classList.remove('border-amber-200/50', 'text-amber-200');
+          btn.classList.remove('border-cyan-300/55', 'text-cyan-200');
         }
       }
 
@@ -2396,13 +2645,13 @@ export const gallery3d = `<!DOCTYPE html>
           iconOn.classList.remove('hidden');
           iconOn.classList.add('inline-flex');
           label.textContent = 'Ambient On';
-          btn.classList.add('text-amber-200', 'border-amber-200/40');
+          btn.classList.add('text-fuchsia-200', 'border-fuchsia-300/45');
         } else {
           iconOn.classList.add('hidden');
           iconOn.classList.remove('inline-flex');
           iconOff.classList.remove('hidden');
           label.textContent = 'Sound Off';
-          btn.classList.remove('text-amber-200', 'border-amber-200/40');
+          btn.classList.remove('text-fuchsia-200', 'border-fuchsia-300/45');
         }
       }
 
@@ -2425,7 +2674,7 @@ export const gallery3d = `<!DOCTYPE html>
           const btn = document.createElement('button');
           btn.className = 'flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition-all shrink-0';
           btn.dataset.dockId = ed.id;
-          btn.innerHTML = \`<span class="w-1.5 h-1.5 rounded-full" style="background:\${ed.accent};"></span><span class="font-mono-tech text-[10px] opacity-75">\${ed.num}</span><span class="hidden md:inline">\${ed.year}</span>\`;
+          btn.innerHTML = \`<span class="w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]" style="background:\${ed.accent}; color:\${ed.accent};"></span><span class="font-mono-tech text-[10px] opacity-85">\${ed.num}</span><span class="hidden md:inline">\${ed.year}</span>\`;
           btn.addEventListener('click', () => focusExhibit(ed.id, true));
           dock.appendChild(btn);
         });
@@ -2434,8 +2683,8 @@ export const gallery3d = `<!DOCTYPE html>
       function highlightDock(activeId) {
         document.querySelectorAll('#edition-dock button').forEach(btn => {
           const isMatch = btn.dataset.dockId === activeId;
-          btn.classList.toggle('bg-amber-200/20', isMatch);
-          btn.classList.toggle('text-amber-200', isMatch);
+          btn.classList.toggle('bg-white/15', isMatch);
+          btn.classList.toggle('text-white', isMatch);
         });
       }
 
@@ -2551,7 +2800,7 @@ export const gallery3d = `<!DOCTYPE html>
             const newUrl = document.getElementById('edit-url').value.trim();
             if (newUrl) {
               ed.url = newUrl;
-              ed.previewUrl = newUrl === './portfolio/' ? './portfolio/?preview=1' : newUrl;
+              ed.previewUrl = newUrl === './portfolio/' ? './portfolio/?preview=1' : newUrl === './projects/' ? './projects/?preview=1' : newUrl;
             }
             ed.description = document.getElementById('edit-desc').value.trim() || ed.description;
             saveEditions(editions);
@@ -2608,7 +2857,6 @@ export const gallery3d = `<!DOCTYPE html>
         state.keys[e.key.toLowerCase()] = false;
       });
 
-      // Touch / On-screen D-Pad
       document.querySelectorAll('.dpad-btn').forEach(btn => {
         const dir = btn.dataset.move;
         const start = (ev) => {
@@ -2628,7 +2876,6 @@ export const gallery3d = `<!DOCTYPE html>
         btn.addEventListener('pointercancel', stop);
       });
 
-      // Pointer Drag Look (mobile + unlocked desktop) & Locked Reticle Click
       const raycaster = new THREE.Raycaster();
       const pointerNDC = new THREE.Vector2();
 
@@ -2738,9 +2985,9 @@ export const gallery3d = `<!DOCTYPE html>
         const h = minimapCanvas.height;
         mCtx.clearRect(0, 0, w, h);
 
-        mCtx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+        mCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
         mCtx.fillRect(10, 6, w - 20, h - 12);
-        mCtx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+        mCtx.strokeStyle = state.palette === 'prism' ? 'rgba(192, 132, 252, 0.35)' : 'rgba(255, 255, 255, 0.22)';
         mCtx.lineWidth = 1;
         mCtx.strokeRect(10, 6, w - 20, h - 12);
 
@@ -2759,7 +3006,7 @@ export const gallery3d = `<!DOCTYPE html>
           const rz = mapZ(obs.minZ);
           const rw = Math.max(3, mapX(obs.maxX) - rx);
           const rh = Math.max(3, mapZ(obs.maxZ) - rz);
-          mCtx.fillStyle = obs.type === 'pedestal' ? 'rgba(240, 201, 125, 0.65)' : 'rgba(226, 232, 240, 0.45)';
+          mCtx.fillStyle = obs.type === 'pedestal' ? 'rgba(232, 121, 249, 0.65)' : 'rgba(148, 163, 184, 0.45)';
           mCtx.fillRect(rx, rz, rw, rh);
         });
 
@@ -2774,13 +3021,13 @@ export const gallery3d = `<!DOCTYPE html>
         mCtx.lineTo(-9, -16);
         mCtx.lineTo(9, -16);
         mCtx.closePath();
-        mCtx.fillStyle = 'rgba(240, 201, 125, 0.28)';
+        mCtx.fillStyle = state.palette === 'prism' ? 'rgba(56, 189, 248, 0.32)' : 'rgba(240, 201, 125, 0.28)';
         mCtx.fill();
         mCtx.restore();
 
         mCtx.beginPath();
         mCtx.arc(px, pz, 3.2, 0, Math.PI * 2);
-        mCtx.fillStyle = '#f0c97d';
+        mCtx.fillStyle = state.palette === 'prism' ? '#67e8f9' : '#f0c97d';
         mCtx.fill();
 
         if (radarCoords) {
@@ -2800,6 +3047,20 @@ export const gallery3d = `<!DOCTYPE html>
 
         const dt = Math.min(clock.getDelta(), 0.05);
         const elapsed = clock.elapsedTime;
+
+        // Animate custom GLSL dichroic thin-film sculptures & chromatic volumetric beams
+        monumentFrameMat.uniforms.uTime.value = elapsed;
+        for (let i = 0; i < dichroicMats.length; i++) {
+          dichroicMats[i].uniforms.uTime.value = elapsed;
+        }
+        if (state.palette === 'prism') {
+          for (let i = 0; i < volumetricRayMats.length; i++) {
+            const hueA = (0.52 + i * 0.27 + elapsed * 0.025) % 1.0;
+            const hueB = (hueA + 0.16) % 1.0;
+            volumetricRayMats[i].uniforms.uColorA.value.setHSL(hueA, 0.88, 0.64);
+            volumetricRayMats[i].uniforms.uColorB.value.setHSL(hueB, 0.88, 0.60);
+          }
+        }
 
         for (let i = 0; i < pedestalSculptures.length; i++) {
           const s = pedestalSculptures[i];
@@ -2902,7 +3163,6 @@ export const gallery3d = `<!DOCTYPE html>
           }
         }
 
-        // Proximity & Hover highlight for all 6 exhibits
         let closestId = null;
         let closestDist = 9.5;
         exhibitObjects.forEach(obj => {
@@ -2912,9 +3172,9 @@ export const gallery3d = `<!DOCTYPE html>
             closestId = obj.edition.id;
           }
           const isHighlighted = (state.hoveredId === obj.edition.id) || (closestId === obj.edition.id && dist < 8.5);
-          const targetOpacity = isHighlighted ? 0.94 : 0.34;
+          const targetOpacity = isHighlighted ? 0.96 : 0.48;
           obj.rimMat.opacity += (targetOpacity - obj.rimMat.opacity) * Math.min(1, dt * 8);
-          obj.accentLight.intensity += ((isHighlighted ? 0.95 : 0.50) - obj.accentLight.intensity) * Math.min(1, dt * 6);
+          obj.accentLight.intensity += ((isHighlighted ? 1.15 : 0.62) - obj.accentLight.intensity) * Math.min(1, dt * 6);
         });
         state.nearestId = closestId;
 
@@ -2924,7 +3184,10 @@ export const gallery3d = `<!DOCTYPE html>
           if (focusId) {
             const ed = editions.find(e => e.id === focusId);
             if (ed) {
-              document.getElementById('prompt-badge').textContent = \`ED. \${ed.num}\`;
+              const pb = document.getElementById('prompt-badge');
+              pb.textContent = \`ED. \${ed.num}\`;
+              pb.style.color = ed.accent;
+              pb.style.backgroundColor = ed.accent + '26';
               document.getElementById('prompt-title').textContent = \`\${ed.title} (\${ed.year})\`;
               promptWrap.classList.remove('hidden', 'opacity-0', 'translate-y-2');
               promptWrap.classList.add('opacity-100', 'translate-y-0');
@@ -2936,19 +3199,16 @@ export const gallery3d = `<!DOCTYPE html>
           drawMinimap();
         }
 
-        // Sync camera world & inverse matrices so CSS3D live websites lock sub-pixel-tight to WebGL cutouts
         camera.updateMatrixWorld();
         camera.matrixWorldInverse.copy(camera.matrixWorld).invert();
         updateCSS3DLayer();
         renderer.render(scene, camera);
       }
 
-      window.addEventListener('load', () => {
-        if (window.lucide) lucide.createIcons();
-        updateMouseLockUI();
-        updateLiveWallsUI();
-        animate();
-      });
+      if (window.lucide) lucide.createIcons();
+      updateMouseLockUI();
+      updateLiveWallsUI();
+      animate();
     })();
   </script>
 </body>
