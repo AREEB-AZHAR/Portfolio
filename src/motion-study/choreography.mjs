@@ -100,7 +100,7 @@ export const scenes = [
     travel: [0.5, 0.78],
   },
   {
-    name: "CRYPTOTRADER",
+    name: "CHRONOS",
     pose: "helix",
     center: [0.25, 0.5],
     scale: 1.08,

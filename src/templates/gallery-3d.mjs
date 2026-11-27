@@ -4,8 +4,8 @@ export const gallery3d = `<!DOCTYPE html>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Areeb Azhar — 3D Portfolio Archive Gallery</title>
-  <meta name="description" content="Walk through five real visual generations and canonical engineering projects inside Areeb Azhar's interactive 3D architectural portfolio archive gallery." />
-  <meta name="theme-color" content="#07080c" />
+  <meta name="description" content="Walk through five real visual generations and canonical engineering projects inside Areeb Azhar's interactive white-marble 3D architectural portfolio archive gallery." />
+  <meta name="theme-color" content="#efece5" />
   <link rel="icon" href="./mark.svg" type="image/svg+xml" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -21,7 +21,7 @@ export const gallery3d = `<!DOCTYPE html>
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #07080c;
+      background: #0d0f15;
       color: #f3f1ec;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       user-select: none;
@@ -31,12 +31,55 @@ export const gallery3d = `<!DOCTYPE html>
     .font-serif-display { font-family: 'Cormorant Garamond', Georgia, serif; }
     .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
 
-    #canvas-container {
+    /* Live 3D CSS3D Website Layer (behind alpha-cutout WebGL gallery for true depth occlusion) */
+    #css3d-container {
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
       z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+      perspective-origin: 50% 50%;
+    }
+    #css3d-camera {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform-origin: 0 0;
+      pointer-events: none;
+    }
+    .css3d-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 800px;
+      transform-origin: 0 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+      pointer-events: none;
+      background: #0b0d14;
+      visibility: hidden;
+    }
+    .css3d-screen iframe {
+      width: 1280px;
+      height: 800px;
+      border: 0;
+      display: block;
+      pointer-events: none;
+      background: #0b0d14;
+    }
+
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
       cursor: grab;
       touch-action: none;
     }
@@ -44,21 +87,21 @@ export const gallery3d = `<!DOCTYPE html>
     #canvas-container.hover-exhibit { cursor: pointer; }
     #canvas-container.locked-look { cursor: none; }
 
-    /* Subtle cinematic vignette & film grain */
+    /* Refined museum vignette & subtle architectural grain (tuned for bright white marble) */
     .cinema-vignette {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 5;
-      background: radial-gradient(circle at 50% 48%, transparent 48%, rgba(4, 5, 10, 0.72) 100%);
+      background: radial-gradient(circle at 50% 48%, transparent 56%, rgba(16, 18, 24, 0.28) 100%);
     }
     .cinema-grain {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 6;
-      opacity: 0.035;
-      background-image: radial-gradient(rgba(255,255,255,0.6) 1px, transparent 0);
+      opacity: 0.022;
+      background-image: radial-gradient(rgba(30,30,35,0.45) 1px, transparent 0);
       background-size: 3px 3px;
     }
 
@@ -68,53 +111,58 @@ export const gallery3d = `<!DOCTYPE html>
       left: 0;
       right: 0;
       height: 0;
-      background: #040508;
+      background: #07080c;
       z-index: 15;
       pointer-events: none;
       transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .letterbox-top { top: 0; }
     .letterbox-bottom { bottom: 0; }
-    body.cinema-bars .letterbox-bar { height: 40px; }
+    body.cinema-bars .letterbox-bar { height: 34px; }
     @media (max-width: 640px) {
-      body.cinema-bars .letterbox-bar { height: 22px; }
+      body.cinema-bars .letterbox-bar { height: 20px; }
     }
 
-    /* Glassmorphism panels */
+    /* High-contrast obsidian frosted glass HUD (crisp over luminous white marble) */
     .glass-panel {
-      background: rgba(11, 13, 20, 0.72);
+      background: rgba(12, 14, 20, 0.80);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 12px 32px rgba(10, 12, 18, 0.22);
     }
     .glass-pill {
-      background: rgba(12, 14, 22, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(14, 16, 24, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 24px rgba(10, 12, 18, 0.18);
     }
 
-    /* Crosshair reticle */
+    /* Crosshair reticle (dark outer ring + warm gold core for legibility on white marble) */
     #reticle {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
+      width: 11px;
+      height: 11px;
       border-radius: 9999px;
-      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      border: 1.75px solid rgba(20, 22, 30, 0.72);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.65);
       pointer-events: none;
       z-index: 12;
-      transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
     }
     body.pointer-locked #reticle {
-      border-color: rgba(240, 201, 125, 0.78);
+      border-color: rgba(180, 134, 52, 0.95);
+      box-shadow: 0 0 0 1.5px rgba(12, 14, 20, 0.55);
     }
     #reticle.active {
-      transform: translate(-50%, -50%) scale(1.85);
-      border-color: #f0c97d;
-      background-color: rgba(240, 201, 125, 0.22);
+      transform: translate(-50%, -50%) scale(1.9);
+      border-color: #d4a348;
+      background-color: rgba(240, 201, 125, 0.28);
+      box-shadow: 0 0 14px rgba(212, 163, 72, 0.55);
     }
 
     /* Scrollbar inside preview modal */
@@ -125,9 +173,9 @@ export const gallery3d = `<!DOCTYPE html>
     .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
     .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 9999px; }
 
-    /* Clickable preview cards inside modal (desktop + mobile touch friendly) */
+    /* Clickable preview / case-study chips inside modal (desktop + mobile touch friendly) */
     .preview-card-link {
-      display: block;
+      display: inline-flex;
       text-decoration: none;
       color: inherit;
       touch-action: manipulation;
@@ -135,11 +183,44 @@ export const gallery3d = `<!DOCTYPE html>
       transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, filter 0.2s ease;
     }
     .preview-card-link:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
+      transform: translateY(-1px);
+      filter: brightness(1.1);
     }
     .preview-card-link:active {
-      transform: scale(0.985);
+      transform: scale(0.98);
+    }
+
+    /* Live interactive modal iframe stage */
+    #live-preview-stage {
+      position: relative;
+      background: #0a0c12;
+      overflow: hidden;
+    }
+    #live-preview-stage .modal-iframe-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      overflow: hidden;
+    }
+    #live-preview-stage iframe.live-modal-frame {
+      border: 0;
+      display: block;
+      background: #0a0c12;
+      transition: opacity 0.28s ease;
+    }
+    #live-preview-stage iframe.live-modal-frame.fit-desktop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 800px;
+      transform-origin: top left;
+    }
+    #live-preview-stage iframe.live-modal-frame.native-responsive {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
     }
 
     /* Splash transition */
@@ -165,8 +246,8 @@ export const gallery3d = `<!DOCTYPE html>
     }
     #inspector-card {
       will-change: transform;
-      background: rgba(11, 13, 20, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(11, 13, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
     #inspector-modal.modal-closed #inspector-card {
@@ -192,8 +273,13 @@ export const gallery3d = `<!DOCTYPE html>
   </style>
 </head>
 <body class="cinema-bars">
-  <!-- 3D WebGL Canvas -->
-  <div id="canvas-container" aria-label="Interactive 3D Portfolio Gallery"></div>
+  <!-- Live 3D Website Canvas Layer (CSS3D synchronized behind WebGL depth cutouts) -->
+  <div id="css3d-container" aria-hidden="true">
+    <div id="css3d-camera"></div>
+  </div>
+
+  <!-- 3D WebGL Marble Architecture Canvas -->
+  <div id="canvas-container" aria-label="Interactive 3D White Marble Portfolio Gallery"></div>
 
   <!-- Cinematic overlays -->
   <div class="cinema-vignette"></div>
@@ -205,28 +291,28 @@ export const gallery3d = `<!DOCTYPE html>
   <div id="reticle" class="hidden"></div>
 
   <!-- =========================================================
-       SPLASH OVERLAY (Cinematic Movie Opening over Live 3D Scene)
+       SPLASH OVERLAY (Cinematic Opening over Live White-Marble 3D Scene)
        ========================================================= -->
-  <div id="splash-overlay" class="fixed inset-0 z-40 flex flex-col items-center justify-center px-6 text-center bg-gradient-to-b from-black/55 via-black/25 to-black/75 overflow-y-auto custom-scroll">
+  <div id="splash-overlay" class="fixed inset-0 z-40 flex flex-col items-center justify-center px-6 text-center bg-gradient-to-b from-slate-950/70 via-slate-950/45 to-slate-950/80 overflow-y-auto custom-scroll">
     <div class="max-w-2xl mx-auto flex flex-col items-center py-8">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill text-[11px] font-mono-tech tracking-[0.22em] uppercase text-amber-200/90 mb-6">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill text-[11px] font-mono-tech tracking-[0.22em] uppercase text-amber-200/95 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse-soft"></span>
-        Interactive 3D Exhibition · Five Designs + Archive
+        Live 3D Marble Pavilion · Five Designs + Archive
       </div>
 
-      <h1 class="font-serif-display text-5xl sm:text-7xl font-medium tracking-tight text-white leading-[0.96] drop-shadow-2xl">
+      <h1 class="font-serif-display text-5xl sm:text-7xl font-medium tracking-tight text-white leading-[0.96] drop-shadow-[0_6px_30px_rgba(0,0,0,0.65)]">
         Areeb Azhar
       </h1>
-      <p class="mt-3 text-xs sm:text-sm font-mono-tech tracking-[0.28em] uppercase text-amber-200/80">
+      <p class="mt-3 text-xs sm:text-sm font-mono-tech tracking-[0.28em] uppercase text-amber-200/90 drop-shadow">
         The Portfolio Archive
       </p>
 
-      <p class="mt-5 max-w-lg text-sm sm:text-base text-slate-200/85 leading-relaxed font-light">
-        Walk through real generations of interface craft, engineering experiments, and visual identity inside a living architectural gallery. Move your mouse to look freely around the hall, or click any monolith to inspect and enter that edition.
+      <p class="mt-5 max-w-lg text-sm sm:text-base text-slate-100/90 leading-relaxed font-light drop-shadow">
+        Walk through a white Calacatta marble pavilion where every monolith displays a live working edition of the portfolio. Move your mouse to look freely, or click any canvas to explore it interactively.
       </p>
 
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3.5">
-        <button id="btn-enter-gallery" class="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-amber-200 text-slate-950 font-semibold text-sm tracking-wide hover:bg-amber-100 transition-all shadow-[0_0_35px_rgba(240,201,125,0.35)]">
+        <button id="btn-enter-gallery" class="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-amber-200 text-slate-950 font-semibold text-sm tracking-wide hover:bg-amber-100 transition-all shadow-[0_0_35px_rgba(240,201,125,0.42)]">
           <span>Enter Gallery</span>
           <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-0.5"></i>
         </button>
@@ -237,24 +323,29 @@ export const gallery3d = `<!DOCTYPE html>
         </button>
       </div>
 
-      <div class="mt-5 flex flex-wrap items-center justify-center gap-4">
-        <a href="./portfolio/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-mono-tech tracking-wider uppercase text-amber-200/90 hover:text-amber-100 transition-colors">
+      <div class="mt-5 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <a href="./portfolio/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill text-xs font-mono-tech tracking-wider uppercase text-amber-200 hover:text-amber-100 transition-colors">
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
           <span>Latest Portfolio</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
-        <a href="./editions/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-mono-tech tracking-wider uppercase text-slate-300/85 hover:text-amber-200 transition-colors">
+        <a href="./projects/chronos/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill text-xs font-mono-tech tracking-wider uppercase text-sky-200 hover:text-sky-100 transition-colors">
+          <i data-lucide="orbit" class="w-3.5 h-3.5"></i>
+          <span>CHRONOS 3D</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+        </a>
+        <a href="./editions/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full glass-pill text-xs font-mono-tech tracking-wider uppercase text-slate-200 hover:text-amber-200 transition-colors">
           <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-          <span>2D Editions Index</span>
+          <span>2D Editions</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
 
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-mono-tech text-slate-300/75">
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-white">WASD / D-Pad</kbd> Walk</span>
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-white">Mouse / Drag</kbd> Look Around</span>
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-white">Click / E</kbd> Select Edition</span>
-        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-white">Esc</kbd> Free Cursor</span>
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-mono-tech text-slate-200/85">
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">WASD / D-Pad</kbd> Walk</span>
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">Mouse / Drag</kbd> Look Around</span>
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">Click / E</kbd> Inspect Edition</span>
+        <span class="inline-flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-black/45 border border-white/20 text-white">Esc</kbd> Free Cursor</span>
       </div>
     </div>
   </div>
@@ -268,7 +359,7 @@ export const gallery3d = `<!DOCTYPE html>
       <button id="btn-back-splash" class="flex items-center gap-2 text-left group" title="Return to Title Screen">
         <span class="w-2 h-2 rounded-full bg-amber-300 group-hover:scale-125 transition-transform"></span>
         <span class="font-serif-display text-base sm:text-lg leading-none text-white tracking-wide">Areeb Azhar</span>
-        <span class="hidden sm:inline text-[10px] font-mono-tech uppercase tracking-[0.2em] text-slate-400 border-l border-white/15 pl-2.5">Archive Hall</span>
+        <span class="hidden sm:inline text-[10px] font-mono-tech uppercase tracking-[0.2em] text-slate-300 border-l border-white/15 pl-2.5">Marble Hall</span>
       </button>
     </div>
 
@@ -277,6 +368,11 @@ export const gallery3d = `<!DOCTYPE html>
       <button id="btn-mouse-lock" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-amber-200 hover:border-amber-200/40 transition-colors" title="Bind mouse cursor to 3D camera (Esc to unlock)">
         <i data-lucide="crosshair" class="w-3.5 h-3.5"></i>
         <span class="hidden md:inline" id="label-mouse-lock">Lock Mouse</span>
+      </button>
+
+      <button id="btn-toggle-live" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-emerald-300 border-emerald-300/40 hover:border-emerald-300/70 transition-colors" title="Toggle live embedded websites on 3D gallery walls">
+        <i data-lucide="monitor-play" class="w-3.5 h-3.5"></i>
+        <span class="hidden lg:inline" id="label-live">Live Walls</span>
       </button>
 
       <a href="./editions/" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-200 hover:text-amber-200 hover:border-amber-200/40 transition-colors" title="Switch to 2D Five-Editions Index">
@@ -291,15 +387,15 @@ export const gallery3d = `<!DOCTYPE html>
 
       <button id="btn-toggle-cinema" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-amber-200 border-amber-200/35 hover:border-amber-200/60 transition-colors" title="Toggle Cinema Letterbox">
         <i data-lucide="clapperboard" class="w-3.5 h-3.5"></i>
-        <span class="hidden lg:inline">Cinema</span>
+        <span class="hidden xl:inline">Cinema</span>
       </button>
 
       <button id="btn-toggle-audio" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full glass-pill text-xs font-medium text-slate-300 hover:text-white transition-colors" title="Toggle Ambient Gallery Sound">
         <span id="icon-audio" class="inline-flex"><span id="icon-audio-off" class="inline-flex"><i data-lucide="volume-x" class="w-3.5 h-3.5"></i></span><span id="icon-audio-on" class="hidden"><i data-lucide="volume-2" class="w-3.5 h-3.5"></i></span></span>
-        <span class="hidden lg:inline" id="label-audio">Sound Off</span>
+        <span class="hidden xl:inline" id="label-audio">Sound Off</span>
       </button>
 
-      <button id="btn-toggle-help" class="inline-flex items-center justify-center w-9 h-9 rounded-full glass-pill text-slate-300 hover:text-amber-200 transition-colors" title="Controls & Info" aria-label="Controls & Info">
+      <button id="btn-toggle-help" class="inline-flex items-center justify-center w-9 h-9 rounded-full glass-pill text-slate-200 hover:text-amber-200 transition-colors" title="Controls & Info" aria-label="Controls & Info">
         <i data-lucide="compass" class="w-4 h-4"></i>
       </button>
     </div>
@@ -309,11 +405,11 @@ export const gallery3d = `<!DOCTYPE html>
        PROXIMITY / HOVER EXHIBIT PROMPT
        ========================================================= -->
   <div id="exhibit-prompt" class="fixed left-1/2 -translate-x-1/2 bottom-28 sm:bottom-24 z-20 pointer-events-auto opacity-0 translate-y-2 transition-all duration-300 hidden max-w-[92vw]">
-    <button id="btn-prompt-inspect" class="flex items-center gap-2.5 sm:gap-3 px-4 py-2.5 rounded-full glass-panel border-amber-200/40 shadow-[0_12px_40px_rgba(0,0,0,0.65)] hover:bg-amber-200/15 transition-all">
+    <button id="btn-prompt-inspect" class="flex items-center gap-2.5 sm:gap-3 px-4 py-2.5 rounded-full glass-panel border-amber-200/40 shadow-[0_12px_40px_rgba(0,0,0,0.45)] hover:bg-amber-200/15 transition-all">
       <span id="prompt-badge" class="px-2 py-0.5 rounded-full bg-amber-200/20 text-amber-200 font-mono-tech text-[10px] uppercase tracking-wider shrink-0">01</span>
-      <span id="prompt-title" class="text-xs sm:text-sm font-medium text-white truncate">The First Portfolio (2026)</span>
+      <span id="prompt-title" class="text-xs sm:text-sm font-medium text-white truncate">The First Portfolio (Mar 2026)</span>
       <span class="inline-flex items-center gap-1 text-[10px] font-mono-tech text-amber-200/90 border-l border-white/15 pl-2.5 shrink-0">
-        <kbd class="hidden sm:inline px-1.5 py-0.5 rounded bg-white/10 text-white">Click / E</kbd> Inspect
+        <kbd class="hidden sm:inline px-1.5 py-0.5 rounded bg-white/10 text-white">Click / E</kbd> Inspect Live
       </span>
     </button>
   </div>
@@ -322,19 +418,19 @@ export const gallery3d = `<!DOCTYPE html>
        BOTTOM EXHIBITION NAVIGATION DOCK + MINIMAP
        ========================================================= -->
   <nav id="hud-bottom" class="fixed bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 z-20 flex items-end justify-between gap-2.5 sm:gap-3 pointer-events-none opacity-0 transition-opacity duration-500">
-    <!-- Left: Touch / Mobile Movement D-Pad (also clickable on desktop) -->
+    <!-- Left: Touch / Mobile Movement D-Pad -->
     <div id="mobile-dpad" class="pointer-events-auto flex flex-col items-center gap-1 shrink-0">
-      <button data-move="forward" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-300" aria-label="Walk Forward">
+      <button data-move="forward" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-200" aria-label="Walk Forward">
         <i data-lucide="chevron-up" class="w-4 h-4"></i>
       </button>
       <div class="flex items-center gap-1">
-        <button data-move="left" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-300" aria-label="Strafe Left">
+        <button data-move="left" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-200" aria-label="Strafe Left">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
         </button>
-        <button data-move="backward" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-300" aria-label="Walk Backward">
+        <button data-move="backward" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-200" aria-label="Walk Backward">
           <i data-lucide="chevron-down" class="w-4 h-4"></i>
         </button>
-        <button data-move="right" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-300" aria-label="Strafe Right">
+        <button data-move="right" class="dpad-btn w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass-pill flex items-center justify-center text-slate-200" aria-label="Strafe Right">
           <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
       </div>
@@ -350,7 +446,7 @@ export const gallery3d = `<!DOCTYPE html>
     <!-- Right: Live Top-Down Gallery Radar -->
     <div class="pointer-events-auto hidden sm:flex flex-col items-center p-2 rounded-2xl glass-panel shrink-0" title="Gallery Floorplan Radar">
       <canvas id="minimap-canvas" width="96" height="120" class="rounded-lg"></canvas>
-      <span id="radar-coords" class="mt-1 text-[9px] font-mono-tech text-slate-400 tracking-wider">HALL · ENTRANCE</span>
+      <span id="radar-coords" class="mt-1 text-[9px] font-mono-tech text-slate-300 tracking-wider">HALL · ENTRANCE</span>
     </div>
   </nav>
 
@@ -362,25 +458,25 @@ export const gallery3d = `<!DOCTYPE html>
       <h3 class="text-xs font-mono-tech uppercase tracking-[0.18em] text-amber-200">Gallery Controls</h3>
       <button id="btn-close-help" class="text-slate-400 hover:text-white p-1" aria-label="Close help"><i data-lucide="x" class="w-4 h-4"></i></button>
     </div>
-    <ul class="space-y-2 text-xs text-slate-300">
+    <ul class="space-y-2 text-xs text-slate-200">
       <li class="flex justify-between"><span>Walk / Strafe</span><span class="font-mono-tech text-white">W A S D / D-Pad</span></li>
       <li class="flex justify-between"><span>Free Mouse Look</span><span class="font-mono-tech text-white">Click Scene</span></li>
       <li class="flex justify-between"><span>Release Cursor</span><span class="font-mono-tech text-white">Esc</span></li>
-      <li class="flex justify-between"><span>Inspect Exhibit</span><span class="font-mono-tech text-white">Click / E</span></li>
+      <li class="flex justify-between"><span>Inspect Live Site</span><span class="font-mono-tech text-white">Click / E</span></li>
       <li class="flex justify-between"><span>Jump to Edition</span><span class="font-mono-tech text-white">Keys 1 – 6</span></li>
     </ul>
-    <p class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-400 leading-relaxed">
-      Tip: Aim the center crosshair at any monolith and click to inspect it. Press <strong class="text-amber-200 font-medium">Esc</strong> any time to unlock your cursor for the top HUD.
+    <p class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 leading-relaxed">
+      Every monolith streams the real website design directly on the marble wall. Click any exhibit to scroll and interact with it live, or press <strong class="text-amber-200 font-medium">Esc</strong> to free your cursor.
     </p>
   </div>
 
   <!-- =========================================================
-       PORTFOLIO INSPECTOR & INTERACTIVE PREVIEW MODAL
+       PORTFOLIO INSPECTOR & LIVE INTERACTIVE WEBSITE MODAL
        ========================================================= -->
-  <div id="inspector-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-black/80 modal-closed" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div id="inspector-card" class="relative w-full max-w-5xl max-h-[92vh] rounded-2xl sm:rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden">
+  <div id="inspector-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-black/75 backdrop-blur-sm modal-closed" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="inspector-card" class="relative w-full max-w-6xl max-h-[93vh] rounded-2xl sm:rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden">
       <!-- Top Bar -->
-      <div class="flex items-center justify-between gap-2 sm:gap-3 px-4 sm:px-5 py-3 sm:py-3.5 border-b border-white/10 bg-black/30">
+      <div class="flex items-center justify-between gap-2 sm:gap-3 px-4 sm:px-5 py-3 sm:py-3.5 border-b border-white/10 bg-black/35">
         <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
           <span id="modal-edition-num" class="px-2.5 py-1 rounded-full text-[11px] font-mono-tech uppercase tracking-widest bg-amber-200/15 text-amber-200 border border-amber-200/30 shrink-0">ED. 01</span>
           <div class="min-w-0">
@@ -396,7 +492,8 @@ export const gallery3d = `<!DOCTYPE html>
           <button id="btn-modal-next" class="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-200 transition-colors" title="Next Portfolio Edition" aria-label="Next Portfolio Edition">
             <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
-          <button id="btn-modal-edit-toggle" class="ml-0.5 sm:ml-1 inline-flex items-center justify-center gap-1.5 h-9 sm:h-8 px-2.5 sm:px-3 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-xs text-slate-200 transition-colors" aria-label="Customize Exhibit">
+          <!-- Localhost-only Customizer Trigger (strictly hidden on all public deployments) -->
+          <button id="btn-modal-edit-toggle" class="hidden ml-0.5 sm:ml-1 items-center justify-center gap-1.5 h-9 sm:h-8 px-2.5 sm:px-3 rounded-full bg-amber-200/10 hover:bg-amber-200/20 border border-amber-200/30 text-xs text-amber-200 transition-colors" aria-label="Customize Exhibit (Localhost Only)" title="Localhost Curation Mode">
             <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
             <span class="hidden sm:inline">Customize</span>
           </button>
@@ -408,33 +505,48 @@ export const gallery3d = `<!DOCTYPE html>
 
       <!-- Body -->
       <div class="flex-1 overflow-y-auto custom-scroll grid grid-cols-1 lg:grid-cols-12">
-        <!-- Left: Live Interactive Portfolio Mockup Viewport -->
-        <div class="lg:col-span-8 p-3.5 sm:p-6 bg-black/40 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col">
-          <!-- Mock Browser Chrome -->
-          <div class="rounded-2xl overflow-hidden border border-white/15 shadow-2xl flex flex-col flex-1 min-h-[320px] sm:min-h-[360px]">
-            <div class="flex items-center justify-between px-3.5 py-2 bg-[#12151f] border-b border-white/10">
-              <div class="flex items-center gap-1.5">
+        <!-- Left: Live Interactive Embedded Website Viewport -->
+        <div class="lg:col-span-8 p-3.5 sm:p-5 bg-black/45 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col">
+          <!-- Browser Chrome -->
+          <div class="rounded-2xl overflow-hidden border border-white/15 shadow-2xl flex flex-col flex-1 min-h-[360px] sm:min-h-[440px]">
+            <div class="flex items-center justify-between gap-2 px-3.5 py-2 bg-[#12151f] border-b border-white/10">
+              <div class="flex items-center gap-1.5 shrink-0">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-400/80"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-amber-300/80"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/80"></span>
               </div>
-              <div id="mock-url-bar" class="px-3 py-0.5 rounded-md bg-black/45 text-[11px] font-mono-tech text-slate-300 truncate max-w-[60%]">
-                areebazhar.dev/designs/original-neon
+              <div id="mock-url-bar" class="px-3 py-0.5 rounded-md bg-black/45 text-[11px] font-mono-tech text-slate-300 truncate max-w-[52%]">
+                areebazhar.dev/designs/original-neon/
               </div>
-              <span class="text-[10px] font-mono-tech text-amber-200/80 uppercase">Interactive</span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button id="btn-frame-scale" type="button" class="px-2 py-0.5 rounded bg-white/5 hover:bg-white/15 border border-white/10 text-[10px] font-mono-tech text-slate-300 uppercase transition-colors" title="Toggle Desktop Fit vs Responsive 1:1">
+                  Fit
+                </button>
+                <button id="btn-frame-reload" type="button" class="w-6 h-6 rounded bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-amber-200 transition-colors" title="Reload Live Preview" aria-label="Reload Live Preview">
+                  <i data-lucide="rotate-cw" class="w-3 h-3"></i>
+                </button>
+                <span class="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono-tech text-emerald-300 uppercase">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>Live
+                </span>
+              </div>
             </div>
 
-            <!-- Dynamic Interactive Preview Container -->
-            <div id="live-preview-stage" class="flex-1 overflow-y-auto custom-scroll">
-              <!-- Rendered per edition -->
+            <!-- Dynamic Live Website Iframe Container -->
+            <div id="live-preview-stage" class="flex-1 min-h-[340px] sm:min-h-[410px]">
+              <!-- Live interactive iframe rendered per edition -->
             </div>
           </div>
-          <p class="mt-2.5 text-[11px] font-mono-tech text-slate-400/80 text-center">
-            Click or tap any featured project card above to open its canonical case study briefing.
-          </p>
+
+          <!-- Quick-Jump Canonical Case Study Chips -->
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2">
+            <span class="text-[10px] font-mono-tech uppercase tracking-[0.18em] text-slate-400">Featured Briefings</span>
+            <div id="modal-case-chips" class="flex flex-wrap items-center gap-1.5">
+              <!-- Populated per edition -->
+            </div>
+          </div>
         </div>
 
-        <!-- Right: Curatorial Notes + Tech Stack + Customizer -->
+        <!-- Right: Curatorial Notes + Tech Stack + Localhost-Only Customizer -->
         <div class="lg:col-span-4 p-4 sm:p-6 flex flex-col justify-between gap-5">
           <!-- View Mode -->
           <div id="modal-info-view" class="space-y-5">
@@ -459,10 +571,10 @@ export const gallery3d = `<!DOCTYPE html>
             </div>
           </div>
 
-          <!-- Edit Mode (Customizer) -->
-          <form id="modal-edit-form" class="space-y-3.5 hidden">
+          <!-- Edit Mode (Localhost-Only Customizer — strictly inaccessible publicly) -->
+          <form id="modal-edit-form" class="space-y-3.5 hidden" aria-hidden="true">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono-tech uppercase tracking-[0.2em] text-amber-200">Customize Exhibit</span>
+              <span class="text-[10px] font-mono-tech uppercase tracking-[0.2em] text-amber-200">Customize Exhibit · Localhost</span>
               <button type="button" id="btn-reset-exhibit" class="text-[11px] text-slate-400 hover:text-amber-200 underline">Reset Default</button>
             </div>
             <div>
@@ -516,6 +628,23 @@ export const gallery3d = `<!DOCTYPE html>
       'use strict';
 
       // ============================================================
+      // 0. ENVIRONMENT GUARDS (LOCALHOST-ONLY CUSTOMIZATION)
+      // ============================================================
+      const isLocalHost = (() => {
+        const h = (window.location.hostname || '').toLowerCase();
+        return (
+          h === 'localhost' ||
+          h === '127.0.0.1' ||
+          h === '::1' ||
+          h === '[::1]' ||
+          h.endsWith('.localhost') ||
+          window.location.protocol === 'file:'
+        );
+      })();
+
+      const isCoarsePointer = Boolean(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+
+      // ============================================================
       // 1. REAL LIVE PORTFOLIO EDITIONS DATA (Grounded to AREEB-AZHAR/Portfolio)
       // ============================================================
       const DEFAULT_EDITIONS = [
@@ -530,8 +659,15 @@ export const gallery3d = `<!DOCTYPE html>
           accent: '#34d399',
           bgHex: '#07120e',
           url: './designs/original-neon/',
+          previewUrl: './designs/original-neon/',
           stack: ['HTML5', 'CSS3', 'Vanilla JS', 'Canvas FX'],
           highlights: ['Preserved historical snapshot (16fbb13)', 'Custom cursor & neural background canvas', 'Canonical links into live project briefings'],
+          featuredLinks: [
+            { label: 'CHRONOS 3D', href: './projects/chronos/' },
+            { label: 'RustBot', href: './projects/rustbot/' },
+            { label: 'Degree Verification', href: './projects/degree-verification/' },
+            { label: 'Bunetto', href: './projects/bunetto/' }
+          ],
           themeKey: 'terminal',
           wing: 'left',
           zPos: 12
@@ -547,8 +683,14 @@ export const gallery3d = `<!DOCTYPE html>
           accent: '#38bdf8',
           bgHex: '#0b1022',
           url: './designs/glass-systems/',
+          previewUrl: './designs/glass-systems/',
           stack: ['Glassmorphism', 'GSAP', 'Lenis', 'Responsive UI'],
           highlights: ['Preserved historical snapshot (425829f)', 'Floating code windows & glass elevation', 'Direct links to full technical case studies'],
+          featuredLinks: [
+            { label: 'CHRONOS 3D', href: './projects/chronos/' },
+            { label: 'Tally Ledger', href: './projects/tally/' },
+            { label: 'AI Game Agents', href: './projects/ai-game-agents/' }
+          ],
           themeKey: 'glass',
           wing: 'right',
           zPos: 12
@@ -564,8 +706,15 @@ export const gallery3d = `<!DOCTYPE html>
           accent: '#ef4444',
           bgHex: '#f5f2eb',
           url: './designs/project-showcase/',
+          previewUrl: './designs/project-showcase/',
           stack: ['Editorial Grid', 'Vite', 'Certificates', 'Searchable Archive'],
           highlights: ['Preserved historical snapshot (a9d3640)', 'Rust Internship certificate & project media', 'High-contrast print-inspired rhythm'],
+          featuredLinks: [
+            { label: 'CHRONOS 3D', href: './projects/chronos/' },
+            { label: 'Degree Verification', href: './projects/degree-verification/' },
+            { label: 'RustBot', href: './projects/rustbot/' },
+            { label: 'Bunetto', href: './projects/bunetto/' }
+          ],
           themeKey: 'swiss',
           wing: 'left',
           zPos: -2
@@ -577,12 +726,19 @@ export const gallery3d = `<!DOCTYPE html>
           title: 'Project Archive Lab',
           subtitle: '19 Canonical Engineering Case Studies',
           aesthetic: 'Electric saffron accents, bold architectural cards, searchable technical index.',
-          description: 'The complete canonical archive uniting 19 software engineering projects — from RustBot, GraviPop, and Tally to Hyperledger Degree Verification, CryptoTrader, Bunetto, and Unity FYP.',
+          description: 'The complete canonical archive uniting 19 software engineering projects — led by CHRONOS (3D Cosmic Timeline), RustBot, GraviPop, Tally, Hyperledger Degree Verification, Bunetto, and Unity FYP.',
           accent: '#facc15',
           bgHex: '#18181b',
           url: './projects/',
-          stack: ['Rust', 'React 19', 'Hyperledger', 'Flutter / Unity'],
-          highlights: ['19 full project pages with architecture flows', 'Real screenshots, icons & repo links', 'Filterable by stack & capability pillar'],
+          previewUrl: './projects/?preview=1',
+          stack: ['Next.js 16', 'Three.js', 'Rust', 'Hyperledger / Unity'],
+          highlights: ['19 full project pages with architecture flows', 'CHRONOS — 30-epoch 3D cosmic hyperspace journey', 'Filterable by stack & capability pillar'],
+          featuredLinks: [
+            { label: 'CHRONOS 3D', href: './projects/chronos/' },
+            { label: 'GraviPop Rust', href: './projects/gravipop/' },
+            { label: 'Unity Minigame Suite', href: './projects/unity-minigame-suite/' },
+            { label: 'Amazing Giant Flowers', href: './projects/amazing-giant-flowers/' }
+          ],
           themeKey: 'brutalist',
           wing: 'right',
           zPos: -2
@@ -598,8 +754,14 @@ export const gallery3d = `<!DOCTYPE html>
           accent: '#e2c285',
           bgHex: '#09090b',
           url: './designs/cinematic-sculpture/',
+          previewUrl: './designs/cinematic-sculpture/',
           stack: ['Three.js', 'Manrope', 'Static MPA', 'Editorial Motion'],
           highlights: ['Preserved historical snapshot (f81b386)', 'Procedural metallic AA sculpture identity', 'Spacious monochrome editorial storytelling'],
+          featuredLinks: [
+            { label: 'CHRONOS 3D', href: './projects/chronos/' },
+            { label: 'GraviPop Rust', href: './projects/gravipop/' },
+            { label: 'Tally Ledger', href: './projects/tally/' }
+          ],
           themeKey: 'noir',
           wing: 'left',
           zPos: -16
@@ -611,41 +773,66 @@ export const gallery3d = `<!DOCTYPE html>
           title: 'A Living Ribbon',
           subtitle: 'Current Flagship · 14-Scene Filament · 28fb767',
           aesthetic: 'Warm architectural gold, obsidian reflections, transforming beveled Three.js ribbon.',
-          description: 'The latest flagship cinematic portfolio: one continuous living filament and transforming sculptural ribbon carry all 14 scenes from the opening AA signature through 6 featured projects and contact.',
+          description: 'The latest flagship cinematic portfolio: one continuous living filament and transforming sculptural ribbon carry all 14 scenes from the opening AA signature through 6 featured projects (including CHRONOS) and contact.',
           accent: '#f59e0b',
           bgHex: '#0c0a09',
           url: './portfolio/',
+          previewUrl: './portfolio/?preview=1',
           stack: ['Three.js', 'Vite 8', 'Living Filament', 'View Transitions'],
           highlights: ['14-scene native-scroll horizontal story', 'Fixed-topology transforming metallic ribbon', 'First-visit animation consent & full briefings'],
+          featuredLinks: [
+            { label: 'CHRONOS 3D', href: './projects/chronos/' },
+            { label: 'RustBot', href: './projects/rustbot/' },
+            { label: 'Degree Verification', href: './projects/degree-verification/' }
+          ],
           themeKey: 'spatial',
           wing: 'right',
           zPos: -16
         }
       ];
 
-      const STORAGE_KEY = 'areeb_3d_portfolio_live_v1';
-      const isCoarsePointer = Boolean(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+      const STORAGE_KEY = 'areeb_3d_portfolio_live_v2';
 
       function loadEditions() {
-        try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          if (saved) {
-            const parsed = JSON.parse(saved);
-            if (Array.isArray(parsed) && parsed.length === DEFAULT_EDITIONS.length) {
-              return parsed;
+        // Strictly ignore localStorage overrides on public deployments
+        if (isLocalHost) {
+          try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+              const parsed = JSON.parse(saved);
+              if (Array.isArray(parsed) && parsed.length === DEFAULT_EDITIONS.length) {
+                return parsed.map((item, i) => Object.assign({}, DEFAULT_EDITIONS[i], item));
+              }
             }
-          }
-        } catch (e) { /* sandbox storage fallback */ }
+          } catch (e) { /* sandbox storage fallback */ }
+        }
         return DEFAULT_EDITIONS.map(e => Object.assign({}, e));
       }
 
       function saveEditions(list) {
+        if (!isLocalHost) return;
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
         } catch (e) { /* ignore */ }
       }
 
       let editions = loadEditions();
+
+      // Configure localhost-only Customizer UI visibility immediately
+      (function configureCustomizerAccess() {
+        const editBtn = document.getElementById('btn-modal-edit-toggle');
+        const editForm = document.getElementById('modal-edit-form');
+        if (isLocalHost) {
+          if (editBtn) {
+            editBtn.classList.remove('hidden');
+            editBtn.classList.add('inline-flex');
+          }
+          if (editForm) editForm.removeAttribute('aria-hidden');
+        } else {
+          if (editBtn) editBtn.remove();
+          if (editForm) editForm.remove();
+        }
+      })();
 
       // ============================================================
       // 2. APP STATE
@@ -656,6 +843,8 @@ export const gallery3d = `<!DOCTYPE html>
         tourTime: 0,
         cinemaBars: true,
         audioEnabled: false,
+        liveWalls: true,
+        modalFitDesktop: true,
         hoveredId: null,
         nearestId: null,
         activeModalId: null,
@@ -670,9 +859,7 @@ export const gallery3d = `<!DOCTYPE html>
         targetYaw: 0,
         targetPitch: 0.02,
         bobPhase: 0,
-        // Smooth camera glide state
         glide: null,
-        // Inputs
         keys: {},
         touchMove: { forward: false, backward: false, left: false, right: false },
         isDragging: false,
@@ -685,6 +872,8 @@ export const gallery3d = `<!DOCTYPE html>
       const rightVec = new THREE.Vector3();
       const wishDir = new THREE.Vector3();
       const centerNDC = new THREE.Vector2(0, 0);
+      const scratchPos = new THREE.Vector3();
+      const scratchCamSpace = new THREE.Vector3();
 
       // ============================================================
       // 3. WEB AUDIO API AMBIENT CINEMA SOUNDSCAPE
@@ -702,7 +891,6 @@ export const gallery3d = `<!DOCTYPE html>
         masterGain.gain.value = 0.0;
         masterGain.connect(audioCtx.destination);
 
-        // Lush warm museum pad (D2, A2, F#3, C#4 subtle detuned)
         const freqs = [73.42, 110.0, 146.83, 220.0];
         const filter = audioCtx.createBiquadFilter();
         filter.type = 'lowpass';
@@ -759,8 +947,188 @@ export const gallery3d = `<!DOCTYPE html>
       }
 
       // ============================================================
-      // 4. PROCEDURAL HIGH-RES PORTFOLIO ARTWORK TEXTURE GENERATOR
+      // 4. PROCEDURAL WHITE CALACATTA / CARRARA MARBLE & GALLERY TEXTURES
       // ============================================================
+      function createMarbleTextures(options = {}) {
+        const size = 1024;
+        const repeatX = options.repeatX || 4;
+        const repeatY = options.repeatY || 2;
+        const seed = options.seed || 17;
+        const isCeiling = Boolean(options.isCeiling);
+
+        const diffCanvas = document.createElement('canvas');
+        diffCanvas.width = size;
+        diffCanvas.height = size;
+        const ctx = diffCanvas.getContext('2d');
+
+        const bumpCanvas = document.createElement('canvas');
+        bumpCanvas.width = size;
+        bumpCanvas.height = size;
+        const bCtx = bumpCanvas.getContext('2d');
+
+        // Deterministic PRNG for repeatable organic veining
+        let s = seed >>> 0;
+        function rand() {
+          s = (s * 1664525 + 1013904223) >>> 0;
+          return s / 4294967296;
+        }
+
+        // 1. Luminous alabaster white Venetian marble paint base
+        const baseGrad = ctx.createLinearGradient(0, 0, size, size);
+        baseGrad.addColorStop(0, isCeiling ? '#f6f5f1' : '#f4f2ed');
+        baseGrad.addColorStop(0.5, isCeiling ? '#efede8' : '#edeae3');
+        baseGrad.addColorStop(1, isCeiling ? '#f5f3ee' : '#f2f0ea');
+        ctx.fillStyle = baseGrad;
+        ctx.fillRect(0, 0, size, size);
+
+        bCtx.fillStyle = '#c8c8c8';
+        bCtx.fillRect(0, 0, size, size);
+
+        // 2. Soft feathered mineral clouding (painted marble wash depth)
+        for (let i = 0; i < 42; i++) {
+          const cx = rand() * size;
+          const cy = rand() * size;
+          const rad = 110 + rand() * 240;
+          const warm = rand() > 0.55;
+          const g = ctx.createRadialGradient(cx, cy, rad * 0.08, cx, cy, rad);
+          g.addColorStop(0, warm ? 'rgba(222, 214, 198, 0.22)' : 'rgba(202, 208, 218, 0.20)');
+          g.addColorStop(1, 'rgba(244, 242, 237, 0)');
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, size, size);
+        }
+
+        // Helper: draw organic branching marble vein with wraparound offsets for seamless tiling
+        function drawVeinPath(targetCtx, pts, width, strokeColor, blurPx) {
+          const offsets = [0, -size, size];
+          targetCtx.save();
+          targetCtx.lineCap = 'round';
+          targetCtx.lineJoin = 'round';
+          targetCtx.lineWidth = width;
+          targetCtx.strokeStyle = strokeColor;
+          if (blurPx > 0) {
+            targetCtx.shadowColor = strokeColor;
+            targetCtx.shadowBlur = blurPx;
+          }
+          for (let ox = 0; ox < offsets.length; ox++) {
+            for (let oy = 0; oy < offsets.length; oy++) {
+              const dx = offsets[ox];
+              const dy = offsets[oy];
+              targetCtx.beginPath();
+              targetCtx.moveTo(pts[0][0] + dx, pts[0][1] + dy);
+              for (let k = 1; k < pts.length; k++) {
+                targetCtx.lineTo(pts[k][0] + dx, pts[k][1] + dy);
+              }
+              targetCtx.stroke();
+            }
+          }
+          targetCtx.restore();
+        }
+
+        // 3. Broad Carrara mineral veins + delicate Calacatta champagne-gold rivers
+        const veinCount = isCeiling ? 11 : 16;
+        for (let v = 0; v < veinCount; v++) {
+          const isGold = !isCeiling && v % 4 === 1;
+          const pts = [];
+          let x = rand() * size;
+          let y = rand() * size;
+          const steps = 26 + Math.floor(rand() * 18);
+          let angle = -0.58 + (rand() - 0.5) * 0.55; // diagonal marble flow
+
+          for (let k = 0; k < steps; k++) {
+            pts.push([x, y]);
+            angle += (rand() - 0.5) * 0.42;
+            const stepLen = 22 + rand() * 34;
+            x += Math.cos(angle) * stepLen;
+            y += Math.sin(angle) * stepLen;
+          }
+
+          // Soft hazy under-glaze
+          drawVeinPath(
+            ctx,
+            pts,
+            (isCeiling ? 8 : 13) + rand() * 12,
+            isGold ? 'rgba(205, 182, 134, 0.14)' : 'rgba(166, 174, 188, 0.16)',
+            14
+          );
+
+          // Primary mineral vein
+          drawVeinPath(
+            ctx,
+            pts,
+            (isCeiling ? 1.8 : 2.4) + rand() * 2.6,
+            isGold ? 'rgba(188, 152, 86, 0.36)' : 'rgba(122, 130, 146, 0.38)',
+            3
+          );
+
+          // Bump impression along vein
+          drawVeinPath(bCtx, pts, 3.0, 'rgba(90, 90, 90, 0.35)', 2);
+
+          // Feathery branching hairline tributaries
+          const branchCount = 2 + Math.floor(rand() * 3);
+          for (let b = 0; b < branchCount; b++) {
+            const startIdx = Math.floor(pts.length * (0.2 + rand() * 0.6));
+            const bPts = [pts[startIdx].slice()];
+            let bx = bPts[0][0];
+            let by = bPts[0][1];
+            let bAng = angle + (rand() > 0.5 ? 0.52 : -0.52) + (rand() - 0.5) * 0.35;
+            for (let m = 0; m < 10; m++) {
+              bAng += (rand() - 0.5) * 0.48;
+              bx += Math.cos(bAng) * (14 + rand() * 20);
+              by += Math.sin(bAng) * (14 + rand() * 20);
+              bPts.push([bx, by]);
+            }
+            drawVeinPath(
+              ctx,
+              bPts,
+              0.8 + rand() * 1.1,
+              isGold ? 'rgba(196, 168, 114, 0.24)' : 'rgba(145, 153, 166, 0.24)',
+              1
+            );
+          }
+        }
+
+        // 4. Fine luminous white crystalline highlights (painted Venetian sheen)
+        for (let i = 0; i < 180; i++) {
+          const sx = rand() * size;
+          const sy = rand() * size;
+          const sw = 12 + rand() * 48;
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+          ctx.fillRect(sx, sy, sw, 1.5);
+        }
+
+        // 5. Subtle architectural marble slab seams (2x2 stone panel joints)
+        ctx.strokeStyle = 'rgba(176, 172, 164, 0.24)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(1, 1, size - 2, size - 2);
+        ctx.beginPath();
+        ctx.moveTo(size / 2, 0); ctx.lineTo(size / 2, size);
+        ctx.moveTo(0, size / 2); ctx.lineTo(size, size / 2);
+        ctx.stroke();
+
+        bCtx.strokeStyle = '#686868';
+        bCtx.lineWidth = 3;
+        bCtx.strokeRect(1, 1, size - 2, size - 2);
+        bCtx.beginPath();
+        bCtx.moveTo(size / 2, 0); bCtx.lineTo(size / 2, size);
+        bCtx.moveTo(0, size / 2); bCtx.lineTo(size, size / 2);
+        bCtx.stroke();
+
+        const map = new THREE.CanvasTexture(diffCanvas);
+        map.wrapS = THREE.RepeatWrapping;
+        map.wrapT = THREE.RepeatWrapping;
+        map.repeat.set(repeatX, repeatY);
+        map.anisotropy = 8;
+
+        const bump = new THREE.CanvasTexture(bumpCanvas);
+        bump.wrapS = THREE.RepeatWrapping;
+        bump.wrapT = THREE.RepeatWrapping;
+        bump.repeat.set(repeatX, repeatY);
+        bump.anisotropy = 4;
+
+        return { map, bump };
+      }
+
+      // Procedural fallback artwork texture (shown while live iframe boots or when Live Walls toggled off)
       function createPortfolioTexture(ed) {
         const canvas = document.createElement('canvas');
         canvas.width = 1024;
@@ -857,8 +1225,8 @@ export const gallery3d = `<!DOCTYPE html>
         ctx.fillText(ed.subtitle, 64, 250);
 
         const projects = [
+          { name: 'CHRONOS 3D', tag: 'Next.js 16 · Three.js · GLSL' },
           { name: 'RustBot', tag: 'Rust · Local Store · APIs' },
-          { name: 'CryptoTrader', tag: 'React 19 · TanStack · Zustand' },
           { name: 'DegreeChain', tag: 'Hyperledger · Docker · AWS' }
         ];
         projects.forEach((proj, idx) => {
@@ -895,7 +1263,7 @@ export const gallery3d = `<!DOCTYPE html>
         ctx.fillText(ed.stack.join('  ·  '), 64, 568);
 
         ctx.fillStyle = ed.accent;
-        ctx.fillText('CLICK TO ENTER EDITION →', 715, 568);
+        ctx.fillText('LOADING LIVE WEBSITE VIEW →', 660, 568);
 
         const tex = new THREE.CanvasTexture(canvas);
         tex.anisotropy = 8;
@@ -909,27 +1277,27 @@ export const gallery3d = `<!DOCTYPE html>
         canvas.height = 256;
         const ctx = canvas.getContext('2d');
 
-        ctx.fillStyle = '#101218';
+        ctx.fillStyle = '#12151e';
         ctx.fillRect(0, 0, 512, 256);
-        ctx.strokeStyle = 'rgba(240, 201, 125, 0.45)';
-        ctx.lineWidth = 4;
+        ctx.strokeStyle = 'rgba(218, 178, 102, 0.72)';
+        ctx.lineWidth = 5;
         ctx.strokeRect(8, 8, 496, 240);
 
         ctx.fillStyle = ed.accent;
-        ctx.font = '600 24px "JetBrains Mono", monospace';
-        ctx.fillText(\`EDITION \${ed.num}  //  \${ed.year}\`, 34, 62);
+        ctx.font = '600 22px "JetBrains Mono", monospace';
+        ctx.fillText(\`EDITION \${ed.num}  //  \${ed.year}\`, 34, 62, 444);
 
         ctx.fillStyle = '#f8fafc';
-        ctx.font = '600 38px Georgia, serif';
-        ctx.fillText(ed.title, 34, 128);
+        ctx.font = '600 34px Georgia, serif';
+        ctx.fillText(ed.title, 34, 126, 444);
 
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '400 20px Inter, sans-serif';
-        ctx.fillText(ed.subtitle, 34, 176);
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '400 17px Inter, sans-serif';
+        ctx.fillText(ed.subtitle, 34, 174, 444);
 
         ctx.fillStyle = '#f0c97d';
-        ctx.font = '500 18px "JetBrains Mono", monospace';
-        ctx.fillText('[ CLICK OR PRESS E TO INSPECT ]', 34, 224);
+        ctx.font = '500 17px "JetBrains Mono", monospace';
+        ctx.fillText('[ CLICK OR PRESS E TO INSPECT ]', 34, 222, 444);
 
         const tex = new THREE.CanvasTexture(canvas);
         tex.needsUpdate = true;
@@ -941,18 +1309,25 @@ export const gallery3d = `<!DOCTYPE html>
         canvas.width = 512;
         canvas.height = 512;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#0e1017';
+        ctx.fillStyle = '#12151e';
         ctx.fillRect(0, 0, 512, 512);
 
-        for (let i = 0; i < 600; i++) {
+        // Subtle polished dark terrazzo flecks with warm ivory & gold stone chips
+        for (let i = 0; i < 650; i++) {
           const x = Math.random() * 512;
           const y = Math.random() * 512;
-          const v = 18 + Math.floor(Math.random() * 24);
-          ctx.fillStyle = \`rgb(\${v},\${v + 2},\${v + 6})\`;
-          ctx.fillRect(x, y, 2, 2);
+          const bright = Math.random() > 0.92;
+          if (bright) {
+            ctx.fillStyle = 'rgba(235, 226, 206, 0.28)';
+            ctx.fillRect(x, y, 2.5, 2.5);
+          } else {
+            const v = 22 + Math.floor(Math.random() * 24);
+            ctx.fillStyle = \`rgb(\${v},\${v + 2},\${v + 7})\`;
+            ctx.fillRect(x, y, 2, 2);
+          }
         }
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.045)';
+        ctx.strokeStyle = 'rgba(240, 201, 125, 0.08)';
         ctx.lineWidth = 2;
         ctx.strokeRect(0, 0, 256, 256);
         ctx.strokeRect(256, 0, 256, 256);
@@ -971,35 +1346,35 @@ export const gallery3d = `<!DOCTYPE html>
         canvas.width = 1024;
         canvas.height = 512;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#090b10';
+        ctx.fillStyle = '#0d1017';
         ctx.fillRect(0, 0, 1024, 512);
 
         const grad = ctx.createRadialGradient(512, 256, 20, 512, 256, 460);
-        grad.addColorStop(0, 'rgba(240, 201, 125, 0.16)');
-        grad.addColorStop(1, 'rgba(9, 11, 16, 0)');
+        grad.addColorStop(0, 'rgba(240, 201, 125, 0.22)');
+        grad.addColorStop(1, 'rgba(13, 16, 23, 0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, 1024, 512);
 
-        ctx.strokeStyle = 'rgba(240, 201, 125, 0.25)';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(36, 36, 952, 440);
+        ctx.strokeStyle = 'rgba(218, 178, 102, 0.55)';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(32, 32, 960, 448);
 
         ctx.textAlign = 'center';
         ctx.fillStyle = '#f0c97d';
         ctx.font = '500 22px "JetBrains Mono", monospace';
-        ctx.fillText('PERMANENT COLLECTION · KARACHI', 512, 160);
+        ctx.fillText('PERMANENT COLLECTION · KARACHI', 512, 155);
 
         ctx.fillStyle = '#ffffff';
         ctx.font = '500 84px Georgia, serif';
-        ctx.fillText('AREEB AZHAR', 512, 265);
+        ctx.fillText('AREEB AZHAR', 512, 260);
 
-        ctx.fillStyle = '#94a3b8';
+        ctx.fillStyle = '#cbd5e1';
         ctx.font = '400 22px Inter, sans-serif';
-        ctx.fillText('SOFTWARE ENGINEERING · UI/UX · INTERACTIVE SYSTEMS', 512, 330);
+        ctx.fillText('SOFTWARE ENGINEERING · 3D INTERACTIVE SYSTEMS · CHRONOS', 512, 328);
 
-        ctx.fillStyle = 'rgba(240, 201, 125, 0.75)';
+        ctx.fillStyle = 'rgba(240, 201, 125, 0.85)';
         ctx.font = '400 18px "JetBrains Mono", monospace';
-        ctx.fillText('github.com/AREEB-AZHAR', 512, 395);
+        ctx.fillText('github.com/AREEB-AZHAR', 512, 396);
 
         const tex = new THREE.CanvasTexture(canvas);
         tex.needsUpdate = true;
@@ -1007,23 +1382,28 @@ export const gallery3d = `<!DOCTYPE html>
       }
 
       // ============================================================
-      // 5. THREE.JS CINEMATIC GALLERY SCENE SETUP
+      // 5. THREE.JS LUMINOUS WHITE MARBLE PAVILION SETUP
+      //    (Alpha-transparent WebGL layered cleanly over CSS3D websites)
       // ============================================================
       const container = document.getElementById('canvas-container');
+      const css3dContainer = document.getElementById('css3d-container');
+      const css3dCameraEl = document.getElementById('css3d-camera');
+
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x07090f);
-      scene.fog = new THREE.FogExp2(0x07090f, 0.024);
+      scene.background = null; // Enclosed marble room; alpha clear allows CSS3D cutouts to shine through
+      scene.fog = new THREE.FogExp2(0xefece5, 0.0085);
 
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 120);
       camera.rotation.order = 'YXZ';
 
       let renderer;
       try {
-        renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
+        renderer.setClearColor(0x000000, 0);
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.15;
+        renderer.toneMappingExposure = 1.0;
         container.appendChild(renderer.domElement);
       } catch (err) {
         container.innerHTML = \`
@@ -1038,91 +1418,157 @@ export const gallery3d = `<!DOCTYPE html>
         return;
       }
 
-      // Lighting
-      const hemiLight = new THREE.HemisphereLight(0x9fb8ff, 0x261d14, 0.85);
+      // Luminous White Marble Museum Lighting (balanced so veining reads crisply without blowout)
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0xe0d8cb, 0.96);
       scene.add(hemiLight);
 
-      const dirLight = new THREE.DirectionalLight(0xfff1d6, 0.55);
+      const dirLight = new THREE.DirectionalLight(0xfffaf0, 0.48);
       dirLight.position.set(4, 14, 10);
       scene.add(dirLight);
 
       const corridorLightZs = [20, 10, 0, -10, -20];
       corridorLightZs.forEach((z, i) => {
-        const pl = new THREE.PointLight(i % 2 === 0 ? 0xffd79a : 0x8db9ff, 1.35, 22, 1.7);
+        const pl = new THREE.PointLight(i % 2 === 0 ? 0xfff4e0 : 0xf6f8ff, 0.56, 24, 1.6);
         pl.position.set(0, 7.6, z);
         scene.add(pl);
       });
 
-      const wallMat = new THREE.MeshStandardMaterial({ color: 0x141720, roughness: 0.82, metalness: 0.12 });
-      const ribMat = new THREE.MeshStandardMaterial({ color: 0x1b202c, roughness: 0.65, metalness: 0.25 });
-      const brassMat = new THREE.MeshStandardMaterial({ color: 0xd4af6a, roughness: 0.3, metalness: 0.85 });
-      const floorMat = new THREE.MeshStandardMaterial({ map: createFloorTexture(), roughness: 0.22, metalness: 0.45 });
+      // Procedural White Calacatta & Carrara Marble Materials (aspect-matched UV scaling)
+      const sideMarble = createMarbleTextures({ repeatX: 7, repeatY: 1.25, seed: 42, isCeiling: false });
+      const endMarble = createMarbleTextures({ repeatX: 2.3, repeatY: 1.25, seed: 91, isCeiling: false });
+      const ceilingMarble = createMarbleTextures({ repeatX: 2.3, repeatY: 7.2, seed: 137, isCeiling: true });
+
+      const wallSideMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        map: sideMarble.map,
+        bumpMap: sideMarble.bump,
+        bumpScale: 0.015,
+        roughness: 0.26,
+        metalness: 0.05
+      });
+      const wallEndMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        map: endMarble.map,
+        bumpMap: endMarble.bump,
+        bumpScale: 0.015,
+        roughness: 0.26,
+        metalness: 0.05
+      });
+      const ceilingMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        map: ceilingMarble.map,
+        bumpMap: ceilingMarble.bump,
+        bumpScale: 0.011,
+        roughness: 0.34,
+        metalness: 0.04
+      });
+      const ribMat = new THREE.MeshStandardMaterial({
+        color: 0xebe7df,
+        bumpMap: endMarble.bump,
+        bumpScale: 0.008,
+        roughness: 0.42,
+        metalness: 0.06
+      });
+      const brassMat = new THREE.MeshStandardMaterial({
+        color: 0xe2bc72,
+        roughness: 0.28,
+        metalness: 0.64,
+        emissive: new THREE.Color(0x3a280a),
+        emissiveIntensity: 0.22
+      });
+      const floorMat = new THREE.MeshStandardMaterial({ map: createFloorTexture(), roughness: 0.20, metalness: 0.45 });
 
       const floor = new THREE.Mesh(new THREE.PlaneGeometry(18, 58), floorMat);
       floor.rotation.x = -Math.PI / 2;
       scene.add(floor);
 
-      const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(18, 58), wallMat);
+      const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(18, 58), ceilingMat);
       ceiling.rotation.x = Math.PI / 2;
       ceiling.position.set(0, 9, 0);
       scene.add(ceiling);
 
-      const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(58, 9), wallMat);
+      const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(58, 9), wallSideMat);
       leftWall.rotation.y = Math.PI / 2;
       leftWall.position.set(-9, 4.5, 0);
       scene.add(leftWall);
 
-      const rightWall = new THREE.Mesh(new THREE.PlaneGeometry(58, 9), wallMat);
+      const rightWall = new THREE.Mesh(new THREE.PlaneGeometry(58, 9), wallSideMat);
       rightWall.rotation.y = -Math.PI / 2;
       rightWall.position.set(9, 4.5, 0);
       scene.add(rightWall);
 
-      const backWall = new THREE.Mesh(new THREE.PlaneGeometry(18, 9), wallMat);
+      const backWall = new THREE.Mesh(new THREE.PlaneGeometry(18, 9), wallEndMat);
       backWall.position.set(0, 4.5, -28);
       scene.add(backWall);
 
-      const entranceWall = new THREE.Mesh(new THREE.PlaneGeometry(18, 9), wallMat);
+      const entranceWall = new THREE.Mesh(new THREE.PlaneGeometry(18, 9), wallEndMat);
       entranceWall.rotation.y = Math.PI;
       entranceWall.position.set(0, 4.5, 28);
       scene.add(entranceWall);
 
-      // Single reused CanvasTexture for Monument Wall
+      // Subtle architectural brushed-brass crown molding & baseboards along white marble walls
+      [-8.95, 8.95].forEach(x => {
+        const baseTrim = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.14, 56), brassMat);
+        baseTrim.position.set(x, 0.07, 0);
+        scene.add(baseTrim);
+
+        const crownTrim = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.09, 56), brassMat);
+        crownTrim.position.set(x, 8.92, 0);
+        scene.add(crownTrim);
+      });
+
+      // Single reused CanvasTexture for Obsidian & Brass Monument Wall Plaque
       const monumentTex = createMonumentTexture();
+      const monumentFrame = new THREE.Mesh(
+        new THREE.BoxGeometry(9.95, 5.15, 0.18),
+        brassMat
+      );
+      monumentFrame.position.set(0, 4.1, -27.84);
+      scene.add(monumentFrame);
+
       const monumentMat = new THREE.MeshStandardMaterial({
         map: monumentTex,
         emissiveMap: monumentTex,
         emissive: new THREE.Color(0xffffff),
         emissiveIntensity: 0.55,
-        roughness: 0.4
+        roughness: 0.35
       });
       const monumentMesh = new THREE.Mesh(new THREE.PlaneGeometry(9.6, 4.8), monumentMat);
-      monumentMesh.position.set(0, 4.1, -27.7);
+      monumentMesh.position.set(0, 4.1, -27.72);
       scene.add(monumentMesh);
 
-      const stripMat = new THREE.MeshBasicMaterial({ color: 0xf0c97d, transparent: true, opacity: 0.5 });
+      const stripMat = new THREE.MeshBasicMaterial({ color: 0xe6c17a, transparent: true, opacity: 0.62 });
       [-2.8, 2.8].forEach(x => {
-        const strip = new THREE.Mesh(new THREE.PlaneGeometry(0.05, 50), stripMat);
+        const strip = new THREE.Mesh(new THREE.PlaneGeometry(0.055, 50), stripMat);
         strip.rotation.x = -Math.PI / 2;
         strip.position.set(x, 0.015, -1);
         scene.add(strip);
       });
 
-      for (let z = 24; z >= -24; z -= 8) {
+      // Alabaster marble structural bay pillars & beams framing each monolith wing with zero overlap
+      const bayPillarZs = [26, 19, 5, -9, -23];
+      bayPillarZs.forEach((z) => {
         [-8.6, 8.6].forEach(x => {
           const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.8, 9, 0.9), ribMat);
           pillar.position.set(x, 4.5, z);
           scene.add(pillar);
-        });
-        const beam = new THREE.Mesh(new THREE.BoxGeometry(18, 0.7, 0.9), ribMat);
-        beam.position.set(0, 8.65, z);
-        scene.add(beam);
 
-        const skyMat = new THREE.MeshBasicMaterial({ color: 0xffe8c2, transparent: true, opacity: 0.32 });
-        const skyStrip = new THREE.Mesh(new THREE.PlaneGeometry(5.6, 0.25), skyMat);
+          const brassInlay = new THREE.Mesh(new THREE.BoxGeometry(0.045, 8.8, 0.06), brassMat);
+          brassInlay.position.set(x > 0 ? x - 0.41 : x + 0.41, 4.5, z);
+          scene.add(brassInlay);
+        });
+        const beam = new THREE.Mesh(new THREE.BoxGeometry(18, 0.65, 0.88), ribMat);
+        beam.position.set(0, 8.68, z);
+        scene.add(beam);
+      });
+
+      [22.5, 12, -2, -16].forEach((z) => {
+        const skyMat = new THREE.MeshBasicMaterial({ color: 0xfff6e5, transparent: true, opacity: 0.72 });
+        const skyStrip = new THREE.Mesh(new THREE.PlaneGeometry(5.8, 0.30), skyMat);
         skyStrip.rotation.x = Math.PI / 2;
-        skyStrip.position.set(0, 8.95, z - 4);
+        skyStrip.position.set(0, 8.95, z);
         scene.add(skyStrip);
-      }
+      });
 
       const solidObstacles = [];
 
@@ -1155,8 +1601,9 @@ export const gallery3d = `<!DOCTYPE html>
         }
       }
 
+      // White-marble bench tops on satin brass museum legs
       const benchGroup = new THREE.Group();
-      const benchTop = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.14, 4.2), ribMat);
+      const benchTop = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.14, 4.2), wallEndMat);
       benchTop.position.set(0, 0.52, 5);
       benchGroup.add(benchTop);
       [-1.5, 1.5].forEach(dz => {
@@ -1174,35 +1621,42 @@ export const gallery3d = `<!DOCTYPE html>
 
       const rayGeo = new THREE.CylinderGeometry(1.4, 3.8, 8.8, 16, 1, true);
       const rayMat = new THREE.MeshBasicMaterial({
-        color: 0xffdfaa,
+        color: 0xfff0cc,
         transparent: true,
-        opacity: 0.032,
+        opacity: 0.036,
         side: THREE.DoubleSide,
         depthWrite: false,
         blending: THREE.AdditiveBlending
       });
 
-      const pedestalBaseMat = new THREE.MeshStandardMaterial({ color: 0x0e1119, roughness: 0.45, metalness: 0.45 });
-      const pedestalColMat = new THREE.MeshStandardMaterial({ color: 0x181c28, roughness: 0.5, metalness: 0.35 });
+      const pedestalBaseMat = new THREE.MeshStandardMaterial({ color: 0x161922, roughness: 0.35, metalness: 0.55 });
+      const pedestalColMat = new THREE.MeshStandardMaterial({
+        color: 0xf4f1ea,
+        map: endMarble.map,
+        bumpMap: endMarble.bump,
+        bumpScale: 0.01,
+        roughness: 0.25,
+        metalness: 0.06
+      });
       const sculptureGoldMat = new THREE.MeshStandardMaterial({
-        color: 0xe6c17a,
-        roughness: 0.22,
-        metalness: 0.88,
-        emissive: new THREE.Color(0x4a3410),
-        emissiveIntensity: 0.35
+        color: 0xf2cd7e,
+        roughness: 0.24,
+        metalness: 0.66,
+        emissive: new THREE.Color(0x6b4c14),
+        emissiveIntensity: 0.42
       });
       const sculptureWireMat = new THREE.MeshBasicMaterial({
-        color: 0xf7dca3,
+        color: 0xd4a348,
         wireframe: true,
         transparent: true,
-        opacity: 0.38
+        opacity: 0.45
       });
 
       const pedestalSculptures = [];
       const pedestalConfigs = [
-        { z: 12, kind: 'icosahedron', accent: 0xf0c97d },
-        { z: -2, kind: 'torusKnot', accent: 0x7dd3fc },
-        { z: -16, kind: 'octahedron', accent: 0xfbbf24 }
+        { z: 12, kind: 'icosahedron', accent: 0xd4a348 },
+        { z: -2, kind: 'torusKnot', accent: 0x38bdf8 },
+        { z: -16, kind: 'octahedron', accent: 0xf59e0b }
       ];
 
       pedestalConfigs.forEach((cfg, idx) => {
@@ -1227,7 +1681,7 @@ export const gallery3d = `<!DOCTYPE html>
 
         const glowRing = new THREE.Mesh(
           new THREE.RingGeometry(0.32, 0.42, 32),
-          new THREE.MeshBasicMaterial({ color: cfg.accent, side: THREE.DoubleSide, transparent: true, opacity: 0.55 })
+          new THREE.MeshBasicMaterial({ color: cfg.accent, side: THREE.DoubleSide, transparent: true, opacity: 0.62 })
         );
         glowRing.rotation.x = -Math.PI / 2;
         glowRing.position.y = 1.295;
@@ -1261,7 +1715,7 @@ export const gallery3d = `<!DOCTYPE html>
         solidObstacles.push({ type: 'pedestal', minX: -0.78, maxX: 0.78, minZ: cfg.z - 0.78, maxZ: cfg.z + 0.78 });
       });
 
-      const particleCount = 320;
+      const particleCount = 260;
       const pGeo = new THREE.BufferGeometry();
       const pPos = new Float32Array(particleCount * 3);
       for (let i = 0; i < particleCount; i++) {
@@ -1271,21 +1725,90 @@ export const gallery3d = `<!DOCTYPE html>
       }
       pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
       const pMat = new THREE.PointsMaterial({
-        color: 0xf7dca3,
-        size: 0.065,
+        color: 0xd9ae5f,
+        size: 0.055,
         transparent: true,
-        opacity: 0.55,
-        blending: THREE.AdditiveBlending,
+        opacity: 0.45,
         depthWrite: false
       });
       const dustParticles = new THREE.Points(pGeo, pMat);
       scene.add(dustParticles);
 
       // ============================================================
-      // 6. BUILD THE 6 PORTFOLIO MONOLITH EXHIBITS
+      // 6. HYBRID CSS3D + WEBGL LIVE WEBSITE MONOLITH EXHIBITS
       // ============================================================
+      const SCREEN_WORLD_W = 4.96;
+      const SCREEN_WORLD_H = 3.1;
+      const CSS_IFRAME_W = 1280;
+      const CSS_IFRAME_H = 800;
+      const CSS_SCALE_X = SCREEN_WORLD_W / CSS_IFRAME_W;
+      const CSS_SCALE_Y = SCREEN_WORLD_H / CSS_IFRAME_H;
+
+      // Occlusion cutout material punches a depth-tested transparent window through WebGL
+      // so benches, pedestals, pillars & sculptures naturally occlude live CSS3D websites!
+      const cutoutMat = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        opacity: 0,
+        transparent: false,
+        blending: THREE.NoBlending,
+        fog: false,
+        side: THREE.FrontSide
+      });
+
+      function eps(value) {
+        return Math.abs(value) < 1e-10 ? 0 : value;
+      }
+
+      function getCameraCSSMatrix(matrix) {
+        const e = matrix.elements;
+        return 'matrix3d(' +
+          eps(e[0]) + ',' + eps(-e[1]) + ',' + eps(e[2]) + ',' + eps(e[3]) + ',' +
+          eps(e[4]) + ',' + eps(-e[5]) + ',' + eps(e[6]) + ',' + eps(e[7]) + ',' +
+          eps(e[8]) + ',' + eps(-e[9]) + ',' + eps(e[10]) + ',' + eps(e[11]) + ',' +
+          eps(e[12]) + ',' + eps(-e[13]) + ',' + eps(e[14]) + ',' + eps(e[15]) +
+        ')';
+      }
+
+      function getObjectCSSMatrix(matrix) {
+        const e = matrix.elements;
+        return 'matrix3d(' +
+          eps(e[0]) + ',' + eps(e[1]) + ',' + eps(e[2]) + ',' + eps(e[3]) + ',' +
+          eps(-e[4]) + ',' + eps(-e[5]) + ',' + eps(-e[6]) + ',' + eps(-e[7]) + ',' +
+          eps(e[8]) + ',' + eps(e[9]) + ',' + eps(e[10]) + ',' + eps(e[11]) + ',' +
+          eps(e[12]) + ',' + eps(e[13]) + ',' + eps(e[14]) + ',' + eps(e[15]) +
+        ')';
+      }
+
+      function resolvePreviewUrl(ed) {
+        return ed.previewUrl || ed.url || './portfolio/?preview=1';
+      }
+
       const exhibitObjects = [];
       const clickableMeshes = [];
+
+      function mountWallIframe(obj) {
+        if (obj.iframeEl) return;
+        const iframe = document.createElement('iframe');
+        iframe.src = resolvePreviewUrl(obj.edition);
+        iframe.title = obj.edition.title + ' live wall canvas';
+        iframe.loading = 'eager';
+        iframe.tabIndex = -1;
+        iframe.setAttribute('aria-hidden', 'true');
+        iframe.setAttribute('scrolling', 'no');
+        iframe.addEventListener('load', () => {
+          obj.iframeLoaded = true;
+        });
+        obj.cssScreenEl.appendChild(iframe);
+        obj.iframeEl = iframe;
+      }
+
+      function unmountWallIframe(obj) {
+        if (!obj.iframeEl) return;
+        obj.iframeEl.src = 'about:blank';
+        obj.iframeEl.remove();
+        obj.iframeEl = null;
+        obj.iframeLoaded = false;
+      }
 
       function buildExhibits() {
         editions.forEach((ed) => {
@@ -1299,14 +1822,14 @@ export const gallery3d = `<!DOCTYPE html>
 
           const plinth = new THREE.Mesh(
             new THREE.BoxGeometry(5.6, 0.42, 0.85),
-            new THREE.MeshStandardMaterial({ color: 0x0d1017, roughness: 0.4, metalness: 0.5 })
+            new THREE.MeshStandardMaterial({ color: 0x151822, roughness: 0.35, metalness: 0.55 })
           );
           plinth.position.set(0, 0.21, 0.25);
           group.add(plinth);
 
           const frameMesh = new THREE.Mesh(
-            new THREE.BoxGeometry(5.24, 3.34, 0.18),
-            new THREE.MeshStandardMaterial({ color: 0x161924, roughness: 0.35, metalness: 0.75 })
+            new THREE.BoxGeometry(5.26, 3.38, 0.18),
+            new THREE.MeshStandardMaterial({ color: 0x141720, roughness: 0.3, metalness: 0.78 })
           );
           frameMesh.position.set(0, 2.75, 0.08);
           group.add(frameMesh);
@@ -1314,22 +1837,22 @@ export const gallery3d = `<!DOCTYPE html>
           const rimMat = new THREE.MeshBasicMaterial({
             color: new THREE.Color(ed.accent),
             transparent: true,
-            opacity: 0.35
+            opacity: 0.42
           });
-          const rimMesh = new THREE.Mesh(new THREE.BoxGeometry(5.32, 3.42, 0.06), rimMat);
+          const rimMesh = new THREE.Mesh(new THREE.BoxGeometry(5.36, 3.48, 0.06), rimMat);
           rimMesh.position.set(0, 2.75, 0.02);
           group.add(rimMesh);
 
           const artTex = createPortfolioTexture(ed);
-          const screenMat = new THREE.MeshStandardMaterial({
+          const fallbackScreenMat = new THREE.MeshStandardMaterial({
             map: artTex,
             emissiveMap: artTex,
             emissive: new THREE.Color(0xffffff),
-            emissiveIntensity: 0.72,
+            emissiveIntensity: 0.68,
             roughness: 0.25,
             metalness: 0.08
           });
-          const screenMesh = new THREE.Mesh(new THREE.PlaneGeometry(4.96, 3.1), screenMat);
+          const screenMesh = new THREE.Mesh(new THREE.PlaneGeometry(SCREEN_WORLD_W, SCREEN_WORLD_H), fallbackScreenMat);
           screenMesh.position.set(0, 2.75, 0.18);
           screenMesh.userData.editionId = ed.id;
           group.add(screenMesh);
@@ -1351,14 +1874,14 @@ export const gallery3d = `<!DOCTYPE html>
           group.add(plaqueMesh);
           clickableMeshes.push(plaqueMesh);
 
-          const accentLight = new THREE.PointLight(new THREE.Color(ed.accent), 0.9, 10, 1.8);
+          const accentLight = new THREE.PointLight(new THREE.Color(ed.accent), 0.55, 9, 1.8);
           accentLight.position.set(0, 5.2, 2.2);
           group.add(accentLight);
 
           const poolMat = new THREE.MeshBasicMaterial({
             color: new THREE.Color(ed.accent),
             transparent: true,
-            opacity: 0.11,
+            opacity: 0.12,
             blending: THREE.AdditiveBlending,
             depthWrite: false
           });
@@ -1369,25 +1892,107 @@ export const gallery3d = `<!DOCTYPE html>
 
           scene.add(group);
 
+          // Precompute exact static CSS3D world matrix aligned to screenMesh
+          group.updateMatrixWorld(true);
+          screenMesh.updateWorldMatrix(true, false);
+          const scaledMatrix = screenMesh.matrixWorld.clone().multiply(
+            new THREE.Matrix4().makeScale(CSS_SCALE_X, CSS_SCALE_Y, 1)
+          );
+
+          const cssScreenEl = document.createElement('div');
+          cssScreenEl.className = 'css3d-screen';
+          cssScreenEl.style.background = ed.bgHex || '#0b0d14';
+          cssScreenEl.style.transform = getObjectCSSMatrix(scaledMatrix) + ' translate(-50%,-50%)';
+          css3dCameraEl.appendChild(cssScreenEl);
+
           const viewX = isLeft ? -3.2 : 3.2;
           const viewYaw = isLeft ? Math.PI / 2 : -Math.PI / 2;
+          const worldScreenX = xWall + (isLeft ? 0.18 : -0.18);
 
-          exhibitObjects.push({
+          const exhibitObj = {
             edition: ed,
             group,
             screenMesh,
+            fallbackScreenMat,
             plaqueMesh,
             rimMat,
             accentLight,
             poolMat,
+            cssScreenEl,
+            iframeEl: null,
+            iframeLoaded: false,
             viewPos: new THREE.Vector3(viewX, 2.1, ed.zPos),
             viewYaw,
-            worldCenter: new THREE.Vector3(xWall, 2.75, ed.zPos)
-          });
+            worldCenter: new THREE.Vector3(worldScreenX, 2.75, ed.zPos),
+            edgeA: new THREE.Vector3(worldScreenX, 2.75, ed.zPos - SCREEN_WORLD_W * 0.5),
+            edgeB: new THREE.Vector3(worldScreenX, 2.75, ed.zPos + SCREEN_WORLD_W * 0.5),
+            normalX: isLeft ? 1 : -1
+          };
+
+          // Mount live website iframes upfront on desktop (mobile dynamically mounts nearest 2)
+          if (!isCoarsePointer) {
+            mountWallIframe(exhibitObj);
+          }
+
+          exhibitObjects.push(exhibitObj);
         });
       }
 
       buildExhibits();
+
+      function updateCSS3DLayer() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const widthHalf = w * 0.5;
+        const heightHalf = h * 0.5;
+        const fov = camera.projectionMatrix.elements[5] * heightHalf;
+
+        css3dContainer.style.perspective = fov + 'px';
+        css3dCameraEl.style.transform =
+          'translate3d(' + widthHalf + 'px,' + heightHalf + 'px,' + fov + 'px) ' +
+          getCameraCSSMatrix(camera.matrixWorldInverse);
+
+        const suspendForModal = state.mode === 'modal';
+        const camInv = camera.matrixWorldInverse;
+
+        // On coarse-pointer mobile, keep only the nearest 2 exhibits actively mounted to save GPU/WebGL contexts
+        let allowedMobileIds = null;
+        if (isCoarsePointer && state.liveWalls && !suspendForModal) {
+          const ranked = exhibitObjects
+            .map(o => ({ id: o.edition.id, dist: camera.position.distanceTo(o.worldCenter) }))
+            .sort((a, b) => a.dist - b.dist);
+          allowedMobileIds = new Set(ranked.slice(0, 2).map(r => r.id));
+        }
+
+        for (let i = 0; i < exhibitObjects.length; i++) {
+          const obj = exhibitObjects[i];
+
+          if (isCoarsePointer && allowedMobileIds) {
+            if (allowedMobileIds.has(obj.edition.id)) {
+              mountWallIframe(obj);
+            } else {
+              unmountWallIframe(obj);
+            }
+          }
+
+          // Check camera-space Z of center and both horizontal edges so CSS3D never crosses z_cam >= 0
+          const centerCamZ = scratchCamSpace.copy(obj.worldCenter).applyMatrix4(camInv).z;
+          const edgeAZ = scratchPos.copy(obj.edgeA).applyMatrix4(camInv).z;
+          const edgeBZ = scratchPos.copy(obj.edgeB).applyMatrix4(camInv).z;
+          const facingFront = (camera.position.x - obj.worldCenter.x) * obj.normalX > 0.1;
+
+          const safeInFront = facingFront && centerCamZ < -0.55 && edgeAZ < -0.25 && edgeBZ < -0.25;
+          const showLive = state.liveWalls && !suspendForModal && obj.iframeLoaded && safeInFront;
+
+          if (showLive) {
+            if (obj.screenMesh.material !== cutoutMat) obj.screenMesh.material = cutoutMat;
+            if (obj.cssScreenEl.style.visibility !== 'visible') obj.cssScreenEl.style.visibility = 'visible';
+          } else {
+            if (obj.screenMesh.material !== obj.fallbackScreenMat) obj.screenMesh.material = obj.fallbackScreenMat;
+            if (obj.cssScreenEl.style.visibility !== 'hidden') obj.cssScreenEl.style.visibility = 'hidden';
+          }
+        }
+      }
 
       function refreshExhibitTextures(edId) {
         const obj = exhibitObjects.find(o => o.edition.id === edId);
@@ -1395,11 +2000,11 @@ export const gallery3d = `<!DOCTYPE html>
         const ed = editions.find(e => e.id === edId);
         obj.edition = ed;
 
-        const oldScreenTex = obj.screenMesh.material.map;
+        const oldScreenTex = obj.fallbackScreenMat.map;
         const newTex = createPortfolioTexture(ed);
-        obj.screenMesh.material.map = newTex;
-        obj.screenMesh.material.emissiveMap = newTex;
-        obj.screenMesh.material.needsUpdate = true;
+        obj.fallbackScreenMat.map = newTex;
+        obj.fallbackScreenMat.emissiveMap = newTex;
+        obj.fallbackScreenMat.needsUpdate = true;
         if (oldScreenTex) oldScreenTex.dispose();
 
         const oldPlaqueTex = obj.plaqueMesh.material.map;
@@ -1408,6 +2013,11 @@ export const gallery3d = `<!DOCTYPE html>
         obj.plaqueMesh.material.emissiveMap = newPlaque;
         obj.plaqueMesh.material.needsUpdate = true;
         if (oldPlaqueTex) oldPlaqueTex.dispose();
+
+        if (obj.iframeEl) {
+          obj.iframeLoaded = false;
+          obj.iframeEl.src = resolvePreviewUrl(ed);
+        }
 
         obj.rimMat.color.set(ed.accent);
         obj.accentLight.color.set(ed.accent);
@@ -1427,6 +2037,21 @@ export const gallery3d = `<!DOCTYPE html>
         } else {
           label.textContent = 'Lock Mouse';
           btn.classList.remove('border-amber-200/50', 'text-amber-200');
+        }
+      }
+
+      function updateLiveWallsUI() {
+        const btn = document.getElementById('btn-toggle-live');
+        const label = document.getElementById('label-live');
+        if (!btn) return;
+        if (state.liveWalls) {
+          btn.classList.add('text-emerald-300', 'border-emerald-300/40');
+          btn.classList.remove('text-slate-300');
+          if (label) label.textContent = 'Live Walls';
+        } else {
+          btn.classList.remove('text-emerald-300', 'border-emerald-300/40');
+          btn.classList.add('text-slate-300');
+          if (label) label.textContent = 'Art Mode';
         }
       }
 
@@ -1463,7 +2088,6 @@ export const gallery3d = `<!DOCTYPE html>
       // Raw FPS mouse-look whenever pointer is locked
       window.addEventListener('mousemove', (ev) => {
         if (state.mode !== 'explore' || !state.isPointerLocked) return;
-        // Clamp extreme Pointer Lock wake spikes (common on Windows/Chrome)
         const dx = Math.max(-120, Math.min(120, ev.movementX || 0));
         const dy = Math.max(-120, Math.min(120, ev.movementY || 0));
         if (dx === 0 && dy === 0) return;
@@ -1519,166 +2143,72 @@ export const gallery3d = `<!DOCTYPE html>
       }
 
       // ============================================================
-      // 9. LIVE INTERACTIVE PORTFOLIO PREVIEW RENDERER (MODAL)
-      //    (Every featured card links directly to live canonical briefings)
+      // 9. LIVE INTERACTIVE WEBSITE PREVIEW RENDERER (INSPECTOR MODAL)
       // ============================================================
+      function updateModalIframeScale() {
+        const stage = document.getElementById('live-preview-stage');
+        const iframe = stage && stage.querySelector('iframe.live-modal-frame');
+        const scaleBtn = document.getElementById('btn-frame-scale');
+        if (!stage || !iframe) return;
+
+        if (state.modalFitDesktop) {
+          iframe.classList.add('fit-desktop');
+          iframe.classList.remove('native-responsive');
+          const rect = stage.getBoundingClientRect();
+          const scale = Math.max(0.25, rect.width / 1280);
+          iframe.style.transform = 'scale(' + scale.toFixed(4) + ')';
+          iframe.style.height = Math.max(800, Math.round(rect.height / scale)) + 'px';
+          if (scaleBtn) scaleBtn.textContent = 'Fit';
+        } else {
+          iframe.classList.remove('fit-desktop');
+          iframe.classList.add('native-responsive');
+          iframe.style.transform = '';
+          iframe.style.height = '';
+          if (scaleBtn) scaleBtn.textContent = '1:1';
+        }
+      }
+
       function renderLivePreview(ed) {
         const stage = document.getElementById('live-preview-stage');
-        const displayUrl = ed.url.startsWith('./')
-          ? 'areebazhar.dev/' + ed.url.replace(/^\\.\\//, '')
-          : ed.url.replace(/^https?:\\/\\//, '');
+        const liveUrl = resolvePreviewUrl(ed);
+        const displayUrl = (ed.url || liveUrl).startsWith('./')
+          ? 'areebazhar.dev/' + (ed.url || liveUrl).replace(/^\\.\\//, '')
+          : (ed.url || liveUrl).replace(/^https?:\\/\\//, '');
         document.getElementById('mock-url-bar').textContent = displayUrl;
 
-        if (ed.themeKey === 'terminal') {
-          stage.innerHTML = \`
-            <div class="p-5 sm:p-6 min-h-[320px] sm:min-h-[360px] font-mono-tech text-xs sm:text-sm" style="background:#07120e; color:#34d399;">
-              <div class="opacity-70 mb-3">Snapshot 16fbb13 — Original Neon Portfolio Edition</div>
-              <div class="mb-2"><span class="text-white">areeb@archive:~$</span> whoami</div>
-              <div class="mb-4 text-emerald-200/90 pl-3">Areeb Azhar — Software Engineer &amp; Creative Developer (Karachi, PK)</div>
-              <div class="mb-2"><span class="text-white">areeb@archive:~$</span> ls -la ./projects</div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pl-0 sm:pl-3 mb-5">
-                <a href="./projects/cryptotrader/" class="preview-card-link p-3.5 rounded border border-emerald-400/30 hover:border-emerald-300/70 bg-emerald-400/5 min-h-[56px]">
-                  <div class="flex items-center justify-between text-white font-semibold"><span>CryptoTrader/</span><span class="text-emerald-300 text-xs">↗</span></div>
-                  <div class="text-[11px] text-emerald-300/75 mt-1">React 19 · TanStack Query · Zustand</div>
-                </a>
-                <a href="./projects/rustbot/" class="preview-card-link p-3.5 rounded border border-emerald-400/30 hover:border-emerald-300/70 bg-emerald-400/5 min-h-[56px]">
-                  <div class="flex items-center justify-between text-white font-semibold"><span>RustBot/</span><span class="text-emerald-300 text-xs">↗</span></div>
-                  <div class="text-[11px] text-emerald-300/75 mt-1">Rust · Local Knowledge Store · APIs</div>
-                </a>
-                <a href="./projects/degree-verification/" class="preview-card-link p-3.5 rounded border border-emerald-400/30 hover:border-emerald-300/70 bg-emerald-400/5 min-h-[56px]">
-                  <div class="flex items-center justify-between text-white font-semibold"><span>DegreeChain/</span><span class="text-emerald-300 text-xs">↗</span></div>
-                  <div class="text-[11px] text-emerald-300/75 mt-1">Hyperledger Fabric · Docker · CouchDB</div>
-                </a>
-                <a href="./projects/bunetto/" class="preview-card-link p-3.5 rounded border border-emerald-400/30 hover:border-emerald-300/70 bg-emerald-400/5 min-h-[56px]">
-                  <div class="flex items-center justify-between text-white font-semibold"><span>Bunetto/</span><span class="text-emerald-300 text-xs">↗</span></div>
-                  <div class="text-[11px] text-emerald-300/75 mt-1">Storefront · Cart · WhatsApp Order Flow</div>
-                </a>
-              </div>
-              <div class="flex items-center gap-2 text-emerald-300">
-                <span class="text-white">areeb@archive:~$</span>
-                <span>open ./designs/original-neon/</span>
-                <span class="inline-block w-2 h-4 bg-emerald-400 animate-pulse"></span>
-              </div>
-            </div>
-          \`;
-        } else if (ed.themeKey === 'swiss') {
-          stage.innerHTML = \`
-            <div class="p-5 sm:p-8 min-h-[320px] sm:min-h-[360px]" style="background:#f5f2eb; color:#111111;">
-              <div class="h-2 w-24 mb-5" style="background:\${ed.accent};"></div>
-              <div class="flex flex-wrap items-end justify-between gap-4 border-b border-black/20 pb-5">
-                <div>
-                  <div class="text-[10px] font-mono-tech uppercase tracking-[0.2em] text-stone-500">Edition 03 · Commit a9d3640</div>
-                  <h3 class="text-3xl sm:text-4xl font-bold tracking-tight mt-1">Areeb Azhar</h3>
-                </div>
-                <div class="text-xs font-medium text-stone-600 max-w-xs">
-                  Warm editorial project showcase with internship certification and canonical project briefings.
-                </div>
-              </div>
-              <div class="mt-4 divide-y divide-black/15 text-xs sm:text-sm">
-                <a href="./projects/cryptotrader/" class="preview-card-link py-3.5 px-1 hover:bg-black/5 rounded grid grid-cols-12 items-center min-h-[44px]"><span class="col-span-2 font-mono-tech text-stone-500">01</span><span class="col-span-6 font-semibold">CryptoTrader Simulator ↗</span><span class="col-span-4 text-right text-stone-600">React 19 / Vite</span></a>
-                <a href="./projects/degree-verification/" class="preview-card-link py-3.5 px-1 hover:bg-black/5 rounded grid grid-cols-12 items-center min-h-[44px]"><span class="col-span-2 font-mono-tech text-stone-500">02</span><span class="col-span-6 font-semibold">Degree Verification Portal ↗</span><span class="col-span-4 text-right text-stone-600">Hyperledger / Docker</span></a>
-                <a href="./projects/rustbot/" class="preview-card-link py-3.5 px-1 hover:bg-black/5 rounded grid grid-cols-12 items-center min-h-[44px]"><span class="col-span-2 font-mono-tech text-stone-500">03</span><span class="col-span-6 font-semibold">RustBot Knowledge Store ↗</span><span class="col-span-4 text-right text-stone-600">Rust / HTTP API</span></a>
-                <a href="./projects/bunetto/" class="preview-card-link py-3.5 px-1 hover:bg-black/5 rounded grid grid-cols-12 items-center min-h-[44px]"><span class="col-span-2 font-mono-tech text-stone-500">04</span><span class="col-span-6 font-semibold">Bunetto Storefront ↗</span><span class="col-span-4 text-right text-stone-600">Tailwind / JS</span></a>
-              </div>
-            </div>
-          \`;
-        } else if (ed.themeKey === 'brutalist') {
-          stage.innerHTML = \`
-            <div class="p-5 sm:p-6 min-h-[320px] sm:min-h-[360px]" style="background:#18181b; color:#ffffff;">
-              <div class="inline-block px-3 py-1 font-mono-tech text-xs font-bold uppercase text-black mb-4" style="background:\${ed.accent}; box-shadow:4px 4px 0 #ffffff;">
-                CANONICAL ARCHIVE // 19 PROJECTS
-              </div>
-              <h3 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight leading-none">
-                BOLD SYSTEMS.<br/>ZERO FLUFF.
-              </h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-                <a href="./projects/amazing-giant-flowers/" class="preview-card-link p-4 bg-zinc-900 border-2 border-white min-h-[112px]" style="box-shadow:5px 5px 0 \${ed.accent};">
-                  <div class="flex items-center justify-between text-xs font-mono-tech uppercase" style="color:\${ed.accent};"><span>E-Commerce</span><span>↗</span></div>
-                  <div class="text-lg font-bold mt-1">Amazing Giant Flowers</div>
-                  <p class="text-xs text-zinc-400 mt-1">Custom Shopify Liquid storefront, floral catalog UX, and quote-oriented ordering.</p>
-                </a>
-                <a href="./projects/unity-minigame-suite/" class="preview-card-link p-4 bg-zinc-900 border-2 border-white min-h-[112px]" style="box-shadow:5px 5px 0 #38bdf8;">
-                  <div class="flex items-center justify-between text-xs font-mono-tech uppercase text-sky-400"><span>Game Dev FYP</span><span>↗</span></div>
-                  <div class="text-lg font-bold mt-1">Unity Minigame Suite</div>
-                  <p class="text-xs text-zinc-400 mt-1">Adaptive learning hub with player progress and dynamic difficulty scaling.</p>
-                </a>
-              </div>
-            </div>
-          \`;
-        } else if (ed.themeKey === 'glass') {
-          stage.innerHTML = \`
-            <div class="p-5 sm:p-6 min-h-[320px] sm:min-h-[360px] relative overflow-hidden" style="background:radial-gradient(circle at 20% 20%, rgba(56,189,248,0.28), transparent 55%), radial-gradient(circle at 85% 80%, rgba(168,85,247,0.25), transparent 55%), #0b1022;">
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-                <a href="./designs/glass-systems/" class="preview-card-link sm:col-span-2 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:border-sky-300/50">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-mono-tech uppercase tracking-widest text-sky-300">Commit 425829f · V2.0</span>
-                    <span class="text-xs text-sky-200">Open V2 ↗</span>
-                  </div>
-                  <h3 class="text-2xl font-semibold text-white mt-1.5">Glass, Code &amp; Systems</h3>
-                  <p class="text-xs text-slate-300 mt-2 leading-relaxed">Dark glass-panel engineering dashboard with floating code snippets and ambient neural linework.</p>
-                </a>
-                <a href="./projects/ai-game-agents/" class="preview-card-link p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:border-sky-300/50 flex flex-col justify-between">
-                  <span class="text-[10px] font-mono-tech uppercase text-slate-400">AI Search</span>
-                  <div class="text-2xl font-bold text-sky-300 mt-2">Minimax</div>
-                  <span class="text-[11px] text-slate-300">AI Game Agents ↗</span>
-                </a>
-                <a href="./projects/tally/" class="preview-card-link sm:col-span-3 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:border-sky-300/50 flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <div class="text-sm font-semibold text-white">Tally — Flutter Personal Finance Ledger ↗</div>
-                    <div class="text-xs text-slate-300">SQLite local persistence · Analytics · Firebase sync</div>
-                  </div>
-                  <span class="px-3 py-1 rounded-full text-xs font-medium bg-sky-400/20 text-sky-200 border border-sky-300/30">Featured</span>
-                </a>
-              </div>
-            </div>
-          \`;
-        } else if (ed.themeKey === 'noir') {
-          stage.innerHTML = \`
-            <div class="p-6 sm:p-9 min-h-[320px] sm:min-h-[360px] flex flex-col justify-between" style="background:#09090b; color:#f4f4f5;">
-              <div class="flex items-center justify-between text-[10px] font-mono-tech uppercase tracking-[0.25em] text-zinc-500">
-                <span>Commit f81b386 · Oct 2026</span>
-                <a href="./designs/cinematic-sculpture/" class="text-amber-200/80 hover:text-amber-200 transition-colors">Open Snapshot ↗</a>
-              </div>
-              <div class="my-6">
-                <h3 class="font-serif-display text-3xl sm:text-5xl font-medium tracking-tight text-white">
-                  Sculpture in <span class="italic" style="color:\${ed.accent};">the story.</span>
-                </h3>
-                <p class="mt-3 text-xs sm:text-sm text-zinc-400 max-w-md leading-relaxed">
-                  First near-black editorial sculptural redesign pairing a metallic AA monogram with quiet architectural typography.
-                </p>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-4 border-t border-white/10 text-xs">
-                <a href="./projects/cryptotrader/" class="preview-card-link p-2.5 rounded-lg bg-white/[0.03] hover:bg-white/10 border border-white/10"><div class="text-zinc-500 font-mono-tech text-[10px]">01</div><div class="text-white mt-0.5 flex items-center justify-between"><span>CryptoTrader</span><span class="text-amber-200">↗</span></div></a>
-                <a href="./projects/gravipop/" class="preview-card-link p-2.5 rounded-lg bg-white/[0.03] hover:bg-white/10 border border-white/10"><div class="text-zinc-500 font-mono-tech text-[10px]">02</div><div class="text-white mt-0.5 flex items-center justify-between"><span>GraviPop Rust</span><span class="text-amber-200">↗</span></div></a>
-                <a href="./projects/tally/" class="preview-card-link p-2.5 rounded-lg bg-white/[0.03] hover:bg-white/10 border border-white/10"><div class="text-zinc-500 font-mono-tech text-[10px]">03</div><div class="text-white mt-0.5 flex items-center justify-between"><span>Tally Ledger</span><span class="text-amber-200">↗</span></div></a>
-              </div>
-            </div>
-          \`;
-        } else {
-          stage.innerHTML = \`
-            <div class="p-6 sm:p-7 min-h-[320px] sm:min-h-[360px] flex flex-col justify-between" style="background:radial-gradient(circle at 75% 30%, rgba(245,158,11,0.2), transparent 55%), #0c0a09; color:#fafaf9;">
-              <div class="flex items-center justify-between">
-                <span class="px-2.5 py-1 rounded-full text-[10px] font-mono-tech uppercase tracking-widest border border-amber-400/40 text-amber-300">Current Flagship · 28fb767</span>
-                <span class="text-xs font-mono-tech text-stone-400">Karachi, PK</span>
-              </div>
-              <div class="my-5">
-                <h3 class="font-serif-display text-4xl sm:text-5xl text-white leading-tight">A Living Ribbon</h3>
-                <p class="mt-2 text-xs sm:text-sm text-stone-300 max-w-md">
-                  Fourteen horizontal editorial scenes carried by one continuous filament and transforming metallic Three.js ribbon.
-                </p>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a href="./projects/rustbot/" class="preview-card-link p-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-amber-200/20 hover:border-amber-200/50 min-h-[60px]">
-                  <div class="flex items-center justify-between text-xs font-semibold text-amber-200"><span>RustBot</span><span>↗</span></div>
-                  <div class="text-[11px] text-stone-400 mt-0.5">Rust HTTP Server · Local Store · Live APIs</div>
-                </a>
-                <a href="./projects/degree-verification/" class="preview-card-link p-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-amber-200/20 hover:border-amber-200/50 min-h-[60px]">
-                  <div class="flex items-center justify-between text-xs font-semibold text-amber-200"><span>Degree Verification</span><span>↗</span></div>
-                  <div class="text-[11px] text-stone-400 mt-0.5">Hyperledger Fabric · Express · CouchDB</div>
-                </a>
-              </div>
-            </div>
-          \`;
+        stage.innerHTML = '';
+        const wrap = document.createElement('div');
+        wrap.className = 'modal-iframe-wrap';
+
+        const loader = document.createElement('div');
+        loader.className = 'absolute inset-0 z-10 flex flex-col items-center justify-center gap-2.5 bg-[#0a0c12] text-slate-300 transition-opacity duration-300 pointer-events-none';
+        loader.innerHTML = '<div class="w-6 h-6 rounded-full border-2 border-amber-200/30 border-t-amber-200 animate-spin"></div><span class="text-[11px] font-mono-tech uppercase tracking-[0.2em] text-amber-200/80">Loading Live Edition…</span>';
+
+        const iframe = document.createElement('iframe');
+        iframe.className = 'live-modal-frame opacity-0';
+        iframe.src = liveUrl;
+        iframe.title = ed.title + ' — Live Interactive Preview';
+        iframe.addEventListener('load', () => {
+          iframe.classList.remove('opacity-0');
+          loader.classList.add('opacity-0');
+          setTimeout(() => loader.remove(), 320);
+        });
+
+        wrap.appendChild(loader);
+        wrap.appendChild(iframe);
+        stage.appendChild(wrap);
+        requestAnimationFrame(updateModalIframeScale);
+
+        // Render clickable featured canonical case study chips underneath the live site
+        const chipsEl = document.getElementById('modal-case-chips');
+        if (chipsEl) {
+          const links = ed.featuredLinks || [];
+          chipsEl.innerHTML = links.map(item => \`
+            <a href="\${item.href}" class="preview-card-link items-center gap-1 px-2.5 py-1 rounded-full bg-white/5 hover:bg-amber-200/15 border border-white/10 hover:border-amber-200/40 text-[11px] font-mono-tech text-slate-200 hover:text-amber-100">
+              <span>\${item.label}</span>
+              <span class="text-amber-200">↗</span>
+            </a>
+          \`).join('');
         }
       }
 
@@ -1732,7 +2262,7 @@ export const gallery3d = `<!DOCTYPE html>
           startGlideTo(new THREE.Vector3(0, 1.78, 19.5), 0, 0.02, 0.65);
           if (!isCoarsePointer) {
             requestMouseLock();
-            showToast('Mouse bound to camera — move to look, Click/E to inspect, Esc for cursor');
+            showToast('Mouse bound to camera — move to look, Click/E to inspect live site, Esc for cursor');
           }
         }
         playChime(440);
@@ -1790,17 +2320,20 @@ export const gallery3d = `<!DOCTYPE html>
         } else {
           liveBtn.removeAttribute('target');
           liveBtn.removeAttribute('rel');
-          liveLabel.textContent = targetUrl === './portfolio/' ? 'Enter Current Flagship' : targetUrl === './projects/' ? 'Browse All 19 Projects' : 'Open Live Edition';
+          liveLabel.textContent = targetUrl === './portfolio/' ? 'Enter Current Flagship' : targetUrl === './projects/' ? 'Browse All 19 Projects' : 'Open Full Edition';
         }
 
-        document.getElementById('edit-title').value = ed.title;
-        document.getElementById('edit-year').value = ed.year;
-        document.getElementById('edit-accent').value = ed.accent;
-        document.getElementById('edit-url').value = ed.url;
-        document.getElementById('edit-desc').value = ed.description;
-
-        document.getElementById('modal-info-view').classList.toggle('hidden', state.editMode);
-        document.getElementById('modal-edit-form').classList.toggle('hidden', !state.editMode);
+        const allowEdit = isLocalHost && state.editMode;
+        const editForm = document.getElementById('modal-edit-form');
+        if (isLocalHost && editForm) {
+          document.getElementById('edit-title').value = ed.title;
+          document.getElementById('edit-year').value = ed.year;
+          document.getElementById('edit-accent').value = ed.accent;
+          document.getElementById('edit-url').value = ed.url;
+          document.getElementById('edit-desc').value = ed.description;
+          editForm.classList.toggle('hidden', !allowEdit);
+        }
+        document.getElementById('modal-info-view').classList.toggle('hidden', allowEdit);
 
         renderLivePreview(ed);
       }
@@ -1808,8 +2341,11 @@ export const gallery3d = `<!DOCTYPE html>
       function closeInspector(reLockMouse = false) {
         if (state.mode !== 'modal') return;
         modalEl.classList.add('modal-closed');
+        const stage = document.getElementById('live-preview-stage');
+        if (stage) stage.innerHTML = ''; // Release modal iframe resources when returning to 3D hall
         state.mode = 'explore';
         state.activeModalId = null;
+        state.editMode = false;
         reticleEl.classList.remove('hidden');
         if (reLockMouse && !isCoarsePointer) {
           requestMouseLock();
@@ -1926,6 +2462,12 @@ export const gallery3d = `<!DOCTYPE html>
         });
       }
 
+      document.getElementById('btn-toggle-live').addEventListener('click', () => {
+        state.liveWalls = !state.liveWalls;
+        updateLiveWallsUI();
+        showToast(state.liveWalls ? 'Live website wall displays enabled' : 'Lightweight procedural art mode enabled');
+      });
+
       document.getElementById('btn-toggle-tour').addEventListener('click', () => {
         if (state.mode === 'modal') closeInspector(false);
         state.autoTour = !state.autoTour;
@@ -1962,39 +2504,65 @@ export const gallery3d = `<!DOCTYPE html>
       document.getElementById('btn-modal-prev').addEventListener('click', () => stepModal(-1));
       document.getElementById('btn-modal-next').addEventListener('click', () => stepModal(1));
 
-      document.getElementById('btn-modal-edit-toggle').addEventListener('click', () => {
-        state.editMode = !state.editMode;
+      document.getElementById('btn-frame-scale').addEventListener('click', () => {
+        state.modalFitDesktop = !state.modalFitDesktop;
+        updateModalIframeScale();
+      });
+      document.getElementById('btn-frame-reload').addEventListener('click', () => {
         const ed = editions.find(e => e.id === state.activeModalId);
-        if (ed) syncModalContent(ed);
+        if (ed) renderLivePreview(ed);
       });
 
-      document.getElementById('btn-reset-exhibit').addEventListener('click', () => {
-        const idx = editions.findIndex(e => e.id === state.activeModalId);
-        if (idx === -1) return;
-        editions[idx] = Object.assign({}, DEFAULT_EDITIONS[idx]);
-        saveEditions(editions);
-        refreshExhibitTextures(editions[idx].id);
-        buildDock();
-        syncModalContent(editions[idx]);
-        showToast('Exhibit reset to default');
-      });
+      // Localhost-only Customizer event bindings (never registered on public deployments)
+      if (isLocalHost) {
+        const editToggleBtn = document.getElementById('btn-modal-edit-toggle');
+        const resetBtn = document.getElementById('btn-reset-exhibit');
+        const editForm = document.getElementById('modal-edit-form');
 
-      document.getElementById('modal-edit-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const ed = editions.find(x => x.id === state.activeModalId);
-        if (!ed) return;
-        ed.title = document.getElementById('edit-title').value.trim() || ed.title;
-        ed.year = document.getElementById('edit-year').value.trim() || ed.year;
-        ed.accent = document.getElementById('edit-accent').value || ed.accent;
-        ed.url = document.getElementById('edit-url').value.trim() || ed.url;
-        ed.description = document.getElementById('edit-desc').value.trim() || ed.description;
-        saveEditions(editions);
-        refreshExhibitTextures(ed.id);
-        buildDock();
-        state.editMode = false;
-        syncModalContent(ed);
-        showToast('3D Monolith & metadata updated');
-      });
+        if (editToggleBtn) {
+          editToggleBtn.addEventListener('click', () => {
+            state.editMode = !state.editMode;
+            const ed = editions.find(e => e.id === state.activeModalId);
+            if (ed) syncModalContent(ed);
+          });
+        }
+
+        if (resetBtn) {
+          resetBtn.addEventListener('click', () => {
+            const idx = editions.findIndex(e => e.id === state.activeModalId);
+            if (idx === -1) return;
+            editions[idx] = Object.assign({}, DEFAULT_EDITIONS[idx]);
+            saveEditions(editions);
+            refreshExhibitTextures(editions[idx].id);
+            buildDock();
+            syncModalContent(editions[idx]);
+            showToast('Exhibit reset to default');
+          });
+        }
+
+        if (editForm) {
+          editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const ed = editions.find(x => x.id === state.activeModalId);
+            if (!ed) return;
+            ed.title = document.getElementById('edit-title').value.trim() || ed.title;
+            ed.year = document.getElementById('edit-year').value.trim() || ed.year;
+            ed.accent = document.getElementById('edit-accent').value || ed.accent;
+            const newUrl = document.getElementById('edit-url').value.trim();
+            if (newUrl) {
+              ed.url = newUrl;
+              ed.previewUrl = newUrl === './portfolio/' ? './portfolio/?preview=1' : newUrl;
+            }
+            ed.description = document.getElementById('edit-desc').value.trim() || ed.description;
+            saveEditions(editions);
+            refreshExhibitTextures(ed.id);
+            buildDock();
+            state.editMode = false;
+            syncModalContent(ed);
+            showToast('Local 3D Monolith & live preview updated');
+          });
+        }
+      }
 
       modalEl.addEventListener('click', (e) => {
         if (e.target === modalEl) closeInspector(false);
@@ -2073,7 +2641,6 @@ export const gallery3d = `<!DOCTYPE html>
       container.addEventListener('pointerdown', (ev) => {
         if (state.mode !== 'explore') return;
 
-        // While pointer-locked, left click inspects the aimed monolith via center reticle
         if (state.isPointerLocked) {
           if (ev.button === 0 && state.hoveredId) {
             focusExhibit(state.hoveredId, true);
@@ -2134,7 +2701,6 @@ export const gallery3d = `<!DOCTYPE html>
             const hitId = hits[0].object.userData.editionId;
             focusExhibit(hitId, true);
           } else if (ev.pointerType === 'mouse' && !isCoarsePointer) {
-            // Clicking open gallery space on desktop re-binds mouse cursor to camera
             if (state.autoTour) {
               state.autoTour = false;
               updateTourUI();
@@ -2148,6 +2714,7 @@ export const gallery3d = `<!DOCTYPE html>
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        updateModalIframeScale();
       });
 
       const clock = new THREE.Clock();
@@ -2171,9 +2738,9 @@ export const gallery3d = `<!DOCTYPE html>
         const h = minimapCanvas.height;
         mCtx.clearRect(0, 0, w, h);
 
-        mCtx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+        mCtx.fillStyle = 'rgba(255, 255, 255, 0.06)';
         mCtx.fillRect(10, 6, w - 20, h - 12);
-        mCtx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+        mCtx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
         mCtx.lineWidth = 1;
         mCtx.strokeRect(10, 6, w - 20, h - 12);
 
@@ -2192,7 +2759,7 @@ export const gallery3d = `<!DOCTYPE html>
           const rz = mapZ(obs.minZ);
           const rw = Math.max(3, mapX(obs.maxX) - rx);
           const rh = Math.max(3, mapZ(obs.maxZ) - rz);
-          mCtx.fillStyle = obs.type === 'pedestal' ? 'rgba(240, 201, 125, 0.55)' : 'rgba(148, 163, 184, 0.42)';
+          mCtx.fillStyle = obs.type === 'pedestal' ? 'rgba(240, 201, 125, 0.65)' : 'rgba(226, 232, 240, 0.45)';
           mCtx.fillRect(rx, rz, rw, rh);
         });
 
@@ -2207,7 +2774,7 @@ export const gallery3d = `<!DOCTYPE html>
         mCtx.lineTo(-9, -16);
         mCtx.lineTo(9, -16);
         mCtx.closePath();
-        mCtx.fillStyle = 'rgba(240, 201, 125, 0.22)';
+        mCtx.fillStyle = 'rgba(240, 201, 125, 0.28)';
         mCtx.fill();
         mCtx.restore();
 
@@ -2287,7 +2854,6 @@ export const gallery3d = `<!DOCTYPE html>
           state.targetYaw = state.yaw;
           state.targetPitch = state.pitch;
         } else if (state.mode === 'explore') {
-          // Smooth mouse-bound / drag first-person camera rotation
           const lookLerp = state.isPointerLocked ? Math.min(1, dt * 24) : Math.min(1, dt * 12);
           state.yaw += (state.targetYaw - state.yaw) * lookLerp;
           state.pitch += (state.targetPitch - state.pitch) * lookLerp;
@@ -2321,7 +2887,6 @@ export const gallery3d = `<!DOCTYPE html>
           camera.position.set(state.pos.x, 1.78 + bobY, state.pos.z);
           camera.rotation.set(state.pitch, state.yaw, 0);
 
-          // Center-reticle raycast when mouse cursor is bound via Pointer Lock
           if (state.isPointerLocked) {
             raycaster.setFromCamera(centerNDC, camera);
             const hits = raycaster.intersectObjects(clickableMeshes, false);
@@ -2347,9 +2912,9 @@ export const gallery3d = `<!DOCTYPE html>
             closestId = obj.edition.id;
           }
           const isHighlighted = (state.hoveredId === obj.edition.id) || (closestId === obj.edition.id && dist < 8.5);
-          const targetOpacity = isHighlighted ? 0.92 : 0.28;
+          const targetOpacity = isHighlighted ? 0.94 : 0.34;
           obj.rimMat.opacity += (targetOpacity - obj.rimMat.opacity) * Math.min(1, dt * 8);
-          obj.accentLight.intensity += ((isHighlighted ? 1.55 : 0.85) - obj.accentLight.intensity) * Math.min(1, dt * 6);
+          obj.accentLight.intensity += ((isHighlighted ? 0.95 : 0.50) - obj.accentLight.intensity) * Math.min(1, dt * 6);
         });
         state.nearestId = closestId;
 
@@ -2371,12 +2936,17 @@ export const gallery3d = `<!DOCTYPE html>
           drawMinimap();
         }
 
+        // Sync camera world & inverse matrices so CSS3D live websites lock sub-pixel-tight to WebGL cutouts
+        camera.updateMatrixWorld();
+        camera.matrixWorldInverse.copy(camera.matrixWorld).invert();
+        updateCSS3DLayer();
         renderer.render(scene, camera);
       }
 
       window.addEventListener('load', () => {
         if (window.lucide) lucide.createIcons();
         updateMouseLockUI();
+        updateLiveWallsUI();
         animate();
       });
     })();

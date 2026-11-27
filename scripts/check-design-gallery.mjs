@@ -41,6 +41,12 @@ const entries = [
 
 // Validate 3D Archive Gallery root landing page
 assert.match(rootGallery3d, /id="canvas-container"/);
+assert.match(rootGallery3d, /id="css3d-container"/);
+assert.match(rootGallery3d, /THREE\.NoBlending/);
+assert.match(rootGallery3d, /createMarbleTextures/);
+assert.match(rootGallery3d, /const isLocalHost =/);
+assert.match(rootGallery3d, /\.\/portfolio\/\?preview=1/);
+assert.match(rootGallery3d, /\.\/projects\/chronos\//);
 assert.match(rootGallery3d, /requestPointerLock/);
 assert.match(rootGallery3d, /pointerlockchange/);
 assert.match(rootGallery3d, /ev\.movementX/);

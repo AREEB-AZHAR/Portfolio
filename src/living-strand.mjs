@@ -60,20 +60,15 @@ function points(kind) {
       [0.6, -0.4],
       [0.9, 0],
     ];
-  if (kind === "cryptotrader")
-    return [
-      [-0.9, 0],
-      [-0.6, 0.5],
-      [-0.3, -0.1],
-      [0, 0.1],
-      [0.3, -0.7],
-      [0.6, -0.4],
-      [0.9, -0.85],
-      [0.9, 0.7],
-      [-0.9, 0.7],
-      [-0.9, 0],
-      [0.9, 0],
-    ];
+  if (kind === "chronos") {
+    const spiral = [];
+    for (let n = 0; n <= 48; n++) {
+      const t = (n / 48) * Math.PI * 3;
+      const r = 0.28 + (n / 48) * 0.62;
+      spiral.push([Math.cos(t) * r, Math.sin(t) * r * 0.85]);
+    }
+    return spiral;
+  }
   if (kind === "structure")
     return [
       [-0.8, 0],
@@ -110,7 +105,7 @@ const kinds = [
   "tally",
   "gravipop",
   "degree-verification",
-  "cryptotrader",
+  "chronos",
   "bunetto",
   "connection",
   "circle",
